@@ -11,8 +11,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderStatusFrame;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest.SwerveDriveBrake;
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
@@ -21,6 +23,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.RobotController;
 
 @SuppressWarnings("removal")
@@ -32,12 +35,13 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
     private final double VELO_PER_METER = COUNTS_PER_METER*10;        //distance units
 
     //Swerve corner locations for kinematics
-    //24.75" square
+    // trackwidth = 25" /2 = 12.5" converts to 0.3175 meters
+    // wheelbase = 25" /2 = 12.5" converts to 0.3175 meters
     private Translation2d[] swervePositions = {
-        new Translation2d(0.314, 0.314),  //convert inches to meters. y is front to back. left front is 1st wheel
-        new Translation2d(0.314, -0.314),  //front right wheel
-        new Translation2d(-0.314, 0.314),  // rear left
-        new Translation2d(-0.314, -0.314)  // rear right
+        new Translation2d(0.3175, 0.3175),  //convert inches to meters. y is front to back. left front is 1st wheel
+        new Translation2d(0.3175, -0.3175),  //front right wheel
+        new Translation2d(-0.3175, 0.3175),  // rear left
+        new Translation2d(-0.3175, -0.3175)  // rear right
     };
 
     private String[] moduleNames = {
@@ -47,9 +51,9 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
         "RR"
     };
 
-    private TalonFX driveMotors[];  //TODO: upgrade to Phoenix 6 once this works
-    private CANSparkMax turnMotors[];
-    private RelativeEncoder turnEncoder[];
+    private CANSparkMax[] driveMotors;
+    private CANSparkMax[] turnMotors;
+    private RelativeEncoder[] turnEncoder;
     private CANCoder turnSensors[];
     private PIDController turnPid[];
 
@@ -59,7 +63,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
 
         //allocate our hardware
         int NUM_MOTORS = swervePositions.length;
-        driveMotors =new TalonFX[NUM_MOTORS];
+        driveMotors =new CANSparkMax[NUM_MOTORS];
         turnMotors = new CANSparkMax[NUM_MOTORS];
         turnSensors = new CANCoder[NUM_MOTORS];
         correctedAngle = new double[NUM_MOTORS];
@@ -67,24 +71,29 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
         turnPid = new PIDController[NUM_MOTORS];
 
         //FL
-        driveMotors[0] = new TalonFX(11);  // TODO: update with correct info when receive it
-        turnMotors[0] = new CANSparkMax(12, MotorType.kBrushless);  // TODO: update with correct info when receive it
-        turnSensors[0] = new CANCoder(13);  // TODO: update with correct info when receive it
+        driveMotors[0] = new CANSparkMax(11, MotorType.kBrushless);  
+        turnMotors[0] = new CANSparkMax(12, MotorType.kBrushless);  
+        turnSensors[0] = new CANCoder(13);  
+        driveMotors[0].setInverted(true); 
+
+        //driveMotors[0].setSmartCurrentLimit(Constants.DRIVETRAIN_MOTOR_CURRENT_LIMIT_AMPS);
         
         //FR
-        driveMotors[1] = new TalonFX(21);  // TODO: update with correct info when receive it
-        turnMotors[1] = new CANSparkMax(22, MotorType.kBrushless);  // TODO: update with correct info when receive it
-        turnSensors[1] = new CANCoder(23);  // TODO: update with correct info when receive it
+        driveMotors[1] = new CANSparkMax(21, MotorType.kBrushless);  
+        turnMotors[1] = new CANSparkMax(22, MotorType.kBrushless);  
+        turnSensors[1] = new CANCoder(23);  
 
         //RL
-        driveMotors[2] = new TalonFX(31);  // TODO: update with correct info when receive it
-        turnMotors[2] = new CANSparkMax(32, MotorType.kBrushless);  // TODO: update with correct info when receive it
-        turnSensors[2] = new CANCoder(33);  // TODO: update with correct info when receive it
+        driveMotors[2] = new CANSparkMax(31, MotorType.kBrushless);  
+        turnMotors[2] = new CANSparkMax(32, MotorType.kBrushless);  
+        turnSensors[2] = new CANCoder(33);  
+        driveMotors[2].setInverted(true); 
 
         //RR
-        driveMotors[3] = new TalonFX(41);  // TODO: update with correct info when receive it
-        turnMotors[3] = new CANSparkMax(42, MotorType.kBrushless);  // TODO: update with correct info when receive it
-        turnSensors[3] = new CANCoder(43);  // TODO: update with correct info when receive it
+        driveMotors[3] = new CANSparkMax(41, MotorType.kBrushless);  
+        turnMotors[3] = new CANSparkMax(42, MotorType.kBrushless); 
+        turnSensors[3] = new CANCoder(43); 
+        //driveMotors[3].setInverted(true); 
 
         for (CANCoder sensor: turnSensors) {
             sensor.setStatusFramePeriod(CANCoderStatusFrame.SensorData, 18);
@@ -95,7 +104,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
         for(int wheel = 0; wheel<NUM_MOTORS; wheel++) {
             final int wheelFinal = wheel;
             Logger.RegisterCanSparkMax(moduleNames[wheel] + " Turn", turnMotors[wheel]);
-            Logger.RegisterTalon(moduleNames[wheel] + " Drive", driveMotors[wheel]);
+            Logger.RegisterCanSparkMax(moduleNames[wheel] + " Drive", driveMotors[wheel]);
             Logger.RegisterCanCoder(moduleNames[wheel] + " Abs", turnSensors[wheel]);
             Logger.RegisterSensor(moduleNames[wheel] + " Speed", () -> getCornerSpeed(wheelFinal));
             Logger.RegisterSensor(moduleNames[wheel] + " Turn Pos", () -> getCornerAngle(wheelFinal));
@@ -103,7 +112,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
 
             //initialize hardware
             turnEncoder[wheel] = turnMotors[wheel].getEncoder();
-            turnPid[wheel] = new PIDController(.5/Math.PI, .2, 0);
+            turnPid[wheel] = new PIDController(.5/Math.PI, .2, 0);  //TODO: modify turnPID values
         }
     }
 
@@ -119,7 +128,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
 
     @Override
     public double getCornerDistance(int wheel) {
-        return driveMotors[wheel].getSelectedSensorPosition() / COUNTS_PER_METER;
+        return driveMotors[wheel].getEncoder().getPosition() / COUNTS_PER_METER;
     }
 
     @Override
@@ -129,7 +138,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
 
     @Override
     public double getCornerSpeed(int wheel) {
-        return driveMotors[wheel].getSelectedSensorVelocity() / VELO_PER_METER;
+        return driveMotors[wheel].getEncoder().getVelocity() / VELO_PER_METER;
     }
 
     @Override
@@ -141,7 +150,10 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
     public void setCornerState(int wheel, SwerveModuleState swerveModuleState) {
         //set the drive command
         double velPct = swerveModuleState.speedMetersPerSecond / 5;  //TODO set equal to max module speed
-        driveMotors[wheel].set(TalonFXControlMode.PercentOutput, velPct);
+        //double velVolts = velPct*12.0;   TODO: change to open loop voltage control
+        driveMotors[wheel].set(velPct);
+        //CANSparkBase.ControlType.kDutyCycle ^
+       // driveMotors[wheel].setVoltage(velVolts);
 
         //set the turn command
         //we need the request to be within the boundaries, not wrap around the 180 point
@@ -161,16 +173,16 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
 
     @Override
     public void setDriveMotorBrakeMode(boolean brakeOn) {
-        NeutralMode mode;
+        IdleMode mode;
 
         if(brakeOn) {
-            mode = NeutralMode.Brake;
+            mode = IdleMode.kBrake;
         } else {
-            mode = NeutralMode.Coast;
+            mode = IdleMode.kCoast;
         }
         
-        for (TalonFX motor : driveMotors) {
-            motor.setNeutralMode(mode);
+        for (CANSparkMax motor : driveMotors) {
+            motor.setIdleMode(mode);
         }
     }
 

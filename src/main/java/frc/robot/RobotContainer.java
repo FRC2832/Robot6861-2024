@@ -10,6 +10,7 @@ import org.livoniawarriors.leds.RainbowLeds;
 import org.livoniawarriors.leds.TestLeds;
 import org.livoniawarriors.odometry.Odometry;
 import org.livoniawarriors.odometry.Pigeon2Gyro;
+import org.livoniawarriors.odometry.PigeonGyro;
 import org.livoniawarriors.odometry.SimSwerveGyro;
 import org.livoniawarriors.swerve.DriveXbox;
 import org.livoniawarriors.swerve.MoveWheels;
@@ -62,7 +63,7 @@ public class RobotContainer {
         //subsystems used in all robots
         odometry = new Odometry();
         leds = new LedSubsystem(0, 10);
-        new VisionSystem(odometry); //not making variable as we won't change this subsystem
+       // new VisionSystem(odometry); //not making variable as we won't change this subsystem
 
         //build the robot based on the Rio ID of the robot
         if (Robot.isSimulation() || (serNum.equals("031b525b")) || (serNum.equals("03064db7"))) {
@@ -72,7 +73,7 @@ public class RobotContainer {
         } else {
             //competition robot
             swerveDrive = new SwerveDriveTrain(new PracticeSwerveHw(), odometry);
-            odometry.setGyroHardware(new Pigeon2Gyro(0));
+            odometry.setGyroHardware(new PigeonGyro(50));
         }
         
         odometry.setSwerveDrive(swerveDrive);
