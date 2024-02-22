@@ -36,17 +36,19 @@ public class IntakeSubSys extends SubsystemBase {
         outtakeVelVolts = outtakeVelPct * 12.0;
     }
 
-    
+    // Runs the IntakeMotors in a positive direction(Inwards)
     public void runIntake() {
       intakeMotor.setVoltage(intakeVelVolts);
     }
 
+    // Runs the IntakeMotors in a negative direction(Outwards)
     public void runOuttake() {
       intakeMotor.setVoltage(outtakeVelVolts);
     }
 
-
-    
+    public void stopIntakeMotors() {
+      intakeMotor.setVoltage(0.0);
+    }
 
     @Override
     public void periodic() {

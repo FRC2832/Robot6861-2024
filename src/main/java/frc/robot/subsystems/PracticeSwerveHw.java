@@ -51,13 +51,13 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
     public PracticeSwerveHw() {
 
         // allocate our hardware
-        int NUM_MOTORS = swervePositions.length;
-        driveMotors = new CANSparkMax[NUM_MOTORS];
-        turnMotors = new CANSparkMax[NUM_MOTORS];
-        turnSensors = new CANCoder[NUM_MOTORS];
-        correctedAngle = new double[NUM_MOTORS];
-        turnEncoder = new RelativeEncoder[NUM_MOTORS];
-        turnPid = new PIDController[NUM_MOTORS];
+        int numMotors = swervePositions.length;
+        driveMotors = new CANSparkMax[numMotors];
+        turnMotors = new CANSparkMax[numMotors];
+        turnSensors = new CANCoder[numMotors];
+        correctedAngle = new double[numMotors];
+        turnEncoder = new RelativeEncoder[numMotors];
+        turnPid = new PIDController[numMotors];
 
         // FL
         driveMotors[0] = new CANSparkMax(11, MotorType.kBrushless);
@@ -90,7 +90,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
         }
 
         // register stuff for logging
-        for (int wheel = 0; wheel < NUM_MOTORS; wheel++) {
+        for (int wheel = 0; wheel < numMotors; wheel++) {
             final int wheelFinal = wheel;
             Logger.RegisterCanSparkMax(moduleNames[wheel] + " Turn", turnMotors[wheel]);
             Logger.RegisterCanSparkMax(moduleNames[wheel] + " Drive", driveMotors[wheel]);

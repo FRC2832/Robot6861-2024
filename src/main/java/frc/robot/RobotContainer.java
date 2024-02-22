@@ -26,14 +26,18 @@ import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.IntakeNoteCmd;
+import frc.robot.subsystems.IntakeSubSys;
 import frc.robot.subsystems.PracticeSwerveHw;
 
 /**
@@ -47,13 +51,18 @@ public class RobotContainer {
     private SwerveDriveTrain swerveDrive;
     private Odometry odometry;
     private LedSubsystem leds;
+    private IntakeSubSys intakeSubSysObj;
 
+    // TODO: Make a JoystickSubSystem
     private XboxController driverController;
+    private CommandXboxController operatorController;
 
     private SendableChooser<Command> autoChooser;
 
     public RobotContainer() {
         driverController = new XboxController(0);
+        operatorController = new CommandXboxController(1);
+        intakeSubSysObj = new IntakeSubSys();
 
         String serNum = RobotController.getSerialNumber();
         SmartDashboard.putString("Serial Number", serNum);
@@ -67,7 +76,7 @@ public class RobotContainer {
        // new VisionSystem(odometry); //not making variable as we won't change this subsystem
 
         //build the robot based on the Rio ID of the robot
-        if (Robot.isSimulation() || (serNum.equals("031b525b")) || (serNum.equals("03064db7"))) {
+        if (RobotBase.isSimulation() || (serNum.equals("031b525b")) || (serNum.equals("03064db7"))) {
             //either buzz or simulation
             swerveDrive = new SwerveDriveTrain(new SwerveDriveSim(), odometry);
             odometry.setGyroHardware(new SimSwerveGyro(swerveDrive));
@@ -128,6 +137,11 @@ public class RobotContainer {
         //setup default commands that are used for driving
         swerveDrive.setDefaultCommand(new DriveXbox(swerveDrive, driverController));
         leds.setDefaultCommand(new RainbowLeds(leds));
+        
+        
+        //setup button bindings
+        Trigger operatorRightTrigger = operatorController.rightTrigger();
+        operatorRightTrigger.whileTrue(new IntakeNoteCmd(intakeSubSysObj));
     }
 
     /**

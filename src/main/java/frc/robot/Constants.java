@@ -20,13 +20,12 @@ public final class Constants {
     // CANID Constants
     public static final int INTAKE_MOTOR_CAN_ID = 2;
 
-    // Motor Values
-    public static final double INTAKE_MOTOR_PCT = 0.0;
-    public static final double OUTTAKE_MOTOR_PCT = 0.0;
+    // Intake Motor Values
+    public static final double INTAKE_MOTOR_PCT = 30.0;
+    public static final double OUTTAKE_MOTOR_PCT = -20.0;
     public static final int INTAKE_MOTOR_SMART_CURRENT_LIMIT = 5;
 
     private Constants() {
         // No-op. This is a utility class. Keep the constructor private to prevent instantiation.
     }
-    
 }
