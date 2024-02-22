@@ -4,16 +4,53 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class IntakeSubSys extends SubsystemBase {
-  /** Creates a new Intake. */
-  public IntakeSubSys() {}
+    /** Creates a new Intake. */
+    // if Operator right trigger held, run intake motors CAN Id 1 & 2
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    // if Operator right trigger held, run intake motors CAN Id
-  }
+    // Neo 550 motors
+    // Test for which direction positive/negative input causes?
+    // Intake in is positive volts
+    // eject is negative volts
+    // once note is fully in indexer, run intake backwards
+
+    private final CANSparkMax intakeMotor;
+    private double intakeVelVolts;
+    private double outtakeVelVolts;
+    private double intakeVelPct;
+    private double outtakeVelPct;
+
+    public IntakeSubSys() {
+        intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR_CAN_ID, MotorType.kBrushless);
+        intakeMotor.setSmartCurrentLimit(Constants.INTAKE_MOTOR_SMART_CURRENT_LIMIT);
+        
+        intakeVelPct = Constants.INTAKE_MOTOR_PCT;
+        outtakeVelPct = Constants.OUTTAKE_MOTOR_PCT;
+        intakeVelVolts = intakeVelPct * 12.0; 
+        outtakeVelVolts = outtakeVelPct * 12.0;
+    }
+
+    
+    public void runIntake() {
+      intakeMotor.setVoltage(intakeVelVolts);
+    }
+
+    public void runOuttake() {
+      intakeMotor.setVoltage(outtakeVelVolts);
+    }
+
+
+    
+
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+
+    }
 }
- 

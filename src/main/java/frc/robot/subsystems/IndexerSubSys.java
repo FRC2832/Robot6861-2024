@@ -7,12 +7,12 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IndexerSubSys extends SubsystemBase {
-  /** Creates a new Indexer. */
-  public IndexerSubSys() {}
+    /** Creates a new Indexer. */
+    public IndexerSubSys() {
+    }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+    }
 }
- 
