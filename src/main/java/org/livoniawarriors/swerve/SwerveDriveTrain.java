@@ -35,7 +35,7 @@ public class SwerveDriveTrain extends SubsystemBase {
     private SwerveModulePosition[] swervePositions;
     private SwerveModuleState[] swerveTargets;
     private double gyroOffset = 0;
-    private PIDController pidZero = new PIDController(0.15, 0.001, 0);
+    private PIDController pidZero = new PIDController(0.00, 0.00000, 0); // TODO: was kp =0.15, ki = 0.001. Need different values?
     private SwerveModuleState[] swerveStates;
     private boolean optimize;
     private boolean resetZeroPid;
@@ -88,7 +88,7 @@ public class SwerveDriveTrain extends SubsystemBase {
         wheelRequestAngle = new DoublePublisher[numWheels];
         wheelCommandSpeed = new DoublePublisher[numWheels];
         wheelRequestSpeed = new DoublePublisher[numWheels];
-        for(int wheel = 0; wheel < numWheels; wheel++) {
+        for (int wheel = 0; wheel < numWheels; wheel++) {
             swervePositions[wheel] = new SwerveModulePosition();
             swerveTargets[wheel] = new SwerveModuleState();
             swerveStates[wheel] = new SwerveModuleState();
@@ -118,7 +118,7 @@ public class SwerveDriveTrain extends SubsystemBase {
         currentHeading = odometry.getGyroRotation();
 
         //read the swerve corner state
-        for(int wheel = 0; wheel < swervePositions.length; wheel++) {
+        for (int wheel = 0; wheel < swervePositions.length; wheel++) {
             double offset = wheelOffsetSetting[wheel].get(0);
             double angle = hardware.getCornerAbsAngle(wheel) - offset;
             swervePositions[wheel].angle = Rotation2d.fromDegrees(angle);
@@ -133,7 +133,7 @@ public class SwerveDriveTrain extends SubsystemBase {
 
         //when we are disabled, reset the turn pids as we don't want to act on the "error" when reenabled
         boolean curTeleop = DriverStation.isTeleopEnabled();
-        if(lastTeleop == false && curTeleop == true || resetZeroPid) {
+        if (!lastTeleop && curTeleop || resetZeroPid) {
             gyroOffset = currentHeading.getDegrees();
             fieldOffset = currentHeading;
             pidZero.reset();
@@ -142,7 +142,7 @@ public class SwerveDriveTrain extends SubsystemBase {
         resetZeroPid = false;
 
         PushSwerveStates(swerveStates,swerveTargets);
-        minSpeed = UtilFunctions.getSetting(MIN_SPEED_KEY, 0.5);
+        minSpeed = UtilFunctions.getSetting(MIN_SPEED_KEY, 0.1); //TODO: may need to increase to 0.5 once max speed increases
         maxSpeed = UtilFunctions.getSetting(MAX_SPEED_KEY, 5);
     }
 

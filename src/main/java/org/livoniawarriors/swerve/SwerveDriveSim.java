@@ -12,21 +12,21 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 
 public class SwerveDriveSim implements ISwerveDriveIo {
-    private double absAngle[];
-    private double turnAngle[];
-    private double correctedAngle[];
-    private double driveSpeed[];
-    private double driveDist[];
-    private ControlMode driveCommand[];
-    private ControlMode turnCommand[];
-    private double drivePower[];
-    private double turnPower[];
+    private double[] absAngle;
+    private double[] turnAngle;
+    private double[] correctedAngle;
+    private double[] driveSpeed;
+    private double[] driveDist;
+    private ControlMode[] driveCommand;
+    private ControlMode[] turnCommand;
+    private double[] drivePower;
+    private double[] turnPower;
 
-    private FlywheelSim turnMotorSim[];
-    private PIDController turningPIDController[];
+    private FlywheelSim[] turnMotorSim;
+    private PIDController[] turningPIDController;
 
     private final double Kv_Turn = 0.006531;
-    private final double kMaxSpeed = 5;     //5m/s ~= 15ft/s
+    private final double kMaxSpeed = 5.0;     //5m/s ~= 15ft/s
     private final double kNomBatVolt = 12.5;
 
     private Translation2d[] swervePositions = {
@@ -58,15 +58,15 @@ public class SwerveDriveSim implements ISwerveDriveIo {
 
         turnMotorSim = new FlywheelSim[numWheels];
         turningPIDController = new PIDController[numWheels];
-        for(int i=0; i<numWheels; i++) {
+        for (int i = 0; i < numWheels; i++) {
             //kv = Volt Seconds per Meter
             //ka = ka VoltSecondsSquaredPerMotor
             turnMotorSim[i] = new FlywheelSim(LinearSystemId.identifyVelocitySystem(0.3850, 0.0385),
-                DCMotor.getFalcon500(1), 150f/7);
+                DCMotor.getFalcon500(1), 150f / 7);
             
             //scale factor for hardware PID to software PID
             //360/2048 is 360 degrees per rev/encoder counts per rev divided by gear ratio
-            var k = (360f/2048) * (7f/150);
+            var k = (360f / 2048) * (7f / 150);
             turningPIDController[i] = new PIDController(1.5 * k, 0.0005 * k, 0 * k, 0.001);
         }
     }
@@ -74,7 +74,7 @@ public class SwerveDriveSim implements ISwerveDriveIo {
     @Override
     public void updateInputs() {
         //TODO: Simulate the actual swerve corners... https://www.chiefdelphi.com/t/sysid-gains-on-sds-mk4i-modules/400373/7
-        for(int i=0; i<driveCommand.length; i++) {
+        for (int i = 0; i < driveCommand.length; i++) {
             //process drive command
             if (driveCommand[i] == ControlMode.MotionMagic) {
                 //drive power is actually distance traveled
@@ -93,8 +93,8 @@ public class SwerveDriveSim implements ISwerveDriveIo {
             drivePower[i] = 0;
 
             //process turn command
-            if(turnCommand[i] == ControlMode.Position) {
-                for(var loops = 0; loops < TimedRobot.kDefaultPeriod / 0.001; loops++) {
+            if (turnCommand[i] == ControlMode.Position) {
+                for (var loops = 0; loops < TimedRobot.kDefaultPeriod / 0.001; loops++) {
                     double turnOutput = turningPIDController[i].calculate(correctedAngle[i], turnPower[i]);
                     //update the sensor values
                     turnAngle[i] += turnOutput;
@@ -146,7 +146,7 @@ public class SwerveDriveSim implements ISwerveDriveIo {
         drivePower[wheel] = swerveModuleState.speedMetersPerSecond;
         turnCommand[wheel] = ControlMode.Position;
         //we need the request to be within the boundaries, not wrap around the 180 point
-        turnPower[wheel] = MathUtil.inputModulus(swerveModuleState.angle.getDegrees(), correctedAngle[wheel]-180, correctedAngle[wheel]+180);
+        turnPower[wheel] = MathUtil.inputModulus(swerveModuleState.angle.getDegrees(), correctedAngle[wheel] - 180, correctedAngle[wheel] + 180);
     }
 
     @Override

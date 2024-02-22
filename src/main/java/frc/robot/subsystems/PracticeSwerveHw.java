@@ -25,6 +25,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 @SuppressWarnings("removal")
 public class PracticeSwerveHw implements ISwerveDriveIo {
@@ -150,10 +151,11 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
     public void setCornerState(int wheel, SwerveModuleState swerveModuleState) {
         //set the drive command
         double velPct = swerveModuleState.speedMetersPerSecond / 5;  //TODO set equal to max module speed
-        //double velVolts = velPct*12.0;   TODO: change to open loop voltage control
-        driveMotors[wheel].set(velPct);
+        double velVolts = velPct*12.0;   //TODO: change to open loop voltage control
+        //driveMotors[wheel].set(velPct);
         //CANSparkBase.ControlType.kDutyCycle ^
-       // driveMotors[wheel].setVoltage(velVolts);
+        driveMotors[wheel].setVoltage(velVolts);
+        // System.out.println("Commanded Volts" + velVolts);
 
         //set the turn command
         //we need the request to be within the boundaries, not wrap around the 180 point
@@ -164,6 +166,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
         }
         double turnOutput = -turnPid[wheel].calculate(Math.toRadians(correctedAngle[wheel]), Math.toRadians(turnRequest));
         turnMotors[wheel].set(turnOutput);
+        
     }
 
     @Override

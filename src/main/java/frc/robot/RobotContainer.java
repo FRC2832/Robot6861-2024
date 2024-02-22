@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import org.livoniawarriors.UtilFunctions;
 import org.livoniawarriors.leds.LedSubsystem;
 import org.livoniawarriors.leds.LightningFlash;
 import org.livoniawarriors.leds.RainbowLeds;
@@ -74,6 +75,7 @@ public class RobotContainer {
             //competition robot
             swerveDrive = new SwerveDriveTrain(new PracticeSwerveHw(), odometry);
             odometry.setGyroHardware(new PigeonGyro(50));
+            
         }
         
         odometry.setSwerveDrive(swerveDrive);
@@ -98,8 +100,8 @@ public class RobotContainer {
             swerveDrive::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             swerveDrive::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-                new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
+                new PIDConstants(0.5, 0.0, 0.0), // TODO: check values.  was kp = 5. Translation PID constants
+                new PIDConstants(0.5, 0.0, 0.0), // TODO: check values.  was kp = 5. Rotation PID constants
                 swerveDrive.getMaxSpeed(), // Max module speed, in m/s
                 swerveDrive.getDriveBaseRadius(), // Drive base radius in meters. Distance from robot center to furthest module.
                 new ReplanningConfig() // Default path replanning config. See the API for the options here
