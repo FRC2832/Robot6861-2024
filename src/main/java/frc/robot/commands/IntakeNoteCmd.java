@@ -11,7 +11,7 @@ import frc.robot.subsystems.IntakeSubSys;
 public class IntakeNoteCmd extends Command {
     private final IntakeSubSys intakeSubSysObj;
     private static final Timer TIMER = new Timer();
-    private static final double MAX_RUN_TIME = 2.0;
+    private static final double MAX_RUN_TIME = 2.0; //seconds
 
     /**
      * Creates a new IntakeNote.

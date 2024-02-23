@@ -22,14 +22,14 @@ public final class Constants {
     public static final int INDEX_MOTOR_CAN_ID = 1;
 
     // Intake Motor Values
-    public static final int INTAKE_MOTOR_SMART_CURRENT_LIMIT = 5;  //TODO: increase once development work complete
+    public static final int INTAKE_MOTOR_SMART_CURRENT_LIMIT = 10;  //NEO 550 - TODO: increase once development work complete
     public static final double INTAKE_MOTOR_PCT = 30.0; //TODO: increase these values.  Maybe 70.0
     public static final double OUTTAKE_MOTOR_PCT = -20.0;  //TODO: confirm these values
   
 
     // Indexer Motor Values
-    public static final int INDEX_MOTOR_SMART_CURRENT_LIMIT = 5;  //TODO: increase once development work complete
-    public static final double UPINDEX_MOTOR_PCT = 1.0;  //TODO: confirm these values
+    public static final int INDEX_MOTOR_SMART_CURRENT_LIMIT = 10;  //NEO 550 - TODO: increase once development work complete
+    public static final double UPINDEX_MOTOR_PCT = 75.0;  //TODO: confirm these values
     public static final double DOWNINDEX_MOTOR_PCT = -20.0;  //TODO: confirm these values
     
     // Shooter Motor Values
