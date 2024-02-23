@@ -5,37 +5,29 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.IntakeSubSys;
 
-public class IntakeNoteCmd extends Command {
-    private final IntakeSubSys intakeSubSysObj;
-    private static final Timer TIMER = new Timer();
-    private static final double MAX_RUN_TIME = 2.0;
+public class OuttakeNoteCmd extends Command {
 
-    /**
-     * Creates a new IntakeNote.
-     * Makes intakeSubSysObj a requirement
-     * 
-     * @param intakeSubSysObj The IntakeSubsystem from the where it is being called
-     */
-    public IntakeNoteCmd(IntakeSubSys intakeSubSys) {
+    private final IntakeSubSys intakeSubSysObj;
+
+    /** Creates a new OuttakeNoteCmd. */
+    public OuttakeNoteCmd(IntakeSubSys intakeSubSysObj) {
+        this.intakeSubSysObj = intakeSubSysObj;
+        addRequirements(intakeSubSysObj);
         // Use addRequirements() here to declare subsystem dependencies.
-        this.intakeSubSysObj = intakeSubSys;
-        addRequirements(intakeSubSys);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        TIMER.reset();
-        TIMER.start();
+        // No op
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        intakeSubSysObj.runIntake();
+        intakeSubSysObj.runOuttake();
     }
 
     // Called once the command ends or is interrupted.
@@ -47,7 +39,6 @@ public class IntakeNoteCmd extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        // REV color sensor
-        return TIMER.get() >= MAX_RUN_TIME;
+        return false;
     }
 }

@@ -15,7 +15,6 @@ public class IntakeSubSys extends SubsystemBase {
     // if Operator right trigger held, run intake motors CAN Id 1 & 2
 
     // Neo 550 motors
-    // Test for which direction positive/negative input causes?
     // Intake in is positive volts
     // eject is negative volts
     // once note is fully in indexer, run intake backwards
@@ -29,25 +28,25 @@ public class IntakeSubSys extends SubsystemBase {
     public IntakeSubSys() {
         intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR_CAN_ID, MotorType.kBrushless);
         intakeMotor.setSmartCurrentLimit(Constants.INTAKE_MOTOR_SMART_CURRENT_LIMIT);
-        
+
         intakeVelPct = Constants.INTAKE_MOTOR_PCT;
         outtakeVelPct = Constants.OUTTAKE_MOTOR_PCT;
-        intakeVelVolts = intakeVelPct * 12.0; 
+        intakeVelVolts = intakeVelPct * 12.0;
         outtakeVelVolts = outtakeVelPct * 12.0;
     }
 
     // Runs the IntakeMotors in a positive direction(Inwards)
     public void runIntake() {
-      intakeMotor.setVoltage(intakeVelVolts);
+        intakeMotor.setVoltage(intakeVelVolts);
     }
 
     // Runs the IntakeMotors in a negative direction(Outwards)
     public void runOuttake() {
-      intakeMotor.setVoltage(outtakeVelVolts);
+        intakeMotor.setVoltage(outtakeVelVolts);
     }
 
     public void stopIntakeMotors() {
-      intakeMotor.setVoltage(0.0);
+        intakeMotor.setVoltage(0.0);
     }
 
     @Override

@@ -20,8 +20,8 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
     // (L2 gear set at 6.75:1 ratio)
     // needs to be scaled * 39.37 (in/m) / (4"*Pi wheel diameter) / 10 (units per
     // 100ms)
-    private final double COUNTS_PER_METER = 4331.1 / 0.94362; // velocity units
-    private final double VELO_PER_METER = COUNTS_PER_METER * 10; // distance units
+    private static final double COUNTS_PER_METER = 4331.1 / 0.94362; // velocity units
+    private static final double VELO_PER_METER = COUNTS_PER_METER * 10; // distance units
 
     // Swerve corner locations for kinematics
     // trackwidth = 25" /2 = 12.5" converts to 0.3175 meters

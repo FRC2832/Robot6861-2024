@@ -19,11 +19,26 @@ package frc.robot;
 public final class Constants {
     // CANID Constants
     public static final int INTAKE_MOTOR_CAN_ID = 2;
+    public static final int INDEX_MOTOR_CAN_ID = 1;
 
     // Intake Motor Values
-    public static final double INTAKE_MOTOR_PCT = 30.0;
-    public static final double OUTTAKE_MOTOR_PCT = -20.0;
-    public static final int INTAKE_MOTOR_SMART_CURRENT_LIMIT = 5;
+    public static final int INTAKE_MOTOR_SMART_CURRENT_LIMIT = 5;  //TODO: increase once development work complete
+    public static final double INTAKE_MOTOR_PCT = 30.0; //TODO: increase these values.  Maybe 70.0
+    public static final double OUTTAKE_MOTOR_PCT = -20.0;  //TODO: confirm these values
+  
+
+    // Indexer Motor Values
+    public static final int INDEX_MOTOR_SMART_CURRENT_LIMIT = 5;  //TODO: increase once development work complete
+    public static final double UPINDEX_MOTOR_PCT = 1.0;  //TODO: confirm these values
+    public static final double DOWNINDEX_MOTOR_PCT = -20.0;  //TODO: confirm these values
+    
+    // Shooter Motor Values
+    public static final int FR_SHOOTER_MOTOR_CAN_ID = 4;
+    public static final int FL_SHOOTER_MOTOR_CAN_ID = 3;
+    public static final int FR_SHOOTER_MOTOR_SMART_CURRENT_LIMIT = 20;
+    public static final int FL_SHOOTER_MOTOR_SMART_CURRENT_LIMIT = 20;
+    public static final double FR_SHOOTER_MOTOR_PCT = 10.0; //TODO: confirm these values
+    public static final double FL_SHOOTER_MOTOR_PCT = -10.0; //TODO: confirm these values
 
     private Constants() {
         // No-op. This is a utility class. Keep the constructor private to prevent instantiation.

@@ -4,25 +4,29 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.Timer;
-import frc.robot.subsystems.IntakeSubSys;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.IndexerSubSys;
 
-public class IntakeNoteCmd extends Command {
-    private final IntakeSubSys intakeSubSysObj;
+public class RunIndexUpCmd extends Command {
+    /** Creates a new RunIndexUp. */
+    private final IndexerSubSys indexerSubSysObj;
     private static final Timer TIMER = new Timer();
-    private static final double MAX_RUN_TIME = 2.0;
+    private static final double MAX_RUN_TIME = 2.5; // TODO: confirm this time
 
     /**
-     * Creates a new IntakeNote.
-     * Makes intakeSubSysObj a requirement
+     * Creates a new RunIndexUpCmd.
+     * Makes indexerSubSysObj a requirement
      * 
-     * @param intakeSubSysObj The IntakeSubsystem from the where it is being called
+     * @param indexerSubSysObj The IndexerSubsystem from the where it is being
+     *                         called
      */
-    public IntakeNoteCmd(IntakeSubSys intakeSubSys) {
+
+    public RunIndexUpCmd(IndexerSubSys indexerSubSysObj) {
         // Use addRequirements() here to declare subsystem dependencies.
-        this.intakeSubSysObj = intakeSubSys;
-        addRequirements(intakeSubSys);
+        this.indexerSubSysObj = indexerSubSysObj;
+        addRequirements(indexerSubSysObj);
+
     }
 
     // Called when the command is initially scheduled.
@@ -35,19 +39,18 @@ public class IntakeNoteCmd extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        intakeSubSysObj.runIntake();
+        indexerSubSysObj.runIndexerUp();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        intakeSubSysObj.stopIntakeMotors();
+        indexerSubSysObj.stopIndexMotors();
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        // REV color sensor
         return TIMER.get() >= MAX_RUN_TIME;
     }
 }
