@@ -17,24 +17,24 @@ import edu.wpi.first.wpilibj.RobotBase;
 
 public class Snapshot implements Runnable {
 
-    private Thread m_thread;
-    private final ZoneId m_utc = ZoneId.of("UTC");
-    private final DateTimeFormatter m_timeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmssSSS")
-            .withZone(m_utc);
+    private Thread thread;
+    private final ZoneId utc = ZoneId.of("UTC");
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmssSSS")
+            .withZone(utc);
 
     private boolean isUsb = false;
     private boolean takeSnap = false;
-    private String m_cameraPath = null;
+    private String cameraPath = null;
     private String filePrefix = "FRC";
 
     public Snapshot() {
-        m_thread = new Thread(this);
-        m_thread.setDaemon(true);
+        thread = new Thread(this);
+        thread.setDaemon(true);
     }
 
     public synchronized void start(String cameraPath) {
-        m_thread.start();
-        m_cameraPath = cameraPath;
+        thread.start();
+        this.cameraPath = cameraPath;
     }
 
     private String makeLogDir(String dir) {
@@ -81,14 +81,14 @@ public class Snapshot implements Runnable {
                     DriverStation.reportWarning("Unable to take snapshot, no USB stick!",false);
                     continue;
                 }
-                LocalDateTime now = LocalDateTime.now(m_utc);
-                String fileName = filePrefix + "_" + m_timeFormatter.format(now) + ".jpg";
+                LocalDateTime now = LocalDateTime.now(utc);
+                String fileName = filePrefix + "_" + timeFormatter.format(now) + ".jpg";
 
                 try {
                     int prev = 0;
                     int cur = 0;
                     
-                    URL url = new URL(m_cameraPath);
+                    URL url = new URL(cameraPath);
                     URLConnection uc = url.openConnection();
                     InputStream inputStream = uc.getInputStream();
                     

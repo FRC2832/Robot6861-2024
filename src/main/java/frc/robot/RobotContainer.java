@@ -40,6 +40,7 @@ import frc.robot.commands.ClimbUpCmd;
 import frc.robot.commands.IntakeNoteCmd;
 import frc.robot.commands.OuttakeNoteCmd;
 import frc.robot.commands.PrimeShooterCmd;
+import frc.robot.commands.ReverseShooterCmd;
 import frc.robot.commands.RunIndexDownCmd;
 import frc.robot.commands.RunIndexUpCmd;
 import frc.robot.subsystems.ClimberSubSys;
@@ -82,7 +83,7 @@ public class RobotContainer {
         shooterSubSysObj = new ShooterSubSys();
         //colorSensorObj = null;
         climberSubSysObj = new ClimberSubSys();
-        colorSensorObj = new REVColorSensor(Port.kOnboard); // TODO: Verify this port.
+        colorSensorObj = new REVColorSensor(Port.kMXP); // TODO: Verify this port.
 
         String serNum = RobotController.getSerialNumber();
         SmartDashboard.putString("Serial Number", serNum);
@@ -172,10 +173,12 @@ public class RobotContainer {
         Trigger operatorLeftBumper = operatorController.leftBumper();
         Trigger operatorRightBumper = operatorController.rightBumper();
         Trigger operatorAButton = operatorController.a();
+        Trigger operatorYButton = operatorController.y();
         Trigger operatorDPadDown = operatorController.povDown();
         Trigger operatorDPadUp = operatorController.povUp();
 
         Trigger driverRightTrigger = driverController.rightTrigger();
+        Trigger driverLeftTrigger = driverController.leftTrigger();
 
         ParallelCommandGroup intakeGroup = new ParallelCommandGroup(new IntakeNoteCmd(intakeSubSysObj, colorSensorObj),
                 new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
@@ -188,10 +191,13 @@ public class RobotContainer {
         operatorLeftBumper.whileTrue(new RunIndexDownCmd(indexerSubSysObj));
         operatorRightBumper.whileTrue(new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
         operatorAButton.whileTrue(new PrimeShooterCmd(shooterSubSysObj));
+        operatorYButton.whileTrue(new ReverseShooterCmd(shooterSubSysObj));
         operatorDPadDown.whileTrue(new ClimbDownCmd(climberSubSysObj));
         operatorDPadUp.whileTrue(new ClimbUpCmd(climberSubSysObj));
 
         driverRightTrigger.whileTrue(new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
+        driverLeftTrigger.whileTrue(new RunIndexDownCmd(indexerSubSysObj));
+
     }
 
     /**

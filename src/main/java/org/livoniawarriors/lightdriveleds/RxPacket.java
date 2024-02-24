@@ -1,7 +1,6 @@
 package org.livoniawarriors.lightdriveleds;
 
-final class RxPacket
-{
+final class RxPacket {
     byte i1;
     byte i2;
     byte i3;
@@ -23,7 +22,8 @@ final class RxPacket
     }
 
     byte[] getBytes() {
-        final byte[] tempdata = { this.i1, this.i2, this.i3, this.i4, this.vin, this.status.getRaw(), this.pwmVals, this.fw };
+        final byte[] tempdata = { this.i1, this.i2, this.i3, this.i4, this.vin, this.status.getRaw(), this.pwmVals,
+                this.fw };
         return tempdata;
     }
 

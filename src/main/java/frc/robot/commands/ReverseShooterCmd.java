@@ -5,25 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ClimberSubSys;
+import frc.robot.subsystems.ShooterSubSys;
 
-public class ClimbDownCmd extends Command {
-    /** Creates a new ClimbDownCmd. */
+public class ReverseShooterCmd extends Command {
 
-    private final ClimberSubSys climberSubSysObj;
+    private final ShooterSubSys shooterSubSysObj;
 
-    /**
-     * Creates a new Climb Up Command.
-     * Makes ClimberSubSysObj a requirement
-     * 
-     * @param ClimberSubSysObj The ClimberSubsystem from the where it is being called
-     */
-
-
-    public ClimbDownCmd(ClimberSubSys climberSubSys) {
+    /** Creates a new ShootNoteCmd. */
+    public ReverseShooterCmd(ShooterSubSys shooterSubSysObj) {
+        this.shooterSubSysObj = shooterSubSysObj;
+        addRequirements(shooterSubSysObj);
         // Use addRequirements() here to declare subsystem dependencies.
-        this.climberSubSysObj = climberSubSys;
-        addRequirements(climberSubSysObj);
     }
 
     // Called when the command is initially scheduled.
@@ -35,14 +27,13 @@ public class ClimbDownCmd extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        climberSubSysObj.runClimberDown();
-        
+        shooterSubSysObj.runShooterReverse();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        climberSubSysObj.stopClimberMotor();
+        shooterSubSysObj.stopShooter();
     }
 
     // Returns true when the command should end.

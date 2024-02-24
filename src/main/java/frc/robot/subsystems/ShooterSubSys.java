@@ -46,6 +46,13 @@ public class ShooterSubSys extends SubsystemBase {
         shooterMotorFR.setVoltage(shooterVelVoltsFR);
         shooterMotorFL.setVoltage(shooterVelVoltsFL);
     }
+
+    public void runShooterReverse() {
+        double shooterVelVoltsReverseFR = Constants.FR_SHOOTER_MOTOR_REVERSE_PCT * 12.0;
+        double shooterVelVoltsReverseFL = Constants.FL_SHOOTER_MOTOR_REVERSE_PCT * 12.0;
+        shooterMotorFR.setVoltage(shooterVelVoltsReverseFR);
+        shooterMotorFL.setVoltage(shooterVelVoltsReverseFL);
+    }
     
     public void stopShooter() {
         shooterMotorFR.setVoltage(0.0);

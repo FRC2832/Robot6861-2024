@@ -29,6 +29,7 @@ public class IntakeSubSys extends SubsystemBase {
     public IntakeSubSys() {
         intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR_CAN_ID, MotorType.kBrushless);
         intakeMotor.setSmartCurrentLimit(Constants.INTAKE_MOTOR_SMART_CURRENT_LIMIT);
+        intakeMotor.setSecondaryCurrentLimit(Constants.INTAKE_MOTOR_SECONDARY_CURRENT_LIMIT);
         intakeMotor.setIdleMode(IdleMode.kBrake);
         intakeVelPct = Constants.INTAKE_MOTOR_PCT;
         outtakeVelPct = Constants.OUTTAKE_MOTOR_PCT;

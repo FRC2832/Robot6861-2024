@@ -12,6 +12,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import frc.robot.Constants;
 
 @SuppressWarnings("removal")
 public class PracticeSwerveHw implements ISwerveDriveIo {
@@ -83,6 +84,17 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
         turnMotors[3] = new CANSparkMax(42, MotorType.kBrushless);
         turnSensors[3] = new CANCoder(43);
         // driveMotors[3].setInverted(true);
+
+        // Current Limit for Drive and Turn (20 and 40) 
+        for (CANSparkMax drive : driveMotors) {
+            drive.setSmartCurrentLimit(Constants.DRIVE_MOTOR_PRIMARY_CURRENT_LIMIT);
+            drive.setSecondaryCurrentLimit(Constants.DRIVE_MOTOR_SECONDARY_CURRENT_LIMIT);
+        }
+        for (CANSparkMax turn : turnMotors) {
+            turn.setSmartCurrentLimit(Constants.TURN_MOTOR_PRIMARY_CURRENT_LIMIT);
+            turn.setSecondaryCurrentLimit(Constants.TURN_MOTOR_SECONDARY_CURRENT_LIMIT);
+        }
+        
 
         for (CANCoder sensor : turnSensors) {
             sensor.setStatusFramePeriod(CANCoderStatusFrame.SensorData, 18);

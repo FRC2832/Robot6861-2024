@@ -12,22 +12,22 @@ public class Saitek extends GenericHID {
 
     /** Represents a digital button on an Saitek. */
     public enum Button {
-        pinkTopLeft(1),
-        pinkTopMiddle(2),
-        pinkTopRight(3),
-        pinkBottomLeft(6),
-        pinkBottomMiddle(7),
-        pinkBottomRight(8),
-        orangeTopLeft(4),
-        orangeTopRight(5),
-        orangeBottomLeft(9),
-        orangeBottomRight(10),
-        yellowTopLeft(11),
-        yellowTopMiddle(13),
-        yellowTopRight(15),
-        yellowBottomLeft(12),
-        yellowBottomMiddle(14),
-        yellowBottomRight(16);
+        PINK_TOP_LEFT(1),
+        PINK_TOP_MIDDLE(2),
+        PINK_TOP_RIGHT(3),
+        PINK_BOTTOM_LEFT(6),
+        PINK_BOTTOM_MIDDLE(7),
+        PINK_BOTTOM_RIGHT(8),
+        ORANGE_TOP_LEFT(4),
+        ORANGE_TOP_RIGHT(5),
+        ORANGE_BOTTOM_LEFT(9),
+        ORANGE_BOTTOM_RIGHT(10),
+        YELLOW_TOP_LEFT(11),
+        YELLOW_TOP_MIDDLE(13),
+        YELLOW_TOP_RIGHT(15),
+        YELLOW_BOTTOM_LEFT(12),
+        YELLOW_BOTTOM_MIDDLE(14),
+        YELLOW_BOTTOM_RIGHT(16);
 
         public final int value;
 
@@ -38,12 +38,12 @@ public class Saitek extends GenericHID {
     }
 
     public enum Axis {
-        xAxis1(0),
-        yAxis1(1),
-        rotate1(2),
-        xAxis2(3),
-        yAxis2(4),
-        rotate2(5);
+        X_AXIS_1(0),
+        Y_AXIS_1(1),
+        ROTATE_1(2),
+        X_AXIS_2(3),
+        Y_AXIS_2(4),
+        ROTATE_2(5);
 
         public final int value;
 
@@ -58,41 +58,41 @@ public class Saitek extends GenericHID {
     }
 
     public double getxAxis1() {
-        return getRawAxis(Axis.xAxis1.value);
+        return getRawAxis(Axis.X_AXIS_1.value);
     }
 
     public double getyAxis1() {
-        return getRawAxis(Axis.yAxis1.value);
+        return getRawAxis(Axis.Y_AXIS_1.value);
     }
 
     public double rotate1() {
-        return getRawAxis(Axis.rotate1.value);
+        return getRawAxis(Axis.ROTATE_1.value);
     }
 
     public double getxAxis2() {
-        return getRawAxis(Axis.xAxis2.value);
+        return getRawAxis(Axis.X_AXIS_2.value);
     }
 
     public double getyAxis2() {
-        return getRawAxis(Axis.yAxis2.value);
+        return getRawAxis(Axis.Y_AXIS_2.value);
     }
 
     public double rotate2() {
-        return getRawAxis(Axis.rotate2.value);
+        return getRawAxis(Axis.ROTATE_2.value);
     }
 
     // Pink Buttons
     // Top Left
     public boolean getPinkTopLeftButton() {
-        return getRawButton(Button.pinkTopLeft.value);
+        return getRawButton(Button.PINK_TOP_LEFT.value);
     }
 
     public boolean getPinkTopLeftButtonPressed() {
-        return getRawButtonPressed(Button.pinkTopLeft.value);
+        return getRawButtonPressed(Button.PINK_TOP_LEFT.value);
     }
 
     public boolean getPinkTopLeftButtonReleased() {
-        return getRawButtonReleased(Button.pinkTopLeft.value);
+        return getRawButtonReleased(Button.PINK_TOP_LEFT.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -102,15 +102,15 @@ public class Saitek extends GenericHID {
 
     // Top middle
     public boolean getPinkTopMiddleButton() {
-        return getRawButton(Button.pinkTopMiddle.value);
+        return getRawButton(Button.PINK_TOP_MIDDLE.value);
     }
 
     public boolean getPinkTopMiddleButtonPressed() {
-        return getRawButtonPressed(Button.pinkTopMiddle.value);
+        return getRawButtonPressed(Button.PINK_TOP_MIDDLE.value);
     }
 
     public boolean getPinkTopMiddleButtonReleased() {
-        return getRawButtonReleased(Button.pinkTopMiddle.value);
+        return getRawButtonReleased(Button.PINK_TOP_MIDDLE.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -120,15 +120,15 @@ public class Saitek extends GenericHID {
 
     // Top Right
     public boolean getPinkTopRightButton() {
-        return getRawButton(Button.pinkTopRight.value);
+        return getRawButton(Button.PINK_TOP_RIGHT.value);
     }
 
     public boolean getPinkTopRightButtonPressed() {
-        return getRawButtonPressed(Button.pinkTopRight.value);
+        return getRawButtonPressed(Button.PINK_TOP_RIGHT.value);
     }
 
     public boolean getPinkTopRightButtonReleased() {
-        return getRawButtonReleased(Button.pinkTopRight.value);
+        return getRawButtonReleased(Button.PINK_TOP_RIGHT.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -138,15 +138,15 @@ public class Saitek extends GenericHID {
 
     // Bottom Left
     public boolean getPinkBottomLeftButton() {
-        return getRawButton(Button.pinkBottomLeft.value);
+        return getRawButton(Button.PINK_BOTTOM_LEFT.value);
     }
 
     public boolean getPinkBottomLeftButtonPressed() {
-        return getRawButtonPressed(Button.pinkBottomLeft.value);
+        return getRawButtonPressed(Button.PINK_BOTTOM_LEFT.value);
     }
 
     public boolean getPinkBottomLeftButtonReleased() {
-        return getRawButtonReleased(Button.pinkBottomLeft.value);
+        return getRawButtonReleased(Button.PINK_BOTTOM_LEFT.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -156,15 +156,15 @@ public class Saitek extends GenericHID {
 
     // Bottom Middle
     public boolean getPinkBottomMiddleButton() {
-        return getRawButton(Button.pinkBottomMiddle.value);
+        return getRawButton(Button.PINK_BOTTOM_MIDDLE.value);
     }
 
     public boolean getPinkBottomMiddleButtonPressed() {
-        return getRawButtonPressed(Button.pinkBottomMiddle.value);
+        return getRawButtonPressed(Button.PINK_BOTTOM_MIDDLE.value);
     }
 
     public boolean getPinkBottomMiddleButtonReleased() {
-        return getRawButtonReleased(Button.pinkBottomMiddle.value);
+        return getRawButtonReleased(Button.PINK_BOTTOM_MIDDLE.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -174,15 +174,15 @@ public class Saitek extends GenericHID {
 
     // Bottom Right
     public boolean getPinkBottomRightButton() {
-        return getRawButton(Button.pinkBottomRight.value);
+        return getRawButton(Button.PINK_BOTTOM_RIGHT.value);
     }
 
     public boolean getPinkBottomRightButtonPressed() {
-        return getRawButtonPressed(Button.pinkBottomRight.value);
+        return getRawButtonPressed(Button.PINK_BOTTOM_RIGHT.value);
     }
 
     public boolean getPinkBottomRightButtonReleased() {
-        return getRawButtonReleased(Button.pinkBottomRight.value);
+        return getRawButtonReleased(Button.PINK_BOTTOM_RIGHT.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -193,15 +193,15 @@ public class Saitek extends GenericHID {
     // Orange Buttons
     // Top Left
     public boolean getOrangeTopLeftButton() {
-        return getRawButton(Button.orangeTopLeft.value);
+        return getRawButton(Button.ORANGE_TOP_LEFT.value);
     }
 
     public boolean getOrangeTopLeftButtonPressed() {
-        return getRawButtonPressed(Button.orangeTopLeft.value);
+        return getRawButtonPressed(Button.ORANGE_TOP_LEFT.value);
     }
 
     public boolean getOrangeTopLeftButtonReleased() {
-        return getRawButtonReleased(Button.orangeTopLeft.value);
+        return getRawButtonReleased(Button.ORANGE_TOP_LEFT.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -211,15 +211,15 @@ public class Saitek extends GenericHID {
 
     // Top Right
     public boolean getOrangeTopRightButton() {
-        return getRawButton(Button.orangeTopRight.value);
+        return getRawButton(Button.ORANGE_TOP_RIGHT.value);
     }
 
     public boolean getOrangeTopRightButtonPressed() {
-        return getRawButtonPressed(Button.orangeTopRight.value);
+        return getRawButtonPressed(Button.ORANGE_TOP_RIGHT.value);
     }
 
     public boolean getOrangeTopRightButtonReleased() {
-        return getRawButtonReleased(Button.orangeTopRight.value);
+        return getRawButtonReleased(Button.ORANGE_TOP_RIGHT.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -229,15 +229,15 @@ public class Saitek extends GenericHID {
 
     // Bottom Left
     public boolean getOrangeBottomLeftButton() {
-        return getRawButton(Button.orangeBottomLeft.value);
+        return getRawButton(Button.ORANGE_BOTTOM_LEFT.value);
     }
 
     public boolean getOrangeBottomLeftButtonPressed() {
-        return getRawButtonPressed(Button.orangeBottomLeft.value);
+        return getRawButtonPressed(Button.ORANGE_BOTTOM_LEFT.value);
     }
 
     public boolean getOrangeBottomLeftButtonReleased() {
-        return getRawButtonReleased(Button.orangeBottomLeft.value);
+        return getRawButtonReleased(Button.ORANGE_BOTTOM_LEFT.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -247,15 +247,15 @@ public class Saitek extends GenericHID {
 
     // Bottom Right
     public boolean getOrangeBottomRightButton() {
-        return getRawButton(Button.orangeBottomRight.value);
+        return getRawButton(Button.ORANGE_BOTTOM_RIGHT.value);
     }
 
     public boolean getOrangeBottomRightButtonPressed() {
-        return getRawButtonPressed(Button.orangeBottomRight.value);
+        return getRawButtonPressed(Button.ORANGE_BOTTOM_RIGHT.value);
     }
 
     public boolean getOrangeBottomRightButtonReleased() {
-        return getRawButtonReleased(Button.orangeBottomRight.value);
+        return getRawButtonReleased(Button.ORANGE_BOTTOM_RIGHT.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -266,15 +266,15 @@ public class Saitek extends GenericHID {
     // Yellow Buttons
     // Top Left
     public boolean getYellowTopLeftButton() {
-        return getRawButton(Button.yellowTopLeft.value);
+        return getRawButton(Button.YELLOW_TOP_LEFT.value);
     }
 
     public boolean getYellowTopLeftButtonPressed() {
-        return getRawButtonPressed(Button.yellowTopLeft.value);
+        return getRawButtonPressed(Button.YELLOW_TOP_LEFT.value);
     }
 
     public boolean getYellowTopLeftButtonReleased() {
-        return getRawButtonReleased(Button.yellowTopLeft.value);
+        return getRawButtonReleased(Button.YELLOW_TOP_LEFT.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -284,15 +284,15 @@ public class Saitek extends GenericHID {
 
     // Top Middle
     public boolean getYellowTopMiddleButton() {
-        return getRawButton(Button.yellowTopMiddle.value);
+        return getRawButton(Button.YELLOW_TOP_MIDDLE.value);
     }
 
     public boolean getYellowTopMiddleButtonPressed() {
-        return getRawButtonPressed(Button.yellowTopMiddle.value);
+        return getRawButtonPressed(Button.YELLOW_TOP_MIDDLE.value);
     }
 
     public boolean getYellowTopMiddleButtonReleased() {
-        return getRawButtonReleased(Button.yellowTopMiddle.value);
+        return getRawButtonReleased(Button.YELLOW_TOP_MIDDLE.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -302,15 +302,15 @@ public class Saitek extends GenericHID {
 
     // Top Right
     public boolean getYellowTopRightButton() {
-        return getRawButton(Button.yellowTopRight.value);
+        return getRawButton(Button.YELLOW_TOP_RIGHT.value);
     }
 
     public boolean getYellowTopRightButtonPressed() {
-        return getRawButtonPressed(Button.yellowTopRight.value);
+        return getRawButtonPressed(Button.YELLOW_TOP_RIGHT.value);
     }
 
     public boolean getYellowTopRightButtonReleased() {
-        return getRawButtonReleased(Button.yellowTopRight.value);
+        return getRawButtonReleased(Button.YELLOW_TOP_RIGHT.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -320,15 +320,15 @@ public class Saitek extends GenericHID {
 
     // Bottom Left
     public boolean getYellowBottomLeftButton() {
-        return getRawButton(Button.yellowBottomLeft.value);
+        return getRawButton(Button.YELLOW_BOTTOM_LEFT.value);
     }
 
     public boolean getYellowBottomLeftButtonPressed() {
-        return getRawButtonPressed(Button.yellowBottomLeft.value);
+        return getRawButtonPressed(Button.YELLOW_BOTTOM_LEFT.value);
     }
 
     public boolean getYellowBottomLeftButtonReleased() {
-        return getRawButtonReleased(Button.yellowBottomLeft.value);
+        return getRawButtonReleased(Button.YELLOW_BOTTOM_LEFT.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -338,15 +338,15 @@ public class Saitek extends GenericHID {
 
     // Bottom Middle
     public boolean getYellowBottomMiddleButton() {
-        return getRawButton(Button.yellowBottomLeft.value);
+        return getRawButton(Button.YELLOW_BOTTOM_LEFT.value);
     }
 
     public boolean getYellowBottomMiddleButtonPressed() {
-        return getRawButtonPressed(Button.yellowBottomMiddle.value);
+        return getRawButtonPressed(Button.YELLOW_BOTTOM_MIDDLE.value);
     }
 
     public boolean getYellowBottomMiddleButtonReleased() {
-        return getRawButtonReleased(Button.yellowBottomMiddle.value);
+        return getRawButtonReleased(Button.YELLOW_BOTTOM_MIDDLE.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -356,15 +356,15 @@ public class Saitek extends GenericHID {
 
     // Bottom Right
     public boolean getYellowBottomRightButton() {
-        return getRawButton(Button.yellowBottomRight.value);
+        return getRawButton(Button.YELLOW_BOTTOM_RIGHT.value);
     }
 
     public boolean getYellowBottomRightButtonPressed() {
-        return getRawButtonPressed(Button.yellowBottomRight.value);
+        return getRawButtonPressed(Button.YELLOW_BOTTOM_RIGHT.value);
     }
 
     public boolean getYellowBottomRightButtonReleased() {
-        return getRawButtonReleased(Button.yellowBottomRight.value);
+        return getRawButtonReleased(Button.YELLOW_BOTTOM_RIGHT.value);
     }
 
     @SuppressWarnings("MethodName")

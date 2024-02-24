@@ -128,18 +128,18 @@ public class PidConstants {
      * Create a generic Constants table with no backing
      */
     public PidConstants() {
-        kP = 0;
-        kI = 0;
-        kD = 0;
-        kF = 0;
-        kS = 0;
-        kG = 0;
-        kV = 0;
-        kA = 0;
-        kiZone = 0;
-        kiError = 0;
-        kVelMax = 0;
-        kAccelMax = 0;
+        kP = 0.0;
+        kI = 0.0;
+        kD = 0.0;
+        kF = 0.0;
+        kS = 0.0;
+        kG = 0.0;
+        kV = 0.0;
+        kA = 0.0;
+        kiZone = 0.0;
+        kiError = 0.0;
+        kVelMax = 0.0;
+        kAccelMax = 0.0;
         key = null;
     }
 

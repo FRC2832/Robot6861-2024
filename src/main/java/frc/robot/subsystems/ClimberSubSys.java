@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+
 import frc.robot.Constants;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,6 +23,7 @@ public class ClimberSubSys extends SubsystemBase {
     // 
 
     private final CANSparkMax climberMotor;
+    private final RelativeEncoder climberEncoder;
     private double upClimbVelVolts;
     private double downClimbVelVolts;
     private double upClimbVelPct;
@@ -31,7 +34,7 @@ public class ClimberSubSys extends SubsystemBase {
     public ClimberSubSys() {
         climberMotor = new CANSparkMax(Constants.CLIMBER_MOTOR_CAN_ID, MotorType.kBrushless);
         climberMotor.setSmartCurrentLimit(Constants.CLIMBER_MOTOR_SMART_CURRENT_LIMIT);
-
+        climberEncoder = climberMotor.getEncoder();
         upClimbVelPct = Constants.UPCLIMB_MOTOR_PCT;
         downClimbVelPct = Constants.DOWNCLIMB_MOTOR_PCT;
         upClimbVelVolts = upClimbVelPct * 12.0;
