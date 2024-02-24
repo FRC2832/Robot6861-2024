@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+
 import frc.robot.Constants;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -24,6 +26,8 @@ public class ShooterSubSys extends SubsystemBase {
 
     private final CANSparkMax shooterMotorFR;
     private final CANSparkMax shooterMotorFL;
+    private final RelativeEncoder shooterMotorFREncoder;
+    private final RelativeEncoder shooterMotorFLEncoder;
     private double shooterVelVoltsFR;
     private double shooterVelVoltsFL;
     private double shooterVelPctFR;
@@ -33,6 +37,8 @@ public class ShooterSubSys extends SubsystemBase {
     public ShooterSubSys() {
         shooterMotorFR = new CANSparkMax(Constants.FR_SHOOTER_MOTOR_CAN_ID, MotorType.kBrushless);
         shooterMotorFL = new CANSparkMax(Constants.FL_SHOOTER_MOTOR_CAN_ID, MotorType.kBrushless);
+        shooterMotorFREncoder= shooterMotorFR.getEncoder();
+        shooterMotorFLEncoder= shooterMotorFL.getEncoder();
         shooterMotorFR.setSmartCurrentLimit(Constants.FR_SHOOTER_MOTOR_SMART_CURRENT_LIMIT);
         shooterMotorFL.setSmartCurrentLimit(Constants.FL_SHOOTER_MOTOR_SMART_CURRENT_LIMIT);
 
@@ -43,6 +49,7 @@ public class ShooterSubSys extends SubsystemBase {
     }
 
     public void runShooter() {
+        //calculate
         shooterMotorFR.setVoltage(shooterVelVoltsFR);
         shooterMotorFL.setVoltage(shooterVelVoltsFL);
     }
@@ -57,6 +64,8 @@ public class ShooterSubSys extends SubsystemBase {
     public void stopShooter() {
         shooterMotorFR.setVoltage(0.0);
         shooterMotorFL.setVoltage(0.0);
+        shooterMotorFLEncoder.setPosition(0.0);
+        shooterMotorFREncoder.setPosition(0.0);
     }
 
     
