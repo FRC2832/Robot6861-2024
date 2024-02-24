@@ -7,10 +7,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import org.livoniawarriors.REVColorSensor;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.subsystems.IntakeSubSys;
 
 public class IntakeNoteCmd extends Command {
+    private boolean isThresholdCrossed;
     private final IntakeSubSys intakeSubSysObj;
     private final REVColorSensor colorSensorObj;
     private static final Timer TIMER = new Timer();
@@ -53,10 +53,19 @@ public class IntakeNoteCmd extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        //Color color = colorSensorObj.getColor();
-        double prox = colorSensorObj.getProximity();  
-        return prox >= PROX_THRESHOLD || TIMER.get() >= MAX_RUN_TIME; 
-        //return color == Color.kOrange || color == Color.kOrangeRed || TIMER.get() >= MAX_RUN_TIME;
+        // Color color = colorSensorObj.getColor();
+        double prox = colorSensorObj.getProximity();
+        if (!isThresholdCrossed && prox >= PROX_THRESHOLD) {
+            isThresholdCrossed = true;
+            return false;
+        }
+        if (isThresholdCrossed) {
+            return prox < PROX_THRESHOLD || TIMER.get() >= MAX_RUN_TIME;
+        }
+        return false;
+        // return prox >= PROX_THRESHOLD || TIMER.get() >= MAX_RUN_TIME;
+        // return color == Color.kOrange || color == Color.kOrangeRed || TIMER.get() >=
+        // MAX_RUN_TIME;
         // return TIMER.get() >= MAX_RUN_TIME;
         // REV color sensor
     }
