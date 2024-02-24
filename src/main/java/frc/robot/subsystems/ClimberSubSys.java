@@ -7,9 +7,14 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+<<<<<<< Updated upstream
 
 import frc.robot.Constants;
+=======
+>>>>>>> Stashed changes
 
+import frc.robot.Constants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClimberSubSys extends SubsystemBase {
@@ -24,6 +29,7 @@ public class ClimberSubSys extends SubsystemBase {
 
     private final CANSparkMax climberMotor;
     private final RelativeEncoder climberEncoder;
+
     private double upClimbVelVolts;
     private double downClimbVelVolts;
     private double upClimbVelPct;
@@ -33,22 +39,28 @@ public class ClimberSubSys extends SubsystemBase {
 
     public ClimberSubSys() {
         climberMotor = new CANSparkMax(Constants.CLIMBER_MOTOR_CAN_ID, MotorType.kBrushless);
+        climberEncoder = climberMotor.getEncoder(); // TODO: Correct countsPerRev
         climberMotor.setSmartCurrentLimit(Constants.CLIMBER_MOTOR_SMART_CURRENT_LIMIT);
-        climberEncoder = climberMotor.getEncoder();
         upClimbVelPct = Constants.UPCLIMB_MOTOR_PCT;
         downClimbVelPct = Constants.DOWNCLIMB_MOTOR_PCT;
         upClimbVelVolts = upClimbVelPct * 12.0;
         downClimbVelVolts = downClimbVelPct * 12.0;
     }
 
+    public void resetEncoders() {
+        climberEncoder.setPosition(0.0);
+    }
+
      // Runs the Climb Motor in a positive direction to raise climber arm up.  //TODO:  check if this is correct
 
     public void runClimberUp() {
+        SmartDashboard.putNumber("Climb motor encoder - up",climberEncoder.getPosition());
         climberMotor.setVoltage(upClimbVelVolts);
     }
 
     // Runs the Climber eMotor in a negative direction
     public void runClimberDown() {
+        SmartDashboard.putNumber("Climb motor encoder - down",climberEncoder.getPosition());
         climberMotor.setVoltage(downClimbVelVolts);
     }
 
