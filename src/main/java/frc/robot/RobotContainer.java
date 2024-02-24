@@ -83,8 +83,7 @@ public class RobotContainer {
         shooterSubSysObj = new ShooterSubSys();
         //colorSensorObj = null;
         climberSubSysObj = new ClimberSubSys();
-        colorSensorObj = new REVColorSensor(Port.kMXP); 
-
+        colorSensorObj = new REVColorSensor(Port.kMXP); // TODO: Verify this port.
         String serNum = RobotController.getSerialNumber();
         SmartDashboard.putString("Serial Number", serNum);
         // known Rio serial numbers:
