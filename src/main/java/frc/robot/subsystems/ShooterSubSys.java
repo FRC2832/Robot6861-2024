@@ -32,6 +32,7 @@ public class ShooterSubSys extends SubsystemBase {
     private double shooterVelVoltsFL;
     private double shooterVelPctFR;
     private double shooterVelPctFL;
+    private double shooterVelRPM;
 
 
     public ShooterSubSys() {
@@ -71,6 +72,14 @@ public class ShooterSubSys extends SubsystemBase {
     
     @Override
     public void periodic() {
+        // TODO: Calculate average RPM and display on SmartDashboard.
+        double flRPM = shooterMotorFLEncoder.getVelocity();
+        double frRPM = shooterMotorFREncoder.getVelocity();
+        shooterVelRPM = (flRPM + frRPM) / 2;
         // This method will be called once per scheduler run
+    }
+
+    public double getShooterVelRPM() {
+        return shooterVelRPM;
     }
 }

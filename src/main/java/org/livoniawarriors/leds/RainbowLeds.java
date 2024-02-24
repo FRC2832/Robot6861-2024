@@ -16,15 +16,19 @@ public class RainbowLeds extends Command {
     }
 
     @Override
-    public boolean runsWhenDisabled() { return true; }
-    
+    public boolean runsWhenDisabled() {
+        return true;
+    }
+
     @Override
-    public void initialize() { }
+    public void initialize() {
+        // No op
+    }
 
     @Override
     public void execute() {
         // For every pixel
-        for (var i = 0; i < ledBuffer.getLength(); i++) {
+        for (int i = 0; i < ledBuffer.getLength(); i++) {
             // Calculate the hue - hue is easier for rainbows because the color
             // shape is a circle so only one value needs to precess
             final var hue = (rainbowFirstPixelHue + (i * 180 / ledBuffer.getLength())) % 180;
@@ -44,5 +48,7 @@ public class RainbowLeds extends Command {
     }
 
     @Override
-    public void end(boolean interrupted) { }
+    public void end(boolean interrupted) {
+        // No op
+    }
 }
