@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -28,7 +29,7 @@ public class IntakeSubSys extends SubsystemBase {
     public IntakeSubSys() {
         intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR_CAN_ID, MotorType.kBrushless);
         intakeMotor.setSmartCurrentLimit(Constants.INTAKE_MOTOR_SMART_CURRENT_LIMIT);
-
+        intakeMotor.setIdleMode(IdleMode.kBrake);
         intakeVelPct = Constants.INTAKE_MOTOR_PCT;
         outtakeVelPct = Constants.OUTTAKE_MOTOR_PCT;
         intakeVelVolts = intakeVelPct * 12.0;

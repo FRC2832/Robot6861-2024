@@ -29,7 +29,7 @@ public class DriveXbox extends Command {
 
     @Override
     public void initialize() {
-        drive.SwerveDrive(0, 0, 0, false);
+        drive.swerveDrive(0, 0, 0, false);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class DriveXbox extends Command {
         double xSpeed = UtilFunctions.deadband(-cont.getLeftY(), dead);
         double ySpeed = UtilFunctions.deadband(-cont.getLeftX(), dead);
         double turn   = UtilFunctions.deadband(-cont.getRightX(), dead);
-        drive.SwerveDrive(
+        drive.swerveDrive(
             xSpeed * drive.getMaxDriverSpeed(), 
             ySpeed * drive.getMaxDriverSpeed(), 
             turn * drive.getMaxDriverOmega()

@@ -25,9 +25,9 @@ public class SwerveDriveSim implements ISwerveDriveIo {
     private FlywheelSim[] turnMotorSim;
     private PIDController[] turningPIDController;
 
-    private final double Kv_Turn = 0.006531;
-    private final double kMaxSpeed = 5.0;     //5m/s ~= 15ft/s
-    private final double kNomBatVolt = 12.5;
+    private static final double V_TURN = 0.006531;
+    private static final double MAX_SPEED = 5.0;     //5m/s ~= 15ft/s
+    private static final double NOM_BAT_VOLT = 12.5;
 
     private Translation2d[] swervePositions = {
         new Translation2d(0.291, 0.291),
@@ -82,7 +82,7 @@ public class SwerveDriveSim implements ISwerveDriveIo {
             } else if (driveCommand[i] == ControlMode.Velocity) {
                 driveSpeed[i] = drivePower[i];
             } else if (driveCommand[i] == ControlMode.PercentOutput) {
-                driveSpeed[i] = drivePower[i] * kMaxSpeed;
+                driveSpeed[i] = drivePower[i] * MAX_SPEED;
             } else {
                 driveSpeed[i] = 0;
             }
@@ -101,7 +101,7 @@ public class SwerveDriveSim implements ISwerveDriveIo {
                     absAngle[i] += turnOutput;
                 }
             } else if (turnCommand[i] == ControlMode.PercentOutput) {
-                var turnOutput = -turnPower[i] * kNomBatVolt * TimedRobot.kDefaultPeriod / Kv_Turn;
+                var turnOutput = -turnPower[i] * NOM_BAT_VOLT * TimedRobot.kDefaultPeriod / V_TURN;
                 //update the sensor values
                 turnAngle[i] += turnOutput;
                 absAngle[i] += turnOutput;

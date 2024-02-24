@@ -24,7 +24,8 @@ public class REVDigitBoard {
 	 */
 	
 	I2C i2c;
-	DigitalInput buttonA, buttonB;
+	DigitalInput buttonA;
+	DigitalInput buttonB;
 	AnalogInput pot;
 	
 	byte[][] charreg;
@@ -51,7 +52,7 @@ public class REVDigitBoard {
 		Timer.delay(.01);
 		
 		charreg = new byte[37][2]; //charreg is short for character registry
-		charmap = new HashMap<Character, Integer>(); 
+		charmap = new HashMap<>(); 
 		
 		charreg[0][0] = (byte)0b00111111; charreg[9][1] = (byte)0b00000000; //0
 		charmap.put('0',0);

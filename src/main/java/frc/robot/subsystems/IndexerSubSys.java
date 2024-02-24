@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 
@@ -32,6 +33,7 @@ public class IndexerSubSys extends SubsystemBase {
     public IndexerSubSys() {
         indexMotor = new CANSparkMax(Constants.INDEX_MOTOR_CAN_ID, MotorType.kBrushless);
         indexMotor.setSmartCurrentLimit(Constants.INDEX_MOTOR_SMART_CURRENT_LIMIT);
+        indexMotor.setIdleMode(IdleMode.kBrake);
 
         upIndexVelPct = Constants.UPINDEX_MOTOR_PCT;
         downIndexVelPct = Constants.DOWNINDEX_MOTOR_PCT;

@@ -4,6 +4,9 @@
 
 package frc.robot.commands;
 
+import org.livoniawarriors.REVColorSensor;
+
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubSys;
@@ -11,8 +14,9 @@ import frc.robot.subsystems.IndexerSubSys;
 public class RunIndexUpCmd extends Command {
     /** Creates a new RunIndexUp. */
     private final IndexerSubSys indexerSubSysObj;
+    private final REVColorSensor colorSensorObj;
     private static final Timer TIMER = new Timer();
-    private static final double MAX_RUN_TIME = 2.5; // TODO: confirm this time
+    private static final double MAX_RUN_TIME = 3.5; // TODO: confirm this time
 
     /**
      * Creates a new RunIndexUpCmd.
@@ -22,9 +26,10 @@ public class RunIndexUpCmd extends Command {
      *                         called
      */
 
-    public RunIndexUpCmd(IndexerSubSys indexerSubSysObj) {
+    public RunIndexUpCmd(IndexerSubSys indexerSubSysObj, REVColorSensor colorSensorObj) {
         // Use addRequirements() here to declare subsystem dependencies.
         this.indexerSubSysObj = indexerSubSysObj;
+        this.colorSensorObj = colorSensorObj;
         addRequirements(indexerSubSysObj);
 
     }
@@ -46,11 +51,16 @@ public class RunIndexUpCmd extends Command {
     @Override
     public void end(boolean interrupted) {
         indexerSubSysObj.stopIndexMotors();
+        TIMER.stop();
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return TIMER.get() >= MAX_RUN_TIME;
+        Color color = colorSensorObj.getColor();
+        return color == Color.kOrange || color == Color.kOrangeRed || TIMER.get() >= MAX_RUN_TIME;
+        // return colorSensorObj.getProximity() >= 0.5;
+        // return TIMER.get() >= MAX_RUN_TIME;
+
     }
 }

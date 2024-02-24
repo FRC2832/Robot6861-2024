@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import org.livoniawarriors.REVColorSensor;
 import org.livoniawarriors.leds.LedSubsystem;
 import org.livoniawarriors.leds.LightningFlash;
 import org.livoniawarriors.leds.RainbowLeds;
@@ -26,6 +27,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -33,11 +35,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.ClimbDownCmd;
+import frc.robot.commands.ClimbUpCmd;
 import frc.robot.commands.IntakeNoteCmd;
 import frc.robot.commands.OuttakeNoteCmd;
 import frc.robot.commands.PrimeShooterCmd;
 import frc.robot.commands.RunIndexDownCmd;
 import frc.robot.commands.RunIndexUpCmd;
+import frc.robot.subsystems.ClimberSubSys;
 import frc.robot.subsystems.IndexerSubSys;
 import frc.robot.subsystems.IntakeSubSys;
 import frc.robot.subsystems.PracticeSwerveHw;
@@ -45,12 +50,10 @@ import frc.robot.subsystems.ShooterSubSys;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
- * Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in
- * the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of
- * the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
     /**
@@ -62,6 +65,8 @@ public class RobotContainer {
     private IntakeSubSys intakeSubSysObj;
     private IndexerSubSys indexerSubSysObj;
     private ShooterSubSys shooterSubSysObj;
+    private REVColorSensor colorSensorObj;
+    private ClimberSubSys climberSubSysObj;
 
     // TODO: Make a JoystickSubSystem
     private CommandXboxController driverController;
@@ -75,6 +80,9 @@ public class RobotContainer {
         intakeSubSysObj = new IntakeSubSys();
         indexerSubSysObj = new IndexerSubSys();
         shooterSubSysObj = new ShooterSubSys();
+        //colorSensorObj = null;
+        climberSubSysObj = new ClimberSubSys();
+        colorSensorObj = new REVColorSensor(Port.kOnboard); // TODO: Verify this port.
 
         String serNum = RobotController.getSerialNumber();
         SmartDashboard.putString("Serial Number", serNum);
@@ -104,11 +112,11 @@ public class RobotContainer {
         odometry.setStartingPose(new Pose2d(1.92, 2.79, new Rotation2d(0)));
 
         // add some buttons to press for development
-        SmartDashboard.putData("Wheels Straight", new MoveWheels(swerveDrive, MoveWheels.WheelsStraight()));
-        SmartDashboard.putData("Wheels Crossed", new MoveWheels(swerveDrive, MoveWheels.WheelsCrossed()));
-        SmartDashboard.putData("Wheels Diamond", new MoveWheels(swerveDrive, MoveWheels.WheelsDiamond()));
-        SmartDashboard.putData("Drive Wheels Straight", new MoveWheels(swerveDrive, MoveWheels.DriveWheelsStraight()));
-        SmartDashboard.putData("Drive Wheels Diamond", new MoveWheels(swerveDrive, MoveWheels.DriveWheelsDiamond()));
+        SmartDashboard.putData("Wheels Straight", new MoveWheels(swerveDrive, MoveWheels.wheelsStraight()));
+        SmartDashboard.putData("Wheels Crossed", new MoveWheels(swerveDrive, MoveWheels.wheelsCrossed()));
+        SmartDashboard.putData("Wheels Diamond", new MoveWheels(swerveDrive, MoveWheels.wheelsDiamond()));
+        SmartDashboard.putData("Drive Wheels Straight", new MoveWheels(swerveDrive, MoveWheels.driveWheelsStraight()));
+        SmartDashboard.putData("Drive Wheels Diamond", new MoveWheels(swerveDrive, MoveWheels.driveWheelsDiamond()));
         SmartDashboard.putData("Test Leds", new TestLeds(leds));
 
         // Register Named Commands for PathPlanner
@@ -121,11 +129,13 @@ public class RobotContainer {
                 odometry::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
                 swerveDrive::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
                 swerveDrive::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
-                new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+                new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your
+                                                 // Constants class
                         new PIDConstants(0.5, 0.0, 0.0), // TODO: check values. was kp = 5. Translation PID constants
                         new PIDConstants(0.5, 0.0, 0.0), // TODO: check values. was kp = 5. Rotation PID constants
                         swerveDrive.getMaxSpeed(), // Max module speed, in m/s
-                        swerveDrive.getDriveBaseRadius(), // Drive base radius in meters. Distance from robot center to furthest module.
+                        swerveDrive.getDriveBaseRadius(), // Drive base radius in meters. Distance from robot center to
+                                                          // furthest module.
                         new ReplanningConfig() // Default path replanning config. See the API for the options here
                 ),
                 odometry::shouldFlipAlliance, // shouldFlipPath Supplier that determines if paths should be flipped to
@@ -162,12 +172,13 @@ public class RobotContainer {
         Trigger operatorLeftBumper = operatorController.leftBumper();
         Trigger operatorRightBumper = operatorController.rightBumper();
         Trigger operatorAButton = operatorController.a();
+        Trigger operatorDPadDown = operatorController.povDown();
+        Trigger operatorDPadUp = operatorController.povUp();
 
         Trigger driverRightTrigger = driverController.rightTrigger();
 
-        
-        ParallelCommandGroup intakeGroup = new ParallelCommandGroup(new IntakeNoteCmd(intakeSubSysObj),
-                new RunIndexUpCmd(indexerSubSysObj));
+        ParallelCommandGroup intakeGroup = new ParallelCommandGroup(new IntakeNoteCmd(intakeSubSysObj, colorSensorObj),
+                new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
         ParallelCommandGroup outtakeGroup = new ParallelCommandGroup(new OuttakeNoteCmd(intakeSubSysObj),
                 new RunIndexDownCmd(indexerSubSysObj));
 
@@ -175,10 +186,12 @@ public class RobotContainer {
         operatorLeftTrigger.whileTrue(outtakeGroup);
         operatorRightTrigger.whileTrue(intakeGroup);
         operatorLeftBumper.whileTrue(new RunIndexDownCmd(indexerSubSysObj));
-        operatorRightBumper.whileTrue(new RunIndexUpCmd(indexerSubSysObj));
+        operatorRightBumper.whileTrue(new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
         operatorAButton.whileTrue(new PrimeShooterCmd(shooterSubSysObj));
+        operatorDPadDown.whileTrue(new ClimbDownCmd(climberSubSysObj));
+        operatorDPadUp.whileTrue(new ClimbUpCmd(climberSubSysObj));
 
-        driverRightTrigger.whileTrue(new RunIndexUpCmd(indexerSubSysObj));
+        driverRightTrigger.whileTrue(new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
     }
 
     /**

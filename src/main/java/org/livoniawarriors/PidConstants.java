@@ -12,24 +12,29 @@ import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.networktables.NetworkTableEvent;
 
 /**
- * This class lets us configure PIDs using our units that make sense.  The input units should be 
- * something like meters or degrees, and the output would be in volts, with max as 12V.
+ * This class lets us configure PIDs using our units that make sense. The input
+ * units should be
+ * something like meters or degrees, and the output would be in volts, with max
+ * as 12V.
  */
 @SuppressWarnings("removal")
 public class PidConstants {
     private String key;
 
-    /** 
+    /**
      * How much voltage do we add based on amount of error from set point.
-     * For example, if P=2, that means for each input unit we are off, add 2 volts to the output.
+     * For example, if P=2, that means for each input unit we are off, add 2 volts
+     * to the output.
      * 
      * Units: Volts/error
      */
     public double kP;
 
-    /** 
-     * How much voltage do we add based on the sum of error.  This number should be small!!!
-     * For example, if I=2, for each input unit we are off for 1 sec, add 2 volts to the output.
+    /**
+     * How much voltage do we add based on the sum of error. This number should be
+     * small!!!
+     * For example, if I=2, for each input unit we are off for 1 sec, add 2 volts to
+     * the output.
      * 
      * Units: Volts/sum of error
      */
@@ -50,28 +55,31 @@ public class PidConstants {
     public double kF;
 
     /**
-     * How much voltage is needed to start the mechanism moving.  Setting to zero is usually fine.
+     * How much voltage is needed to start the mechanism moving. Setting to zero is
+     * usually fine.
      * 
      * Units: Volts
      */
     public double kS;
 
     /**
-     * How much voltage is needed to overcome gravity.  Set to zero if not a vertical mechanism.
-     *  
+     * How much voltage is needed to overcome gravity. Set to zero if not a vertical
+     * mechanism.
+     * 
      * Units: Volts
      */
     public double kG;
-    
+
     /**
      * Also called kF, how many sensor units change per volt.
-     *  
+     * 
      * Units: Volts / Rev/S
      */
     public double kV;
 
-    /** 
-     * How many sensor units^s squared change per volt.  Used to match the feed forward accelerations.
+    /**
+     * How many sensor units^s squared change per volt. Used to match the feed
+     * forward accelerations.
      * Set to zero in most applications.
      * 
      * Units: Volts / Rev/S^2
@@ -79,17 +87,22 @@ public class PidConstants {
     public double kA;
 
     /**
-     * How much range you want before the I-Term enables.  For example, if kiZone=10, and the measurement
-     * is 12 units off, ignore the I term.  OK to start at zero, this is used to stop integral windup when
-     * the mechanism starts moving and usually adds more overshoot after reaching the target.
+     * How much range you want before the I-Term enables. For example, if kiZone=10,
+     * and the measurement
+     * is 12 units off, ignore the I term. OK to start at zero, this is used to stop
+     * integral windup when
+     * the mechanism starts moving and usually adds more overshoot after reaching
+     * the target.
      * 
      * Units: Distance
      */
     public double kiZone;
 
     /**
-     * How much range is allowable to turn off the PID.  For example, if kiError = 2, and the mechanism is 1
-     * unit away, the PID would turn off.  OK to start at zero.  This has a side effect of basically always
+     * How much range is allowable to turn off the PID. For example, if kiError = 2,
+     * and the mechanism is 1
+     * unit away, the PID would turn off. OK to start at zero. This has a side
+     * effect of basically always
      * stopping control the iError off, so probably good to keep off.
      * 
      * Units: Distance
@@ -104,7 +117,8 @@ public class PidConstants {
     public double kVelMax;
 
     /**
-     * Used in motion control to say the max acceleration the mechanism should travel.
+     * Used in motion control to say the max acceleration the mechanism should
+     * travel.
      * 
      * Units: Distance/Sec^2
      */
@@ -131,12 +145,15 @@ public class PidConstants {
 
     /**
      * Create a generic Constants table with persistent backing from NetworkTables
+     * 
      * @param key NetworkTable location to save at
      */
     public PidConstants(String key) {
         String tempKey = key;
-        if(!tempKey.startsWith("/", 0)) tempKey = "/" + tempKey;
-        if(!tempKey.endsWith("/")) tempKey = tempKey + "/";
+        if (!tempKey.startsWith("/", 0))
+            tempKey = "/" + tempKey;
+        if (!tempKey.endsWith("/"))
+            tempKey = tempKey + "/";
         this.key = tempKey;
         loadFromNT();
     }
@@ -173,14 +190,16 @@ public class PidConstants {
 
     /**
      * Configure a TalonFX (aka Falcon or Kraken) with this PID constants
+     * 
      * @param motor Motor to configure
      */
     public void configureMotor(TalonFX motor) {
-        //TODO Implement conversion from CTRE unit to sane units...  Should be 1023/12 / scaleFactor
+        // TODO Implement conversion from CTRE unit to sane units... Should be 1023/12 /
+        // scaleFactor
         loadFromNT();
         TalonFXConfiguration allConfigs = new TalonFXConfiguration();
         motor.getAllConfigs(allConfigs);
-        allConfigs.slot0.kP = kP ;
+        allConfigs.slot0.kP = kP;
         allConfigs.slot0.kI = kI;
         allConfigs.slot0.kD = kD;
         allConfigs.slot0.kF = kF;
@@ -188,7 +207,8 @@ public class PidConstants {
         allConfigs.slot0.integralZone = kiZone;
         allConfigs.slot0.allowableClosedloopError = kiError;
 
-        //these use the velocity units, which are 10x more counts vs distance (units/100us)
+        // these use the velocity units, which are 10x more counts vs distance
+        // (units/100us)
         allConfigs.motionCruiseVelocity = kVelMax;
         allConfigs.motionAcceleration = kAccelMax;
 
@@ -197,14 +217,16 @@ public class PidConstants {
 
     /**
      * Configure a TalonSRX speed controller with this PID constants
+     * 
      * @param motor Motor to configure
      */
     public void configureMotor(TalonSRX motor) {
-        //TODO Implement conversion from CTRE unit to sane units...  Should be 1023/12 / scaleFactor
+        // TODO Implement conversion from CTRE unit to sane units... Should be 1023/12 /
+        // scaleFactor
         loadFromNT();
         TalonSRXConfiguration allConfigs = new TalonSRXConfiguration();
         motor.getAllConfigs(allConfigs);
-        allConfigs.slot0.kP = kP ;
+        allConfigs.slot0.kP = kP;
         allConfigs.slot0.kI = kI;
         allConfigs.slot0.kD = kD;
         allConfigs.slot0.kF = kF;
@@ -212,7 +234,8 @@ public class PidConstants {
         allConfigs.slot0.integralZone = kiZone;
         allConfigs.slot0.allowableClosedloopError = kiError;
 
-        //these use the velocity units, which are 10x more counts vs distance (units/100us)
+        // these use the velocity units, which are 10x more counts vs distance
+        // (units/100us)
         allConfigs.motionCruiseVelocity = kVelMax;
         allConfigs.motionAcceleration = kAccelMax;
 
@@ -221,6 +244,7 @@ public class PidConstants {
 
     /**
      * Configure a CanSparkMax speed controller with this PID constants
+     * 
      * @param motor Motor to configure
      * @return PID controller to command with PID
      */
@@ -236,7 +260,7 @@ public class PidConstants {
         pid.setSmartMotionAllowedClosedLoopError(kiError, 0);
 
         pid.setSmartMotionMaxVelocity(kVelMax, 0);
-        pid.setSmartMotionMaxAccel(kAccelMax,0);
+        pid.setSmartMotionMaxAccel(kAccelMax, 0);
 
         return pid;
     }

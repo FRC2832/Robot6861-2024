@@ -92,16 +92,16 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
         // register stuff for logging
         for (int wheel = 0; wheel < numMotors; wheel++) {
             final int wheelFinal = wheel;
-            Logger.RegisterCanSparkMax(moduleNames[wheel] + " Turn", turnMotors[wheel]);
-            Logger.RegisterCanSparkMax(moduleNames[wheel] + " Drive", driveMotors[wheel]);
-            Logger.RegisterCanCoder(moduleNames[wheel] + " Abs", turnSensors[wheel]);
-            Logger.RegisterSensor(moduleNames[wheel] + " Speed", () -> getCornerSpeed(wheelFinal));
-            Logger.RegisterSensor(moduleNames[wheel] + " Turn Pos", () -> getCornerAngle(wheelFinal));
-            Logger.RegisterSensor(moduleNames[wheel] + " Drive Dist", () -> getCornerDistance(wheelFinal));
+            Logger.registerCanSparkMax(moduleNames[wheel] + " Turn", turnMotors[wheel]);
+            Logger.registerCanSparkMax(moduleNames[wheel] + " Drive", driveMotors[wheel]);
+            Logger.registerCanCoder(moduleNames[wheel] + " Abs", turnSensors[wheel]);
+            Logger.registerSensor(moduleNames[wheel] + " Speed", () -> getCornerSpeed(wheelFinal));
+            Logger.registerSensor(moduleNames[wheel] + " Turn Pos", () -> getCornerAngle(wheelFinal));
+            Logger.registerSensor(moduleNames[wheel] + " Drive Dist", () -> getCornerDistance(wheelFinal));
 
             // initialize hardware
             turnEncoder[wheel] = turnMotors[wheel].getEncoder();
-            turnPid[wheel] = new PIDController(.5 / Math.PI, .2, 0); // TODO: modify turnPID values
+            turnPid[wheel] = new PIDController(0.5 / Math.PI, 0.2, 0.0); // TODO: modify turnPID values
         }
     }
 

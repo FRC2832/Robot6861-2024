@@ -42,9 +42,9 @@ public class VisionSystem extends SubsystemBase {
     // The standard deviations of our vision estimated poses, which affect
     // correction rate
     // (Fake values. Experiment and determine estimation noise on an actual robot.)
-    public static final Matrix<N3, N1> SINGLE_TAG_STD_DEVIATIONS = VecBuilder.fill(4, 4, 8);
-    public static final Matrix<N3, N1> MULTI_TAG_STD_DEVIATIONS = VecBuilder.fill(0.5, 0.5, 1);
-    public static final double MAX_VISION_DISTANCE = 4;
+    public static final Matrix<N3, N1> SINGLE_TAG_STD_DEVIATIONS = VecBuilder.fill(4.0, 4.0, 8.0);
+    public static final Matrix<N3, N1> MULTI_TAG_STD_DEVIATIONS = VecBuilder.fill(0.5, 0.5, 1.0);
+    public static final double MAX_VISION_DISTANCE = 4.0;
 
     public VisionSystem(Odometry odometry) {
         super();
@@ -59,7 +59,7 @@ public class VisionSystem extends SubsystemBase {
         // get camera by name
         frontCam = new PhotonCamera("FrontCam");
         // get the offsets where the camera is mounted
-        frontCamPos = new Transform3d(new Translation3d(0.5, 0.0, 0.5), new Rotation3d(0, 0, 0));
+        frontCamPos = new Transform3d(new Translation3d(0.5, 0.0, 0.5), new Rotation3d(0.0, 0.0, 0.0));
         // get the estimator of it
         frontCamEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
                 frontCam, frontCamPos);
@@ -90,11 +90,11 @@ public class VisionSystem extends SubsystemBase {
             // Create simulated camera properties. These can be set to mimic your actual
             // camera.
             SimCameraProperties cameraProp = new SimCameraProperties();
-            cameraProp.setCalibration(1280, 720, Rotation2d.fromDegrees(111));
+            cameraProp.setCalibration(1280, 720, Rotation2d.fromDegrees(111.0));
             cameraProp.setCalibError(0.37, 0.13);
-            cameraProp.setFPS(15);
-            cameraProp.setAvgLatencyMs(50);
-            cameraProp.setLatencyStdDevMs(15);
+            cameraProp.setFPS(15.0);
+            cameraProp.setAvgLatencyMs(50.0);
+            cameraProp.setLatencyStdDevMs(15.0);
             // Create a PhotonCameraSim which will update the linked PhotonCamera's values
             // with visible
             // targets.

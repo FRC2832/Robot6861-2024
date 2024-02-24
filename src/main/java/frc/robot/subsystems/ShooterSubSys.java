@@ -48,8 +48,8 @@ public class ShooterSubSys extends SubsystemBase {
     }
     
     public void stopShooter() {
-        shooterMotorFR.setVoltage(0);
-        shooterMotorFL.setVoltage(0);
+        shooterMotorFR.setVoltage(0.0);
+        shooterMotorFL.setVoltage(0.0);
     }
 
     

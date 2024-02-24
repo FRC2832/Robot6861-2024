@@ -2,39 +2,39 @@ package org.livoniawarriors.lightdriveleds;
 
 final class RxPacket
 {
-    byte I1;
-    byte I2;
-    byte I3;
-    byte I4;
-    byte VIN;
+    byte i1;
+    byte i2;
+    byte i3;
+    byte i4;
+    byte vin;
     Status status;
-    byte PWMVals;
-    byte FW;
+    byte pwmVals;
+    byte fw;
 
     RxPacket() {
         this.status = new Status();
-        this.I1 = 0;
-        this.I2 = 0;
-        this.I3 = 0;
-        this.I4 = 0;
-        this.VIN = 0;
-        this.PWMVals = 0;
-        this.FW = 0;
+        this.i1 = 0;
+        this.i2 = 0;
+        this.i3 = 0;
+        this.i4 = 0;
+        this.vin = 0;
+        this.pwmVals = 0;
+        this.fw = 0;
     }
 
-    byte[] GetBytes() {
-        final byte[] tempdata = { this.I1, this.I2, this.I3, this.I4, this.VIN, this.status.GetRaw(), this.PWMVals, this.FW };
+    byte[] getBytes() {
+        final byte[] tempdata = { this.i1, this.i2, this.i3, this.i4, this.vin, this.status.getRaw(), this.pwmVals, this.fw };
         return tempdata;
     }
 
-    void SetBytes(final byte[] data) {
-        this.I1 = data[0];
-        this.I2 = data[1];
-        this.I3 = data[2];
-        this.I4 = data[3];
-        this.VIN = data[4];
-        this.status.SetRaw(data[5]);
-        this.PWMVals = data[6];
-        this.FW = data[7];
+    void setBytes(final byte[] data) {
+        this.i1 = data[0];
+        this.i2 = data[1];
+        this.i3 = data[2];
+        this.i4 = data[3];
+        this.vin = data[4];
+        this.status.setRaw(data[5]);
+        this.pwmVals = data[6];
+        this.fw = data[7];
     }
 }

@@ -10,26 +10,26 @@ public class Status
         this.m_mode = mode.NONE;
     }
 
-    public byte GetTripped() {
+    public byte getTripped() {
         return (byte)((this.m_raw & 0xF0) >> 4);
     }
 
-    public Boolean IsEnabled() {
+    public Boolean isEnabled() {
         if ((this.m_raw & 0x1) > 0) {
             return true;
         }
         return false;
     }
 
-    public mode GetMode() {
+    public mode getMode() {
         return this.m_mode;
     }
 
-    public Byte GetRaw() {
+    public Byte getRaw() {
         return this.m_raw;
     }
 
-    public void SetRaw(final byte raw) {
+    public void setRaw(final byte raw) {
         this.m_raw = raw;
     }
 
