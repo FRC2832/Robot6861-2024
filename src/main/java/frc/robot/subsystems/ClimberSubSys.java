@@ -7,11 +7,6 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-<<<<<<< Updated upstream
-
-import frc.robot.Constants;
-=======
->>>>>>> Stashed changes
 
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -34,7 +29,6 @@ public class ClimberSubSys extends SubsystemBase {
     private double downClimbVelVolts;
     private double upClimbVelPct;
     private double downClimbVelPct;
-
 
 
     public ClimberSubSys() {
