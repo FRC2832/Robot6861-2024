@@ -5,6 +5,7 @@ import org.livoniawarriors.UtilFunctions;
 import edu.wpi.first.networktables.DoubleSubscriber;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 /**
  * Drive the robot with xbox controller 
@@ -19,16 +20,16 @@ public class DriveXbox extends Command {
      * @param drive Drivetrain to command
      * @param cont Controller to read from
      */
-    public DriveXbox(SwerveDriveTrain drive, XboxController cont) {
+    public DriveXbox(SwerveDriveTrain drive, CommandXboxController cont) {
         this.drive = drive;
-        this.cont = cont;
+        this.cont = cont.getHID();
         deadband = UtilFunctions.getSettingSub("DriveXbox/Deadband", 0.13);
         addRequirements(drive);
     }
 
     @Override
     public void initialize() {
-        drive.SwerveDrive(0, 0, 0, false);
+        drive.swerveDrive(0, 0, 0, false);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class DriveXbox extends Command {
         double xSpeed = UtilFunctions.deadband(-cont.getLeftY(), dead);
         double ySpeed = UtilFunctions.deadband(-cont.getLeftX(), dead);
         double turn   = UtilFunctions.deadband(-cont.getRightX(), dead);
-        drive.SwerveDrive(
+        drive.swerveDrive(
             xSpeed * drive.getMaxDriverSpeed(), 
             ySpeed * drive.getMaxDriverSpeed(), 
             turn * drive.getMaxDriverOmega()

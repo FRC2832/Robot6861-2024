@@ -4,15 +4,57 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
+import frc.robot.Constants;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClimberSubSys extends SubsystemBase {
-  /** Creates a new Climber. */
-  public ClimberSubSys() {}
+    /** Creates a new Climber. */
+     // if Operator DPad up is climber up.  run climber motor CAN Id 5
+     // TODO: double check CAN ID on robot, and update here
 
-  
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+    // Neo?  motor
+    // Climb up is in positive volts?????  CHECK
+    // CLIMber Down is negative volts????  CHECK
+    // 
+
+    private final CANSparkMax climberMotor;
+    private double upClimbVelVolts;
+    private double downClimbVelVolts;
+    private double upClimbVelPct;
+    private double downClimbVelPct;
+
+
+
+    public ClimberSubSys() {
+        climberMotor = new CANSparkMax(Constants.CLIMBER_MOTOR_CAN_ID, MotorType.kBrushless);
+        climberMotor.setSmartCurrentLimit(Constants.CLIMBER_MOTOR_SMART_CURRENT_LIMIT);
+
+        upClimbVelPct = Constants.UPCLIMB_MOTOR_PCT;
+        downClimbVelPct = Constants.DOWNCLIMB_MOTOR_PCT;
+        upClimbVelVolts = upClimbVelPct * 12.0;
+        downClimbVelVolts = downClimbVelPct * 12.0;
+    }
+
+     // Runs the Climb Motor in a positive direction to raise climber arm up.  //TODO:  check if this is correct
+
+    public void runClimberUp() {
+        climberMotor.setVoltage(upClimbVelVolts);
+    }
+
+    // Runs the Climber eMotor in a negative direction
+    public void runClimberDown() {
+        climberMotor.setVoltage(downClimbVelVolts);
+    }
+
+    public void stopClimberMotor() {
+        climberMotor.setVoltage(0.0);
+    }
+
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+    }
 }

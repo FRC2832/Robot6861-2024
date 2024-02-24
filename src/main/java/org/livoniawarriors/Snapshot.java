@@ -124,11 +124,11 @@ public class Snapshot implements Runnable {
         }
     }
 
-    public void TakeSnapshot() {
-        TakeSnapshot("FRC");
+    public void takeSnapshot() {
+        takeSnapshot("FRC");
     }
 
-    public void TakeSnapshot(String prefix) {
+    public void takeSnapshot(String prefix) {
         takeSnap = true;
         filePrefix = prefix;
     }

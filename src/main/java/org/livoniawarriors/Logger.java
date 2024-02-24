@@ -19,6 +19,7 @@ import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.sensors.Pigeon2_Faults;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.sensors.PigeonIMU_Faults;
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.networktables.BooleanPublisher;
@@ -28,6 +29,7 @@ import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -37,15 +39,15 @@ import frc.robot.Robot;
 
 @SuppressWarnings("removal")
 public class Logger implements Runnable {
-    private final double VOLTS_PER_PSI = 1.931/100; //2.431V at 100psi
+    private static final double VOLTS_PER_PSI = 1.931 / 100; // 2.431V at 100psi
 
-    private static HashMap<String,Object> items = new HashMap<String,Object>();
+    private static HashMap<String, Object> items = new HashMap<>();
     private static PowerDistribution pdp;
     private static String[] pdpNames;
     private static PneumaticHub ph;
     private static String[] pneumaticNames;
     private static BasePigeon pigeon;
-    private static CANSparkMax spark;       //used to stop warning about not closing motor, since we really don't...
+    private static CANSparkMax spark; // used to stop warning about not closing motor, since we really don't...
 
     private NetworkTable currentTable;
     private NetworkTable commandTable;
@@ -60,7 +62,7 @@ public class Logger implements Runnable {
 
     private static boolean faultSet;
     private static boolean sfaultSet;
-    //solenoids, compressor
+    // solenoids, compressor
 
     public Logger() {
         // Starts recording to data log
@@ -69,7 +71,7 @@ public class Logger implements Runnable {
         var log = DataLogManager.getLog();
         DriverStation.startDataLog(log);
 
-        //create our logging table references
+        // create our logging table references
         canStatusTable = NetworkTableInstance.getDefault().getTable("CAN Status");
         currentTable = NetworkTableInstance.getDefault().getTable("Motor Currents");
         tempTable = NetworkTableInstance.getDefault().getTable("Motor Temps");
@@ -99,41 +101,42 @@ public class Logger implements Runnable {
     }
 
     public void start() {
-        //we run at 100ms rate because of all the CAN traffic, especially with the PDP log channels
+        // we run at 100ms rate because of all the CAN traffic, especially with the PDP
+        // log channels
         UtilFunctions.addPeriodic(this, 0.1, 0);
     }
 
-    public static void RegisterTalon(String name, BaseTalon talon) {
+    public static void registerTalon(String name, BaseTalon talon) {
         items.put(name, talon);
     }
 
-    public static void RegisterCanSparkMax(String name, CANSparkMax spark) {
+    public static void registerCanSparkMax(String name, CANSparkMax spark) {
         items.put(name, spark);
     }
 
-    public static void RegisterCanCoder(String name, CANCoder coder) {
+    public static void registerCanCoder(String name, CANCoder coder) {
         items.put(name, coder);
     }
 
-    public static void RegisterSensor(String name, DoubleSupplier value) {
+    public static void registerSensor(String name, DoubleSupplier value) {
         items.put(name, value);
     }
 
-    public static void RegisterPdp(PowerDistribution pdp, String[] channelNames) {
+    public static void registerPdp(PowerDistribution pdp, String[] channelNames) {
         Logger.pdp = pdp;
         pdpNames = channelNames;
     }
 
-    public static void RegisterPneumaticHub(PneumaticHub ph, String[] channelNames) {
+    public static void registerPneumaticHub(PneumaticHub ph, String[] channelNames) {
         Logger.ph = ph;
         pneumaticNames = channelNames;
     }
 
-    public static void RegisterLoopTimes(Robot robot) {
+    public static void registerLoopTimes(Robot robot) {
         new LoopTimeLogger(robot, taskTimings);
     }
 
-    public static void RegisterPigeon(BasePigeon pigeon) {
+    public static void registerPigeon(BasePigeon pigeon) {
         Logger.pigeon = pigeon;
     }
 
@@ -142,12 +145,12 @@ public class Logger implements Runnable {
         for (String i : items.keySet()) {
             var item = items.get(i);
 
-            if(item instanceof BaseTalon) {
-                readTalon(i, (BaseTalon)item);
-            } else if(item instanceof DoubleSupplier) {
-                sensorTable.getEntry(i).setDouble(((DoubleSupplier)item).getAsDouble());
-            } else if(item instanceof CANCoder) {
-                var coder = (CANCoder)item;
+            if (item instanceof BaseTalon) {
+                readTalon(i, (BaseTalon) item);
+            } else if (item instanceof DoubleSupplier) {
+                sensorTable.getEntry(i).setDouble(((DoubleSupplier) item).getAsDouble());
+            } else if (item instanceof CANCoder) {
+                var coder = (CANCoder) item;
                 sensorTable.getEntry(i + " Angle").setDouble(coder.getAbsolutePosition());
                 sensorTable.getEntry(i + " Mag Str").setString(coder.getMagnetFieldStrength().name());
 
@@ -159,23 +162,23 @@ public class Logger implements Runnable {
                 coder.getStickyFaults(sFaults);
                 stickyTable.getEntry(i).setString(readFaultStruct(sFaults));
                 canStatusTable.getEntry(i).setString(coder.getLastError().name());
-            } else if(item instanceof CANSparkMax) {
-                spark = (CANSparkMax)item;
+            } else if (item instanceof CANSparkMax) {
+                spark = (CANSparkMax) item;
 
-                commandTable.getEntry(i).setDouble(spark.getAppliedOutput()*spark.getBusVoltage());
+                commandTable.getEntry(i).setDouble(spark.getAppliedOutput() * spark.getBusVoltage());
                 currentTable.getEntry(i).setDouble(spark.getOutputCurrent());
                 faultTable.getEntry(i).setString(readSparkFaults(spark.getFaults()));
                 stickyTable.getEntry(i).setString(readSparkFaults(spark.getStickyFaults()));
                 tempTable.getEntry(i).setDouble(spark.getMotorTemperature());
                 canStatusTable.getEntry(i).setString(spark.getLastError().name());
             } else {
-                //unknown table
+                // unknown table
             }
         }
 
-        if(pdp != null) {
-            for(int i=0; i<pdpNames.length; i++) {
-                if(pdpNames[i] != null) {
+        if (pdp != null) {
+            for (int i = 0; i < pdpNames.length; i++) {
+                if (pdpNames[i] != null) {
                     currentTable.getEntry("PDP Current " + pdpNames[i]).setDouble(pdp.getCurrent(i));
                 } else {
                 }
@@ -185,13 +188,13 @@ public class Logger implements Runnable {
             tempTable.getEntry("PDP").setDouble(pdp.getTemperature());
             faultTable.getEntry("PDP").setString(readFaultStruct(pdp.getFaults()));
             stickyTable.getEntry("PDP").setString(readFaultStruct(pdp.getStickyFaults()));
-            //no CAN status to report
+            // no CAN status to report
         }
 
-        if(ph != null) {
+        if (ph != null) {
             var solenoids = ph.getSolenoids();
-            for(int i=0; i<pneumaticNames.length; i++) {
-                if(pneumaticNames[i] != null) {
+            for (int i = 0; i < pneumaticNames.length; i++) {
+                if (pneumaticNames[i] != null) {
                     commandTable.getEntry(pneumaticNames[i]).setBoolean((solenoids & (1 << i)) == 1);
                 }
             }
@@ -202,26 +205,26 @@ public class Logger implements Runnable {
             currentTable.getEntry("Solenoids").setDouble(ph.getSolenoidsTotalCurrent());
             faultTable.getEntry("PH").setString(readFaultStruct(ph.getFaults()));
             stickyTable.getEntry("PH").setString(readFaultStruct(ph.getStickyFaults()));
-            //no CAN status to report
+            // no CAN status to report
         }
 
-        if(pigeon != null) {
-            double[] pigeon_data = new double[3];
-            pigeon.getYawPitchRoll(pigeon_data);
-            sensorTable.getEntry("Pigeon Yaw").setDouble(pigeon_data[0]);
-            sensorTable.getEntry("Pigeon Pitch").setDouble(pigeon_data[1]);
-            sensorTable.getEntry("Pigeon Roll").setDouble(pigeon_data[2]);
+        if (pigeon != null) {
+            double[] pigeonData = new double[3];
+            pigeon.getYawPitchRoll(pigeonData);
+            sensorTable.getEntry("Pigeon Yaw").setDouble(pigeonData[0]);
+            sensorTable.getEntry("Pigeon Pitch").setDouble(pigeonData[1]);
+            sensorTable.getEntry("Pigeon Roll").setDouble(pigeonData[2]);
 
-            short[] accel_data = new short[3];
-            pigeon.getBiasedAccelerometer(accel_data);
-            sensorTable.getEntry("Pigeon Ax").setDouble(accel_data[0]/16384.);
-            sensorTable.getEntry("Pigeon Ay").setDouble(accel_data[1]/16384.);
-            sensorTable.getEntry("Pigeon Az").setDouble(accel_data[2]/16384.);
+            short[] accelData = new short[3];
+            pigeon.getBiasedAccelerometer(accelData);
+            sensorTable.getEntry("Pigeon Ax").setDouble(accelData[0] / 16384.);
+            sensorTable.getEntry("Pigeon Ay").setDouble(accelData[1] / 16384.);
+            sensorTable.getEntry("Pigeon Az").setDouble(accelData[2] / 16384.);
 
             canStatusTable.getEntry("Pigeon").setString(pigeon.getLastError().name());
 
             if (pigeon instanceof PigeonIMU) {
-                var p1 = (PigeonIMU)pigeon;
+                var p1 = (PigeonIMU) pigeon;
                 PigeonIMU_Faults p1Faults = new PigeonIMU_Faults();
                 p1.getFaults(p1Faults);
                 faultTable.getEntry("Pigeon").setString(readFaultStruct(p1Faults));
@@ -229,7 +232,7 @@ public class Logger implements Runnable {
                 p1.getStickyFaults(p1Faults);
                 stickyTable.getEntry("Pigeon").setString(readFaultStruct(p1Faults));
             } else if (pigeon instanceof Pigeon2) {
-                var p2 = (Pigeon2)pigeon;
+                var p2 = (Pigeon2) pigeon;
                 Pigeon2_Faults p2Faults = new Pigeon2_Faults();
                 p2.getFaults(p2Faults);
                 faultTable.getEntry("Pigeon").setString(readFaultStruct(p2Faults));
@@ -237,7 +240,7 @@ public class Logger implements Runnable {
                 p2.getStickyFaults(p2Faults);
                 stickyTable.getEntry("Pigeon").setString(readFaultStruct(p2Faults));
             } else {
-                //unknown pigeon
+                // unknown pigeon
             }
         }
 
@@ -263,28 +266,28 @@ public class Logger implements Runnable {
 
         String[] keys = new String[keys0.size()];
         String[] stickyKeys = new String[stickyKeys0.size()];
-        
+
         keys0.toArray(keys);
         stickyKeys0.toArray(stickyKeys);
-        
+
         faultSet = false;
-        for(String i: keys) {
+        for (String i : keys) {
             var faultName = faultTable.getEntry(i).getString("EROR");
-            if(!faultName.equals("Ok")) {
+            if (!faultName.equals("Ok")) {
                 faultSet = true;
             }
         }
-        
+
         sfaultSet = false;
-        for(String i: stickyKeys) {
+        for (String i : stickyKeys) {
             var faultName = stickyTable.getEntry(i).getString("EROR");
-            if(!faultName.equals("Ok")) {
+            if (!faultName.equals("Ok")) {
                 sfaultSet = true;
             }
         }
 
         boolean flashDriveAttached;
-        if (Robot.isReal()) {
+        if (RobotBase.isReal()) {
             flashDriveAttached = Files.exists(Paths.get("/u"));
         } else {
             flashDriveAttached = true;
@@ -295,7 +298,8 @@ public class Logger implements Runnable {
     private void readTalon(String name, BaseTalon talon) {
         String faultStr;
         String sFaultStr;
-        //reading the raw bits because we know there are faults not in Faults (aka Neutral Brake Current Limit)
+        // reading the raw bits because we know there are faults not in Faults (aka
+        // Neutral Brake Current Limit)
         var handle = talon.getHandle();
         var faultBits = MotControllerJNI.GetFaults(handle);
         var error = talon.getLastError();
@@ -332,7 +336,7 @@ public class Logger implements Runnable {
 
         faults.update(bits);
         retVal = readFaultStruct(faults);
-        if(retVal.length() == 0) {
+        if (retVal.length() == 0) {
             retVal = "Unknown Fault " + bits;
         }
 
@@ -342,14 +346,14 @@ public class Logger implements Runnable {
     private String readFaultStruct(Object obj) {
         StringBuilder work = new StringBuilder();
 
-        //iterate through all the fields and find the boolean ones
-        Field fieldlist[] = obj.getClass().getDeclaredFields();
+        // iterate through all the fields and find the boolean ones
+        Field[] fieldlist = obj.getClass().getDeclaredFields();
         for (int i = 0; fieldlist.length > i; i++) {
             Field fld = fieldlist[i];
             if (fld.getType().equals(boolean.class)) {
                 try {
                     boolean value = fld.getBoolean(obj);
-                    if(value) {
+                    if (value) {
                         work.append(fld.getName() + " ");
                     }
                 } catch (IllegalArgumentException e) {
@@ -360,21 +364,21 @@ public class Logger implements Runnable {
             }
         }
 
-        //check if string is empty
-        if(work.length() == 0) {
+        // check if string is empty
+        if (work.length() == 0) {
             work.append("Ok");
         }
         return work.toString();
     }
 
     private String readSparkFaults(short faults) {
-        if(faults == 0) {
+        if (faults == 0) {
             return "Ok";
         }
         StringBuilder work = new StringBuilder();
-        for(var i=0; i<15; i++) {
-            if((faults & (1 << i)) == 1) {
-                var fault = CANSparkMax.FaultID.fromId(i);
+        for (var i = 0; i < 15; i++) {
+            if ((faults & (1 << i)) == 1) {
+                var fault = CANSparkBase.FaultID.fromId(i);
                 work.append(fault.name()).append(" ");
             }
         }
@@ -384,45 +388,45 @@ public class Logger implements Runnable {
     public static void checkClearFaults(boolean clear) {
         var clearFaults = SmartDashboard.getBoolean("Clear Faults", false);
 
-        if(clearFaults == false && clear == false) {
+        if (!clearFaults && !clear) {
             return;
         }
         SmartDashboard.putBoolean("Clear Faults", false);
 
         for (String name : items.keySet()) {
             var item = items.get(name);
-            if(item instanceof BaseTalon) {
-                var talon = (BaseTalon)item;
+            if (item instanceof BaseTalon) {
+                var talon = (BaseTalon) item;
                 talon.clearStickyFaults();
-            } else if(item instanceof CANCoder) {
-                var coder = (CANCoder)item;
+            } else if (item instanceof CANCoder) {
+                var coder = (CANCoder) item;
                 coder.clearStickyFaults();
-            } else if(item instanceof CANSparkMax) {
-                spark = (CANSparkMax)item;
+            } else if (item instanceof CANSparkMax) {
+                spark = (CANSparkMax) item;
                 spark.clearFaults();
             } else {
-                //unknown table
+                // unknown table
             }
         }
 
-        if(pdp != null) {
+        if (pdp != null) {
             pdp.clearStickyFaults();
         }
 
-        if(ph != null) {
+        if (ph != null) {
             ph.clearStickyFaults();
         }
 
-        if(pigeon != null) {
+        if (pigeon != null) {
             pigeon.clearStickyFaults();
         }
     }
 
-    public static boolean FaultSet() {
+    public static boolean getFaultSet() {
         return faultSet;
     }
 
-    public static boolean StickyFaultSet() {
+    public static boolean getStickyFaultSet() {
         return sfaultSet;
     }
 }

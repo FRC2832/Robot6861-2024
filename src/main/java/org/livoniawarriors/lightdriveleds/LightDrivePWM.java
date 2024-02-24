@@ -19,7 +19,7 @@ public final class LightDrivePWM
         this.m_type_servo = true;
     }
 
-    public void Update() {
+    public void update() {
         double newduty = 0.0;
         int channels = ((this.m_matrix[0] > 127) ? 16 : 0) | ((this.m_matrix[1] > 127) ? 32 : 0) | ((this.m_matrix[2] > 127) ? 64 : 0) | ((this.m_matrix[3] > 127) ? 128 : 0) | ((this.m_matrix[4] > 127) ? 256 : 0) | ((this.m_matrix[5] > 127) ? 512 : 0);
         newduty = channels / 1023.0;
@@ -39,7 +39,7 @@ public final class LightDrivePWM
         }
     }
 
-    public void SetColor(int ch, final Color color) {
+    public void setColor(int ch, final Color color) {
         if (ch < 1 || ch > 4) {
             return;
         }
@@ -49,7 +49,7 @@ public final class LightDrivePWM
         this.m_matrix[ch + 2] = (int)(color.blue * 255);
     }
 
-    public void SetLevel(final int ch, final int level) {
+    public void setLevel(final int ch, final int level) {
         if (ch < 1 || ch > 12 || level < 0 || level > 255) {
             return;
         }

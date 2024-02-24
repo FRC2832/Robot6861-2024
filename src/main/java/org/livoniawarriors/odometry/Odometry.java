@@ -52,12 +52,12 @@ public class Odometry extends SubsystemBase {
         plotCorners = UtilFunctions.getSettingSub("/Odometry/Plot Swerve Corners", false);
 
         SmartDashboard.putData("Field", field);
-        Logger.RegisterSensor("Gyro Yaw", this::getGyroAngle);
-        Logger.RegisterSensor("Gyro Pitch", this::getGyroPitch);
-        Logger.RegisterSensor("Gyro Roll", this::getGyroRoll);
-        Logger.RegisterSensor("Gyro X Accel", hardware::getXAccel);
-        Logger.RegisterSensor("Gyro Y Accel", hardware::getYAccel);
-        Logger.RegisterSensor("Gyro Z Accel", hardware::getZAccel);
+        Logger.registerSensor("Gyro Yaw", this::getGyroAngle);
+        Logger.registerSensor("Gyro Pitch", this::getGyroPitch);
+        Logger.registerSensor("Gyro Roll", this::getGyroRoll);
+        Logger.registerSensor("Gyro X Accel", hardware::getXAccel);
+        Logger.registerSensor("Gyro Y Accel", hardware::getYAccel);
+        Logger.registerSensor("Gyro Z Accel", hardware::getZAccel);
     }
 
     public void setSwerveDrive(SwerveDriveTrain drive) {
