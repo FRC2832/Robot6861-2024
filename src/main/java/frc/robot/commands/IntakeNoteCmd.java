@@ -15,6 +15,7 @@ public class IntakeNoteCmd extends Command {
     private final REVColorSensor colorSensorObj;
     private static final Timer TIMER = new Timer();
     private static final double MAX_RUN_TIME = 3.5; // seconds
+    private static final double PROX_THRESHOLD = 0.5;
 
     /**
      * Creates a new IntakeNote.
@@ -52,8 +53,10 @@ public class IntakeNoteCmd extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        Color color = colorSensorObj.getColor();
-        return color == Color.kOrange || color == Color.kOrangeRed || TIMER.get() >= MAX_RUN_TIME;
+        //Color color = colorSensorObj.getColor();
+        double prox = colorSensorObj.getProximity();  
+        return prox >= PROX_THRESHOLD || TIMER.get() >= MAX_RUN_TIME; 
+        //return color == Color.kOrange || color == Color.kOrangeRed || TIMER.get() >= MAX_RUN_TIME;
         // return TIMER.get() >= MAX_RUN_TIME;
         // REV color sensor
     }

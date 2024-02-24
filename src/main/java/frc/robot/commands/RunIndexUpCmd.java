@@ -17,6 +17,7 @@ public class RunIndexUpCmd extends Command {
     private final REVColorSensor colorSensorObj;
     private static final Timer TIMER = new Timer();
     private static final double MAX_RUN_TIME = 3.5; // TODO: confirm this time
+    private static final double PROX_THRESHOLD = 0.5;
 
     /**
      * Creates a new RunIndexUpCmd.
@@ -57,8 +58,11 @@ public class RunIndexUpCmd extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        Color color = colorSensorObj.getColor();
-        return color == Color.kOrange || color == Color.kOrangeRed || TIMER.get() >= MAX_RUN_TIME;
+        //Color color = colorSensorObj.getColor();
+        //return color == Color.kOrange || color == Color.kOrangeRed || TIMER.get() >= MAX_RUN_TIME;
+        double prox = colorSensorObj.getProximity();  
+        return prox >= PROX_THRESHOLD || TIMER.get() >= MAX_RUN_TIME; 
+       
         // return colorSensorObj.getProximity() >= 0.5;
         // return TIMER.get() >= MAX_RUN_TIME;
 

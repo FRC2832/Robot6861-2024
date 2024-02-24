@@ -83,7 +83,7 @@ public class RobotContainer {
         shooterSubSysObj = new ShooterSubSys();
         //colorSensorObj = null;
         climberSubSysObj = new ClimberSubSys();
-        colorSensorObj = new REVColorSensor(Port.kMXP); // TODO: Verify this port.
+        colorSensorObj = new REVColorSensor(Port.kMXP); 
 
         String serNum = RobotController.getSerialNumber();
         SmartDashboard.putString("Serial Number", serNum);
