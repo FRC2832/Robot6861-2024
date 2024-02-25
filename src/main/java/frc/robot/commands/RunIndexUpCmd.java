@@ -77,7 +77,7 @@ public class RunIndexUpCmd extends Command {
         if (isThresholdCrossed) {
             return (prox < PROX_THRESHOLD && BUFFER_TIMER.get() >= BUFFER_TIME) || TIMER.get() >= MAX_RUN_TIME;
         }
-        return false;
+        return TIMER.get() >= MAX_RUN_TIME;
         // double prox = colorSensorObj.getProximity();
         // return prox >= PROX_THRESHOLD || TIMER.get() >= MAX_RUN_TIME;
 

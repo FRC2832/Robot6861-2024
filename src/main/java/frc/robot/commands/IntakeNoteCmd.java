@@ -63,7 +63,7 @@ public class IntakeNoteCmd extends Command {
         if (isThresholdCrossed) {
             return prox < PROX_THRESHOLD || TIMER.get() >= MAX_RUN_TIME;
         }
-        return false;
+        return TIMER.get() >= MAX_RUN_TIME;
         // return prox >= PROX_THRESHOLD || TIMER.get() >= MAX_RUN_TIME;
         // return color == Color.kOrange || color == Color.kOrangeRed || TIMER.get() >=
         // MAX_RUN_TIME;
