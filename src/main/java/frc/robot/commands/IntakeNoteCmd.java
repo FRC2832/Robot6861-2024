@@ -35,6 +35,7 @@ public class IntakeNoteCmd extends Command {
     public void initialize() {
         TIMER.reset();
         TIMER.start();
+        isThresholdCrossed = false;
     }
 
     // Called every time the scheduler runs while the command is scheduled.

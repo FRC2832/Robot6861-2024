@@ -43,6 +43,7 @@ public class RunIndexUpCmd extends Command {
         TIMER.reset();
         TIMER.start();
         BUFFER_TIMER.reset();
+        isThresholdCrossed = false;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -70,6 +71,7 @@ public class RunIndexUpCmd extends Command {
         double prox = colorSensorObj.getProximity();
         if (!isThresholdCrossed && prox >= PROX_THRESHOLD) {
             isThresholdCrossed = true;
+            System.out.println("isThresholdCrossed " + isThresholdCrossed + " prox " + prox + " BUFFER_TIMER " + BUFFER_TIMER.get() + " TIMER " + TIMER.get());
             return false;
         }
         if (isThresholdCrossed) {
