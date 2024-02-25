@@ -43,6 +43,7 @@ import frc.robot.commands.PrimeShooterCmd;
 import frc.robot.commands.ReverseShooterCmd;
 import frc.robot.commands.RunIndexDownCmd;
 import frc.robot.commands.RunIndexUpCmd;
+import frc.robot.commands.RunIndexUpContinuousCmd;
 import frc.robot.subsystems.ClimberSubSys;
 import frc.robot.subsystems.IndexerSubSys;
 import frc.robot.subsystems.IntakeSubSys;
@@ -194,7 +195,7 @@ public class RobotContainer {
         operatorDPadDown.whileTrue(new ClimbDownCmd(climberSubSysObj));
         operatorDPadUp.whileTrue(new ClimbUpCmd(climberSubSysObj));
 
-        driverRightTrigger.whileTrue(new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
+        driverRightTrigger.whileTrue(new RunIndexUpContinuousCmd(indexerSubSysObj));
         driverLeftTrigger.whileTrue(new RunIndexDownCmd(indexerSubSysObj));
 
     }
