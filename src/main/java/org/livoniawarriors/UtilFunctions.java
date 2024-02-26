@@ -23,6 +23,10 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 public class UtilFunctions {
+    private UtilFunctions() {
+        // No op
+    }
+
     /**
      * This function takes a joystick input from -1 to 1 and removes the center of
      * the stick.
@@ -253,19 +257,6 @@ public class UtilFunctions {
                 listener);
     }
 
-    private static String checkKey(String key) {
-        String newKey;
-
-        if (key.startsWith("/", 0)) {
-            newKey = key;
-        } else {
-            newKey = "/" + key;
-        }
-
-        newKey = newKey.replaceAll("//", "/");
-        return newKey;
-    }
-
     /**
      * This function adds a periodic function to the schedule. This will run after
      * the main loop finishes.
@@ -286,5 +277,18 @@ public class UtilFunctions {
             // don't do anything, we just return false that it didn't schedule
         }
         return false;
+    }
+
+    private static String checkKey(String key) {
+        String newKey;
+
+        if (key.startsWith("/", 0)) {
+            newKey = key;
+        } else {
+            newKey = "/" + key;
+        }
+
+        newKey = newKey.replaceAll("//", "/");
+        return newKey;
     }
 }

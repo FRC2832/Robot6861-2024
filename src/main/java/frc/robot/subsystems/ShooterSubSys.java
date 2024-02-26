@@ -17,10 +17,10 @@ public class ShooterSubSys extends SubsystemBase {
 
     // Run Shooter when operator presses A button
 
-    // 2 Neo  motors - FR is positive to shoot. FL is negative to shoot.  
+    // 2 Neo motors - FR is positive to shoot. FL is negative to shoot.
     // MIght need to invert shooter motors
     // Test for which direction positive/negative input causes?
-    
+
     // once shooter wheels up to speed, run index motor to feed note into shooter
     // DRIVER right trigger for running INDEX motor
 
@@ -34,12 +34,11 @@ public class ShooterSubSys extends SubsystemBase {
     private double shooterVelPctFL;
     private double shooterVelRPM;
 
-
     public ShooterSubSys() {
         shooterMotorFR = new CANSparkMax(Constants.FR_SHOOTER_MOTOR_CAN_ID, MotorType.kBrushless);
         shooterMotorFL = new CANSparkMax(Constants.FL_SHOOTER_MOTOR_CAN_ID, MotorType.kBrushless);
-        shooterMotorFREncoder= shooterMotorFR.getEncoder();
-        shooterMotorFLEncoder= shooterMotorFL.getEncoder();
+        shooterMotorFREncoder = shooterMotorFR.getEncoder();
+        shooterMotorFLEncoder = shooterMotorFL.getEncoder();
         shooterMotorFR.setSmartCurrentLimit(Constants.FR_SHOOTER_MOTOR_SMART_CURRENT_LIMIT);
         shooterMotorFL.setSmartCurrentLimit(Constants.FL_SHOOTER_MOTOR_SMART_CURRENT_LIMIT);
 
@@ -50,7 +49,7 @@ public class ShooterSubSys extends SubsystemBase {
     }
 
     public void runShooter() {
-        //calculate
+        // calculate
         shooterMotorFR.setVoltage(shooterVelVoltsFR);
         shooterMotorFL.setVoltage(shooterVelVoltsFL);
     }
@@ -61,7 +60,7 @@ public class ShooterSubSys extends SubsystemBase {
         shooterMotorFR.setVoltage(shooterVelVoltsReverseFR);
         shooterMotorFL.setVoltage(shooterVelVoltsReverseFL);
     }
-    
+
     public void stopShooter() {
         shooterMotorFR.setVoltage(0.0);
         shooterMotorFL.setVoltage(0.0);
@@ -69,7 +68,6 @@ public class ShooterSubSys extends SubsystemBase {
         shooterMotorFREncoder.setPosition(0.0);
     }
 
-    
     @Override
     public void periodic() {
         // TODO: Calculate average RPM and display on SmartDashboard.

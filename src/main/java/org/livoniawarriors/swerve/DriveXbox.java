@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 /**
- * Drive the robot with xbox controller 
+ * Drive the robot with xbox controller
  */
 public class DriveXbox extends Command {
     private SwerveDriveTrain drive;
@@ -17,8 +17,9 @@ public class DriveXbox extends Command {
 
     /**
      * Inject the drivetrain and controller to use
+     * 
      * @param drive Drivetrain to command
-     * @param cont Controller to read from
+     * @param cont  Controller to read from
      */
     public DriveXbox(SwerveDriveTrain drive, CommandXboxController cont) {
         this.drive = drive;
@@ -34,28 +35,29 @@ public class DriveXbox extends Command {
 
     @Override
     public void execute() {
-        //driver clicked field reset stick
+        // driver clicked field reset stick
         if (cont.getLeftStickButtonPressed()) {
             drive.resetFieldOriented();
         }
 
-        var dead = deadband.get();
+        double dead = deadband.get();
         double xSpeed = UtilFunctions.deadband(-cont.getLeftY(), dead);
         double ySpeed = UtilFunctions.deadband(-cont.getLeftX(), dead);
-        double turn   = UtilFunctions.deadband(-cont.getRightX(), dead);
+        double turn = UtilFunctions.deadband(-cont.getRightX(), dead);
         drive.swerveDrive(
-            xSpeed * drive.getMaxDriverSpeed(), 
-            ySpeed * drive.getMaxDriverSpeed(), 
-            turn * drive.getMaxDriverOmega()
-        );
+                xSpeed * drive.getMaxDriverSpeed(),
+                ySpeed * drive.getMaxDriverSpeed(),
+                turn * drive.getMaxDriverOmega());
     }
 
     @Override
     public boolean isFinished() {
-        //never end
+        // never end
         return false;
     }
 
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        // No op
+    }
 }

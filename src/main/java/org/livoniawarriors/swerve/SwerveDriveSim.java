@@ -107,6 +107,7 @@ public class SwerveDriveSim implements ISwerveDriveIo {
                 absAngle[i] += turnOutput;
                 turnPower[i] = 0;
             } else {
+                // No op
             }
 
             //reset turn command back to zero

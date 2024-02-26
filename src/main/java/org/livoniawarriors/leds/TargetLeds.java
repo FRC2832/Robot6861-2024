@@ -76,5 +76,6 @@ public class TargetLeds extends Command {
 
     @Override
     public void end(boolean interrupted) {
+        // No op
     }
 }

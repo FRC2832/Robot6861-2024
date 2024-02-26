@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ShooterSubSys;
 
 public class ReverseShooterCmd extends Command {
-
     private final ShooterSubSys shooterSubSysObj;
 
     /** Creates a new ShootNoteCmd. */

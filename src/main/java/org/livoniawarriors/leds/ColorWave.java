@@ -31,6 +31,7 @@ public class ColorWave extends Command {
 
     @Override
     public void initialize() {
+        // No op
     }
 
     @Override
@@ -56,6 +57,7 @@ public class ColorWave extends Command {
 
     @Override
     public void end(boolean interrupted) {
+        // No op
     }
 
     /**

@@ -71,5 +71,6 @@ public class TestLeds extends Command {
 
     @Override
     public void end(boolean interrupted) {
+        // No op
     }
 }

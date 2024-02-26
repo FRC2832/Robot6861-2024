@@ -24,7 +24,6 @@ public class ClimberSubSys extends SubsystemBase {
 
     private final CANSparkMax climberMotor;
     private final RelativeEncoder climberEncoder;
-
     private double upClimbVelVolts;
     private double downClimbVelVolts;
     private double upClimbVelPct;

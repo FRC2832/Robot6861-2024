@@ -92,13 +92,14 @@ public class SwerveDriveTrain extends SubsystemBase {
         wheelRequestAngle = new DoublePublisher[numWheels];
         wheelCommandSpeed = new DoublePublisher[numWheels];
         wheelRequestSpeed = new DoublePublisher[numWheels];
-        double[] wheelOffsetSettingBackups = {18.19, 289.16, 345.23, 14.326};
+        double[] wheelOffsetSettingBackups = { 18.19, 289.16, 345.23, 14.326 };
         for (int wheel = 0; wheel < numWheels; wheel++) {
             swervePositions[wheel] = new SwerveModulePosition();
             swerveTargets[wheel] = new SwerveModuleState();
             swerveStates[wheel] = new SwerveModuleState();
             wheelOffsetSetting[wheel] = UtilFunctions
-                    .getSettingSub("/Swerve Drive/Wheel Offset " + moduleNames[wheel] + " (deg)", wheelOffsetSettingBackups[wheel]);
+                    .getSettingSub("/Swerve Drive/Wheel Offset " + moduleNames[wheel] + " (deg)",
+                            wheelOffsetSettingBackups[wheel]);
             wheelCalcAngle[wheel] = UtilFunctions
                     .getNtPub("/Swerve Drive/Module " + moduleNames[wheel] + "/Calc Angle (deg)", 0);
             wheelCommandAngle[wheel] = UtilFunctions

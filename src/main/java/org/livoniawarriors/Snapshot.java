@@ -78,7 +78,7 @@ public class Snapshot implements Runnable {
                 takeSnap = false;
                 String path = makeLogDir("");
                 if (!isUsb) {
-                    DriverStation.reportWarning("Unable to take snapshot, no USB stick!",false);
+                    DriverStation.reportWarning("Unable to take snapshot, no USB stick!", false);
                     continue;
                 }
                 LocalDateTime now = LocalDateTime.now(utc);
@@ -87,21 +87,21 @@ public class Snapshot implements Runnable {
                 try {
                     int prev = 0;
                     int cur = 0;
-                    
+
                     URL url = new URL(cameraPath);
                     URLConnection uc = url.openConnection();
                     InputStream inputStream = uc.getInputStream();
-                    
+
                     while ((inputStream != null)
                             && ((cur = inputStream.read()) >= 0)) {
                         if (prev == 0xFF && cur == 0xD8) {
-                            //start of jpeg
+                            // start of jpeg
                             jpgOut.reset();
                             jpgOut.write((byte) prev);
                         }
                         if (jpgOut != null) {
                             jpgOut.write((byte) cur);
-                            //jpeg finished
+                            // jpeg finished
                             if (prev == 0xFF && cur == 0xD9) {
                                 break;
                             }
@@ -110,14 +110,14 @@ public class Snapshot implements Runnable {
                     }
                     inputStream.close();
 
-                    if(jpgOut.size() > 0) {
+                    if (jpgOut.size() > 0) {
                         FileOutputStream writer = new FileOutputStream(path + "/" + fileName);
                         jpgOut.writeTo(writer);
                         writer.close();
-                        DriverStation.reportWarning("Wrote snapshot to: " + fileName,false);
+                        DriverStation.reportWarning("Wrote snapshot to: " + fileName, false);
                     }
                 } catch (Exception e) {
-                    DriverStation.reportWarning("Unable to take snapshot!",false);
+                    DriverStation.reportWarning("Unable to take snapshot!", false);
                     e.toString();
                 }
             }

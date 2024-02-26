@@ -10,7 +10,7 @@ public class LightningFlash extends SequentialCommandGroup {
     public LightningFlash(ILedSubsystem leds, int hue) {
         // Wpilib Hue is 0-180, FastLed was 0-360
         Color colorBright = Color.fromHSV(hue, 255, 255);
-        Color colorDim = Color.fromHSV((int) MathUtil.inputModulus(hue - 6, 0, 180), 255, 50);
+        Color colorDim = Color.fromHSV((int) MathUtil.inputModulus(hue - 6.0, 0.0, 180.0), 255, 50);
 
         addCommands(
                 new SolidColorLeds(leds, colorBright).withTimeout(0.1),

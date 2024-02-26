@@ -34,7 +34,6 @@ public class RunIndexUpCmd extends Command {
         this.indexerSubSysObj = indexerSubSysObj;
         this.colorSensorObj = colorSensorObj;
         addRequirements(indexerSubSysObj);
-
     }
 
     // Called when the command is initially scheduled.
@@ -84,6 +83,5 @@ public class RunIndexUpCmd extends Command {
 
         // return colorSensorObj.getProximity() >= 0.5;
         // return TIMER.get() >= MAX_RUN_TIME;
-
     }
 }

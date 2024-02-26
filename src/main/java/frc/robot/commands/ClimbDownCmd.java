@@ -9,16 +9,15 @@ import frc.robot.subsystems.ClimberSubSys;
 
 public class ClimbDownCmd extends Command {
     /** Creates a new ClimbDownCmd. */
-
     private final ClimberSubSys climberSubSysObj;
 
     /**
      * Creates a new Climb Up Command.
      * Makes ClimberSubSysObj a requirement
      * 
-     * @param ClimberSubSysObj The ClimberSubsystem from the where it is being called
+     * @param ClimberSubSysObj The ClimberSubsystem from the where it is being
+     *                         called
      */
-
 
     public ClimbDownCmd(ClimberSubSys climberSubSys) {
         // Use addRequirements() here to declare subsystem dependencies.
@@ -36,7 +35,6 @@ public class ClimbDownCmd extends Command {
     @Override
     public void execute() {
         climberSubSysObj.runClimberDown();
-        
     }
 
     // Called once the command ends or is interrupted.
