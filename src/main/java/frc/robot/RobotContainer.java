@@ -180,7 +180,7 @@ public class RobotContainer {
         Trigger driverRightTrigger = driverController.rightTrigger();
         Trigger driverLeftTrigger = driverController.leftTrigger();
 
-        ParallelCommandGroup intakeGroup = new ParallelCommandGroup(new IntakeNoteCmd(intakeSubSysObj, colorSensorObj),
+        ParallelCommandGroup intakeGroup = new ParallelCommandGroup(new IntakeNoteCmd(intakeSubSysObj, colorSensorObj, driverController, operatorController),
                 new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
         ParallelCommandGroup outtakeGroup = new ParallelCommandGroup(new OuttakeNoteCmd(intakeSubSysObj),
                 new RunIndexDownCmd(indexerSubSysObj));
