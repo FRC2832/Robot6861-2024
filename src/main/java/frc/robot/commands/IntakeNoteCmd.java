@@ -14,7 +14,7 @@ public class IntakeNoteCmd extends Command {
     private final IntakeSubSys intakeSubSysObj;
     private final REVColorSensor colorSensorObj;
     private static final Timer TIMER = new Timer();
-    private static final double MAX_RUN_TIME = 3.5; // seconds
+    private static final double MAX_RUN_TIME = 5.0; // was 3.5 seconds
     private static final double PROX_THRESHOLD = 0.5;
 
     /**

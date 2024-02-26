@@ -140,6 +140,9 @@ public class SwerveDriveTrain extends SubsystemBase {
 
             wheelCalcAngle[wheel].set(angle);
             hardware.setCorrectedAngle(wheel, angle);
+
+            //System.out.println("getCornerDistance(): " + hardware.getCornerDistance(wheel));
+
         }
 
         // when we are disabled, reset the turn pids as we don't want to act on the
@@ -198,7 +201,9 @@ public class SwerveDriveTrain extends SubsystemBase {
 
         // log the request
         swerveXSpeed.set(xSpeed);
+        System.out.println("xspeed " + xSpeed);
         swerveYSpeed.set(ySpeed);
+        System.out.println("yspeed " + ySpeed);
         swerveOmega.set(Math.toDegrees(turn));
         for (int i = 0; i < requestStates.length; i++) {
             wheelRequestAngle[i].set(requestStates[i].angle.getDegrees());
@@ -256,6 +261,11 @@ public class SwerveDriveTrain extends SubsystemBase {
             // whatever value is bigger flips when forwards vs backwards
             double value1 = currentState[i].speedMetersPerSecond - maxSpeedDelta;
             double value2 = currentState[i].speedMetersPerSecond + maxSpeedDelta;
+            // System.out.println("value 1 " + value1);
+            // System.out.println("value 2 " + value2);
+            // System.out.println("maxSpeedDelta " + maxSpeedDelta);
+
+
             outputStates[i].speedMetersPerSecond = MathUtil.clamp(
                     speedReq, // current request
                     Math.min(value1, value2), // last request minimum
