@@ -3,6 +3,7 @@ package org.livoniawarriors.odometry;
 public class BlankGyro implements IGyroHardware {
     @Override
     public void updateHardware() {
+        // No op
     }
 
     @Override

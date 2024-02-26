@@ -1,47 +1,45 @@
 package org.livoniawarriors.lightdriveleds;
 
-public class Status
-{
-    private byte m_raw;
-    private mode m_mode;
+public class Status {
+    private byte raw;
+    private Mode mode;
 
     public Status() {
-        this.m_raw = 0;
-        this.m_mode = mode.NONE;
+        this.raw = 0;
+        this.mode = Mode.NONE;
     }
 
     public byte getTripped() {
-        return (byte)((this.m_raw & 0xF0) >> 4);
+        return (byte) ((this.raw & 0xF0) >> 4);
     }
 
     public Boolean isEnabled() {
-        if ((this.m_raw & 0x1) > 0) {
+        if ((this.raw & 0x1) > 0) {
             return true;
         }
         return false;
     }
 
-    public mode getMode() {
-        return this.m_mode;
+    public Mode getMode() {
+        return this.mode;
     }
 
     public Byte getRaw() {
-        return this.m_raw;
+        return this.raw;
     }
 
     public void setRaw(final byte raw) {
-        this.m_raw = raw;
+        this.raw = raw;
     }
 
-    public enum mode
-    {
+    public enum Mode {
         NONE("NONE", 0),
         IDLE("IDLE", 1),
         PWM("PWM", 2),
         CAN("CAN", 3),
         SERIAL("SERIAL", 4);
 
-        private mode(final String s, final int n) {
+        private Mode(final String s, final int n) {
         }
     }
 }

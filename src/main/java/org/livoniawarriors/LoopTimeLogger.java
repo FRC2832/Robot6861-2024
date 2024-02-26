@@ -35,7 +35,7 @@ public class LoopTimeLogger implements Runnable {
             Watchdog watchDog = (Watchdog) field.get(robot); // At last it's yours.
             robotEpochs = watchToMap(watchDog);
 
-            var cs = CommandScheduler.getInstance();
+            CommandScheduler cs = CommandScheduler.getInstance();
             f = cs.getClass();
             field = f.getDeclaredField("m_watchdog");
             field.setAccessible(true);
@@ -51,7 +51,7 @@ public class LoopTimeLogger implements Runnable {
             throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
         // from the watchdog, get the tracer
         var watchClass = watchDog.getClass();
-        var field = watchClass.getDeclaredField("m_tracer");
+        Field field = watchClass.getDeclaredField("m_tracer");
         field.setAccessible(true);
         Tracer tracer = (Tracer) field.get(watchDog);
 
@@ -65,8 +65,8 @@ public class LoopTimeLogger implements Runnable {
     @Override
     public void run() {
         if (robotEpochs != null) {
-            var totalTime = 0.f;
-            for (var key : robotEpochs.keySet()) {
+            float totalTime = 0.0f;
+            for (String key : robotEpochs.keySet()) {
                 var entry = table.getEntry(key);
                 var time = robotEpochs.get(key) / 1000f;
                 entry.setDouble(time);
@@ -76,8 +76,8 @@ public class LoopTimeLogger implements Runnable {
         }
 
         if (cmdEpochs != null) {
-            var cmdTime = 0.f;
-            for (var key : cmdEpochs.keySet()) {
+            float cmdTime = 0.0f;
+            for (String key : cmdEpochs.keySet()) {
                 var entry = table.getEntry(key);
                 var time = cmdEpochs.get(key) / 1000f;
                 entry.setDouble(time);

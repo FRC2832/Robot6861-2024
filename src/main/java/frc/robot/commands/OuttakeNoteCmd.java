@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubSys;
 
 public class OuttakeNoteCmd extends Command {
-
     private final IntakeSubSys intakeSubSysObj;
 
     /** Creates a new OuttakeNoteCmd. */

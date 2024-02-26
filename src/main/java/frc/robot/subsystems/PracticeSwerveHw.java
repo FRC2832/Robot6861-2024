@@ -90,7 +90,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
         turnSensors[3] = new CANCoder(43);
         // driveMotors[3].setInverted(true);
 
-        // Current Limit for Drive and Turn (20 and 40) 
+        // Current Limit for Drive and Turn (20 and 40)
         for (CANSparkMax drive : driveMotors) {
             drive.setSmartCurrentLimit(Constants.DRIVE_MOTOR_PRIMARY_CURRENT_LIMIT);
             drive.setSecondaryCurrentLimit(Constants.DRIVE_MOTOR_SECONDARY_CURRENT_LIMIT);
@@ -99,7 +99,6 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
             turn.setSmartCurrentLimit(Constants.TURN_MOTOR_PRIMARY_CURRENT_LIMIT);
             turn.setSecondaryCurrentLimit(Constants.TURN_MOTOR_SECONDARY_CURRENT_LIMIT);
         }
-        
 
         for (CANCoder sensor : turnSensors) {
             sensor.setStatusFramePeriod(CANCoderStatusFrame.SensorData, 18);

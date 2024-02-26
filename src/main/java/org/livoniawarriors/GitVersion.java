@@ -30,7 +30,7 @@ public class GitVersion implements Serializable {
     }
 
     public static GitVersion loadVersion() {
-        var path = Filesystem.getDeployDirectory() + "/gitinfo.obj";
+        String path = Filesystem.getDeployDirectory() + "/gitinfo.obj";
         GitVersion obj;
 
         try {
@@ -76,7 +76,7 @@ public class GitVersion implements Serializable {
 
             // get the status to see if any files have changed
             pr = rt.exec("git status -s");
-            var temp = new String(pr.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+            String temp = new String(pr.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
             result.isModified = temp.length() != 0;
 
             // write object file
