@@ -37,7 +37,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants;
 import frc.robot.commands.ClimbDownCmd;
 import frc.robot.commands.ClimbUpCmd;
 import frc.robot.commands.IntakeNoteCmd;
@@ -98,7 +97,7 @@ public class RobotContainer {
         camera = CameraServer.startAutomaticCapture(Constants.CAMERA_USB_PORT);
         camera.setResolution(Constants.IMAGE_WIDTH, Constants.IMAGE_HEIGHT);
         camera.setFPS(Constants.FRAMERATE);
-        
+
         // CvSink cvSink = CameraServer.getVideo();
 
         // subsystems used in all robots
