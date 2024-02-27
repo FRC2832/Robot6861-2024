@@ -21,7 +21,7 @@ public class IntakeNoteCmd extends Command {
     private final XboxController driverController;
     private final XboxController operatorController;
     private static final Timer TIMER = new Timer();
-    private static final double MAX_RUN_TIME = 3.5; // seconds
+    private static final double MAX_RUN_TIME = 5.0; // was 3.5 seconds
     private static final double PROX_THRESHOLD = 0.5;
 
     /**
@@ -53,8 +53,8 @@ public class IntakeNoteCmd extends Command {
     public void execute() {
         intakeSubSysObj.runIntake();
         if (isThresholdCrossed) {
-            driverController.setRumble(RumbleType.kBothRumble, 0.5);
-            operatorController.setRumble(RumbleType.kBothRumble, 0.5);
+            driverController.setRumble(RumbleType.kBothRumble, 0.8);
+            operatorController.setRumble(RumbleType.kBothRumble, 0.8);
         }
     }
 
