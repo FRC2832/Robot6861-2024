@@ -53,8 +53,8 @@ public class IntakeNoteCmd extends Command {
     public void execute() {
         intakeSubSysObj.runIntake();
         if (isThresholdCrossed) {
-            driverController.setRumble(RumbleType.kBothRumble, 0.5);
-            operatorController.setRumble(RumbleType.kBothRumble, 0.5);
+            driverController.setRumble(RumbleType.kBothRumble, 0.8);
+            operatorController.setRumble(RumbleType.kBothRumble, 0.8);
         }
     }
 

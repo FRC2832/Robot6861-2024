@@ -55,9 +55,9 @@ public class Odometry extends SubsystemBase {
         Logger.registerSensor("Gyro Yaw", this::getGyroAngle);
         Logger.registerSensor("Gyro Pitch", this::getGyroPitch);
         Logger.registerSensor("Gyro Roll", this::getGyroRoll);
-        Logger.registerSensor("Gyro X Accel", hardware::getXAccel);
-        Logger.registerSensor("Gyro Y Accel", hardware::getYAccel);
-        Logger.registerSensor("Gyro Z Accel", hardware::getZAccel);
+        //Logger.registerSensor("Gyro X Accel", hardware::getXAccel);
+        //Logger.registerSensor("Gyro Y Accel", hardware::getYAccel);
+        //Logger.registerSensor("Gyro Z Accel", hardware::getZAccel);
     }
 
     public void setSwerveDrive(SwerveDriveTrain drive) {
@@ -86,6 +86,7 @@ public class Odometry extends SubsystemBase {
     public void periodic() {
         hardware.updateHardware();
         Rotation2d heading = getGyroRotation();
+        System.out.println("Heading: " + heading);
 
         if (drive != null) {
             SwerveModulePosition[] states = drive.getSwervePositions();
