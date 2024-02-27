@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.cscore.VideoSource;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -52,6 +54,12 @@ public final class Constants {
     public static final int DRIVE_MOTOR_SECONDARY_CURRENT_LIMIT = 60;
     public static final int TURN_MOTOR_PRIMARY_CURRENT_LIMIT = 40;
     public static final int TURN_MOTOR_SECONDARY_CURRENT_LIMIT = 60;
+
+    // Vision system values
+    public static final int CAMERA_USB_PORT = 0;
+    public static final int IMAGE_WIDTH = 640;
+    public static final int IMAGE_HEIGHT = 480;
+    public static final int FRAMERATE = 20;
 
     private Constants() {
         // No-op. This is a utility class. Keep the constructor private to prevent

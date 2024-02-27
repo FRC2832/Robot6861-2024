@@ -45,7 +45,7 @@ public class Odometry extends SubsystemBase {
         hardware = new BlankGyro();
         robotPose = new Pose2d(FIELD_LENGTH_METERS / 2, FIELD_WIDTH_METERS / 2, new Rotation2d());
         startPose = new Pose2d(FIELD_LENGTH_METERS / 2, FIELD_WIDTH_METERS / 2, new Rotation2d());
-        lastVisionTime = 0;
+        lastVisionTime = 0.0;
 
         field = new Field2d();
         resetPos = UtilFunctions.getNtSub("/Odometry/Reset Position", false);

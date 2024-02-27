@@ -23,6 +23,8 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -35,6 +37,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants;
 import frc.robot.commands.ClimbDownCmd;
 import frc.robot.commands.ClimbUpCmd;
 import frc.robot.commands.IntakeNoteCmd;
@@ -69,7 +72,8 @@ public class RobotContainer {
     private ShooterSubSys shooterSubSysObj;
     private REVColorSensor colorSensorObj;
     private ClimberSubSys climberSubSysObj;
-
+    // private VisionSystem visionSystemObj;
+    private UsbCamera camera;
     // TODO: Make a JoystickSubSystem
     private CommandXboxController driverController;
     private CommandXboxController operatorController;
@@ -82,7 +86,6 @@ public class RobotContainer {
         intakeSubSysObj = new IntakeSubSys();
         indexerSubSysObj = new IndexerSubSys();
         shooterSubSysObj = new ShooterSubSys();
-        //colorSensorObj = null;
         climberSubSysObj = new ClimberSubSys();
         colorSensorObj = new REVColorSensor(Port.kMXP); // TODO: Verify this port.
         String serNum = RobotController.getSerialNumber();
@@ -90,6 +93,13 @@ public class RobotContainer {
         // known Rio serial numbers:
         // 031b525b = buzz
         // 03064db7 = big buzz
+
+        // Boilerplate code to start the camera server
+        camera = CameraServer.startAutomaticCapture(Constants.CAMERA_USB_PORT);
+        camera.setResolution(Constants.IMAGE_WIDTH, Constants.IMAGE_HEIGHT);
+        camera.setFPS(Constants.FRAMERATE);
+        
+        // CvSink cvSink = CameraServer.getVideo();
 
         // subsystems used in all robots
         odometry = new Odometry();
@@ -105,12 +115,15 @@ public class RobotContainer {
         } else {
             // competition robot
             swerveDrive = new SwerveDriveTrain(new PracticeSwerveHw(), odometry);
-            odometry.setGyroHardware(new PigeonGyro(50));
+            odometry.setGyroHardware(new PigeonGyro(50)); // TODO: Ensure this ID is correct
 
         }
 
         odometry.setSwerveDrive(swerveDrive);
-        odometry.setStartingPose(new Pose2d(1.92, 2.79, new Rotation2d(0)));
+        odometry.setStartingPose(new Pose2d(1.92, 2.79, new Rotation2d(0))); // TODO: Verify this starting pose is
+                                                                             // correct.
+
+        // visionSystemObj = new VisionSystem(odometry);
 
         // add some buttons to press for development
         SmartDashboard.putData("Wheels Straight", new MoveWheels(swerveDrive, MoveWheels.wheelsStraight()));
@@ -180,7 +193,8 @@ public class RobotContainer {
         Trigger driverRightTrigger = driverController.rightTrigger();
         Trigger driverLeftTrigger = driverController.leftTrigger();
 
-        ParallelCommandGroup intakeGroup = new ParallelCommandGroup(new IntakeNoteCmd(intakeSubSysObj, colorSensorObj, driverController, operatorController),
+        ParallelCommandGroup intakeGroup = new ParallelCommandGroup(
+                new IntakeNoteCmd(intakeSubSysObj, colorSensorObj, driverController, operatorController),
                 new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
         ParallelCommandGroup outtakeGroup = new ParallelCommandGroup(new OuttakeNoteCmd(intakeSubSysObj),
                 new RunIndexDownCmd(indexerSubSysObj));
