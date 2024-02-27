@@ -4,22 +4,22 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.IndexerSubSys;
-import com.revrobotics.RelativeEncoder;
 import org.livoniawarriors.swerve.SwerveDriveTrain;
 
 public class DriveBackCmd extends Command {
-
     private final SwerveDriveTrain swerveObj;
-    private final double distance;
-    private final SwerveModulePosition[] finalPos = new SwerveModulePosition[4];
-    private final SwerveModulePosition[] curPos = new SwerveModulePosition[4];
+    private final double tgtDistance;
+
+    private double initDistance;
+    private SwerveModulePosition[] curPos = new SwerveModulePosition[4];
 
     /** Creates a new RunIndexDown. */
     public DriveBackCmd(SwerveDriveTrain swerve, double distance) {
         this.swerveObj = swerve;
-        this.distance = distance;
+        this.tgtDistance = distance;
+        this.initDistance = swerveObj.getSwervePositions()[0].distanceMeters;
         addRequirements(swerve);
         // Use addRequirements() here to declare subsystem dependencies.
     }
@@ -28,7 +28,7 @@ public class DriveBackCmd extends Command {
     @Override
     public void initialize() {
         curPos = swerveObj.getSwervePositions();
-        finalPos = curPos;
+        initDistance = curPos[0].distanceMeters;
         // Add distance to finalPos
     }
 
@@ -43,18 +43,19 @@ public class DriveBackCmd extends Command {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        /* Stops swerve drive motors when command ends
-        public void stopWheels() {
-            swerveDrive(0, 0, 0);
-        }
-        From SwerveDriveTrain.java in src/main/java/org/livoniawarriors/swerve
-        */
+        /*
+         * Stops swerve drive motors when command ends
+         * public void stopWheels() {
+         * swerveDrive(0, 0, 0);
+         * }
+         * From SwerveDriveTrain.java in src/main/java/org/livoniawarriors/swerve
+         */
         swerveObj.stopWheels();
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return (curPos.minus(finalPos) < 0.1);
+        return Math.abs(curPos[0].distanceMeters - initDistance) >= Math.abs(tgtDistance);
     }
 }
