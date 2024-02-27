@@ -34,6 +34,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -47,6 +48,7 @@ import frc.robot.commands.ReverseShooterCmd;
 import frc.robot.commands.RunIndexDownCmd;
 import frc.robot.commands.RunIndexUpCmd;
 import frc.robot.commands.RunIndexUpContinuousCmd;
+import frc.robot.commands.autons.blue.ShootAndBackAuton;
 import frc.robot.subsystems.ClimberSubSys;
 import frc.robot.subsystems.IndexerSubSys;
 import frc.robot.subsystems.IntakeSubSys;
@@ -162,6 +164,8 @@ public class RobotContainer {
 
         // Build an auto chooser. This will use Commands.none() as the default option.
         autoChooser = AutoBuilder.buildAutoChooser();
+        autoChooser.addOption("Shoot and Back (Blue)", new ShootAndBackAuton(swerveDrive, shooterSubSysObj, indexerSubSysObj));
+        autoChooser.addOption("Do Nothing", Commands.none());
         SmartDashboard.putData("Auto Chooser", autoChooser);
         
     }
