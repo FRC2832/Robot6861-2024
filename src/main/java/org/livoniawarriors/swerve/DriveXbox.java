@@ -6,6 +6,7 @@ import edu.wpi.first.networktables.DoubleSubscriber;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants;
 
 /**
  * Drive the robot with xbox controller
@@ -44,10 +45,24 @@ public class DriveXbox extends Command {
         double xSpeed = UtilFunctions.deadband(-cont.getLeftY(), dead);
         double ySpeed = UtilFunctions.deadband(-cont.getLeftX(), dead);
         double turn = UtilFunctions.deadband(-cont.getRightX(), dead);
-        drive.swerveDrive(
+       
+        
+        if(cont.getLeftBumperPressed()){ //snail mode
+            drive.swerveDrive(
+                Constants.SNAIL_MODE * xSpeed * drive.getMaxDriverSpeed(),
+                Constants.SNAIL_MODE * ySpeed * drive.getMaxDriverSpeed(),
+                turn * drive.getMaxDriverOmega());
+        } else if(cont.getRightTriggerAxis()>= 0.5){ //turtle mode
+            drive.swerveDrive(
+                Constants.TURTLE_MODE * xSpeed * drive.getMaxDriverSpeed(),
+                Constants.TURTLE_MODE * ySpeed * drive.getMaxDriverSpeed(),
+                turn * drive.getMaxDriverOmega());
+        }else{
+            drive.swerveDrive(
                 xSpeed * drive.getMaxDriverSpeed(),
                 ySpeed * drive.getMaxDriverSpeed(),
                 turn * drive.getMaxDriverOmega());
+        }
     }
 
     @Override
