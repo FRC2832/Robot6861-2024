@@ -52,7 +52,7 @@ public class DriveXbox extends Command {
                 Constants.SNAIL_MODE * xSpeed * drive.getMaxDriverSpeed(),
                 Constants.SNAIL_MODE * ySpeed * drive.getMaxDriverSpeed(),
                 turn * drive.getMaxDriverOmega());
-        } else if(cont.getRightTriggerAxis()>= 0.5){ //turtle mode
+        } else if(cont.getLeftTriggerAxis()>= 0.5){ //turtle mode
             drive.swerveDrive(
                 Constants.TURTLE_MODE * xSpeed * drive.getMaxDriverSpeed(),
                 Constants.TURTLE_MODE * ySpeed * drive.getMaxDriverSpeed(),
