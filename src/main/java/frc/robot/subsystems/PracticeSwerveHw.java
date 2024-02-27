@@ -12,7 +12,6 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
 @SuppressWarnings("removal")
@@ -231,7 +230,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
 
     @Override
     public void updateInputs() {
-
+        // No op
     }
 
 }
