@@ -158,7 +158,7 @@ public class SwerveDriveTrain extends SubsystemBase {
         resetZeroPid = false;
 
         pushSwerveStates(swerveStates, swerveTargets);
-        minSpeed = UtilFunctions.getSetting(MIN_SPEED_KEY, 0.1); // TODO: may need to increase to 0.5 once max speed
+        minSpeed = UtilFunctions.getSetting(MIN_SPEED_KEY, 0.3); // TODO: may need to increase to 0.5 once max speed
                                                                  // increases
         maxSpeed = UtilFunctions.getSetting(MAX_SPEED_KEY, 5);
     }
@@ -202,9 +202,9 @@ public class SwerveDriveTrain extends SubsystemBase {
 
         // log the request
         swerveXSpeed.set(xSpeed);
-        System.out.println("xspeed " + xSpeed);
+        // System.out.println("xspeed " + xSpeed);
         swerveYSpeed.set(ySpeed);
-        System.out.println("yspeed " + ySpeed);
+        // System.out.println("yspeed " + ySpeed);
         swerveOmega.set(Math.toDegrees(turn));
         for (int i = 0; i < requestStates.length; i++) {
             wheelRequestAngle[i].set(requestStates[i].angle.getDegrees());
