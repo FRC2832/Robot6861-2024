@@ -53,6 +53,9 @@ public final class Constants {
     public static final int TURN_MOTOR_PRIMARY_CURRENT_LIMIT = 40;
     public static final int TURN_MOTOR_SECONDARY_CURRENT_LIMIT = 60;
 
+    //
+    public static final double TURTLE_MODE = 0.5;
+    public static final double SNAIL_MODE = 0.25;
     private Constants() {
         // No-op. This is a utility class. Keep the constructor private to prevent
         // instantiation.

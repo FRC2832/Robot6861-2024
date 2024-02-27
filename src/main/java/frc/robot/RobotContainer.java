@@ -179,6 +179,8 @@ public class RobotContainer {
 
         Trigger driverRightTrigger = driverController.rightTrigger();
         Trigger driverLeftTrigger = driverController.leftTrigger();
+        Trigger driverXButton = driverController.x();
+
 
         ParallelCommandGroup intakeGroup = new ParallelCommandGroup(new IntakeNoteCmd(intakeSubSysObj, colorSensorObj, driverController, operatorController),
                 new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
@@ -196,7 +198,7 @@ public class RobotContainer {
         operatorDPadUp.whileTrue(new ClimbUpCmd(climberSubSysObj));
 
         driverRightTrigger.whileTrue(new RunIndexUpContinuousCmd(indexerSubSysObj));
-        driverLeftTrigger.whileTrue(new RunIndexDownCmd(indexerSubSysObj));
+        driverXButton.whileTrue(new RunIndexDownCmd(indexerSubSysObj));
 
     }
 
