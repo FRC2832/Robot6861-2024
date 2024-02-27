@@ -44,6 +44,7 @@ public final class Constants {
     // climber motor values
     public static final int CLIMBER_MOTOR_CAN_ID = 5;
     public static final int CLIMBER_MOTOR_SMART_CURRENT_LIMIT = 30; // TODO: confirm this value
+    public static final int CLIMBER_MOTOR_SECONDARY_CURRENT_LIMIT = 50; // TODO: confirm this value
     public static final int UPCLIMB_MOTOR_PCT = 20; // TODO: confirm this value
     public static final int DOWNCLIMB_MOTOR_PCT = -70; // TODO: Confirm this value
 

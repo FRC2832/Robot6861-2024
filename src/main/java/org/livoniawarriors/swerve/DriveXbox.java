@@ -49,7 +49,7 @@ public class DriveXbox extends Command {
        
         double newXSpeed = 0.0;
         double newYSpeed = 0.0;
-        if(cont.getLeftBumperPressed()){ //snail mode
+        if(cont.getLeftBumper()){ //snail mode
             SmartDashboard.putString("Drive mode:", "Snail");
             newXSpeed = Constants.SNAIL_MODE * xSpeed * drive.getMaxDriverSpeed();
             newYSpeed = Constants.SNAIL_MODE * ySpeed * drive.getMaxDriverSpeed();

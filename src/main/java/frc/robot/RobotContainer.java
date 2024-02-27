@@ -39,6 +39,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ClimbDownCmd;
 import frc.robot.commands.ClimbUpCmd;
+import frc.robot.commands.ShowClimberEncoderCmd;
 import frc.robot.commands.IntakeNoteCmd;
 import frc.robot.commands.OuttakeNoteCmd;
 import frc.robot.commands.PrimeShooterCmd;
@@ -131,6 +132,8 @@ public class RobotContainer {
         SmartDashboard.putData("Drive Wheels Straight", new MoveWheels(swerveDrive, MoveWheels.driveWheelsStraight()));
         SmartDashboard.putData("Drive Wheels Diamond", new MoveWheels(swerveDrive, MoveWheels.driveWheelsDiamond()));
         SmartDashboard.putData("Test Leds", new TestLeds(leds));
+        SmartDashboard.putNumber("Climb motor encoder", climberSubSysObj.showEncoders());
+        
 
         // Register Named Commands for PathPlanner
         NamedCommands.registerCommand("flashRed", new LightningFlash(leds, Color.kFirstRed));
@@ -160,6 +163,7 @@ public class RobotContainer {
         // Build an auto chooser. This will use Commands.none() as the default option.
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
+        
     }
 
     /**
@@ -178,6 +182,8 @@ public class RobotContainer {
         // setup default commands that are used for driving
         swerveDrive.setDefaultCommand(new DriveXbox(swerveDrive, driverController));
         leds.setDefaultCommand(new RainbowLeds(leds));
+        //ClimberSubSys.setDefaultCommand(new ShowClimberEncoderCmd(climberSubSysObj));
+        
 
         // setup button bindings
         Trigger operatorLeftTrigger = operatorController.leftTrigger();

@@ -169,6 +169,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
     public void setCornerState(int wheel, SwerveModuleState swerveModuleState) {
         // set the drive command
         double velPct = swerveModuleState.speedMetersPerSecond / 5; // TODO set equal to max module speed
+        System.out.println(velPct);
         double velVolts = velPct * 12.0; 
         //System.out.println("module volts commanded" + velVolts);
         //System.out.println("module PCT commanded" + velPct);

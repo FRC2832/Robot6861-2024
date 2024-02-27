@@ -38,8 +38,7 @@ public class SwerveDriveTrain extends SubsystemBase {
     private SwerveModulePosition[] swervePositions;
     private SwerveModuleState[] swerveTargets;
     private double gyroOffset = 0.0;
-    private PIDController pidZero = new PIDController(0.00, 0.00000, 0); // TODO: was kp =0.15, ki = 0.001. Need
-                                                                         // different values?
+    private PIDController pidZero = new PIDController(0.01, 0.0005, 0); // confirm these values.
     private SwerveModuleState[] swerveStates;
     private boolean optimize;
     private boolean resetZeroPid;
@@ -158,7 +157,7 @@ public class SwerveDriveTrain extends SubsystemBase {
         resetZeroPid = false;
 
         pushSwerveStates(swerveStates, swerveTargets);
-        minSpeed = UtilFunctions.getSetting(MIN_SPEED_KEY, 0.3); // TODO: may need to increase to 0.5 once max speed
+        minSpeed = UtilFunctions.getSetting(MIN_SPEED_KEY, 0.1); // TODO: may need to increase to 0.5 once max speed
                                                                  // increases
         maxSpeed = UtilFunctions.getSetting(MAX_SPEED_KEY, 5);
     }
@@ -187,6 +186,7 @@ public class SwerveDriveTrain extends SubsystemBase {
         } else {
             // straighten the robot
             turn = pidZero.calculate(currentHeading.getDegrees(), gyroOffset);
+            System.out.println("turn: " + turn);
         }
 
         if (fieldOriented) {
