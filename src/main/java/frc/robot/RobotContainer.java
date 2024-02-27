@@ -190,7 +190,6 @@ public class RobotContainer {
         Trigger operatorDPadUp = operatorController.povUp();
 
         Trigger driverRightTrigger = driverController.rightTrigger();
-        Trigger driverLeftTrigger = driverController.leftTrigger();
         Trigger driverXButton = driverController.x();
 
 
