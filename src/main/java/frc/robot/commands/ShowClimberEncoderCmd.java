@@ -8,35 +8,36 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ClimberSubSys;
 
 public class ShowClimberEncoderCmd extends Command {
-  /** Creates a new ShowClimberEnvoder. */
-  private ClimberSubSys climberSubSysObj;
+    /** Creates a new ShowClimberEnvoder. */
+    private ClimberSubSys climberSubSysObj;
 
-  public ShowClimberEncoderCmd(ClimberSubSys climberSubSysObj) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.climberSubSysObj = climberSubSysObj;
-    addRequirements(climberSubSysObj);
-  }
+    public ShowClimberEncoderCmd(ClimberSubSys climberSubSysObj) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        this.climberSubSysObj = climberSubSysObj;
+        addRequirements(climberSubSysObj);
+    }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    climberSubSysObj.resetEncoders();
-  
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+        climberSubSysObj.resetEncoders();
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    climberSubSysObj.showEncoders();
-  }
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        climberSubSysObj.showEncoders();
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }
