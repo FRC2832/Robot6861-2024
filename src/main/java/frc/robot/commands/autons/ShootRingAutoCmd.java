@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubSys;
 import frc.robot.subsystems.ShooterSubSys;
 
-public class ShootRingAuton extends Command {
+public class ShootRingAutoCmd extends Command {
     private final ShooterSubSys shooterSubSysObj;
     private final IndexerSubSys indexerSubSysObj;
     private final double tgtShooterVelRPM;
@@ -19,7 +19,7 @@ public class ShootRingAuton extends Command {
     private static final Timer TIMER = new Timer();
 
     /** Creates a new ShootRingAuton. */
-    public ShootRingAuton(ShooterSubSys shooterSubSysObj, IndexerSubSys indexerSubSysObj, double tgtShooterVelRPM) {
+    public ShootRingAutoCmd(ShooterSubSys shooterSubSysObj, IndexerSubSys indexerSubSysObj, double tgtShooterVelRPM) {
         this.shooterSubSysObj = shooterSubSysObj;
         this.indexerSubSysObj = indexerSubSysObj;
         this.tgtShooterVelRPM = tgtShooterVelRPM;

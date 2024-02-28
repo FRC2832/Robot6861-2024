@@ -100,7 +100,7 @@ public class Logger implements Runnable {
                         command -> Shuffleboard.addEventMarker(
                                 "Command finished", command.getName(), EventImportance.kNormal));
 
-        flashDrivePresent = UtilFunctions.getNtPub("/Sensors/Flash Drive Attached", false);
+        flashDrivePresent = UtilFunctions.getNtPub("/Sensors/Flash Drive Attached", true);
     }
 
     public void start() {

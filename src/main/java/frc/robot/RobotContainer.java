@@ -19,6 +19,7 @@ import org.livoniawarriors.swerve.SwerveDriveTrain;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
@@ -41,6 +42,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ClimbDownCmd;
 import frc.robot.commands.ClimbUpCmd;
 import frc.robot.commands.ShowClimberEncoderCmd;
+import frc.robot.commands.autons.AmpSideNoteAuton;
+import frc.robot.commands.autons.AmpSideOutAuton;
+import frc.robot.commands.autons.CenterNoteAuton;
+import frc.robot.commands.autons.StageSideNoteAuton;
+import frc.robot.commands.autons.StageSideOutAuton;
 import frc.robot.commands.IntakeNoteCmd;
 import frc.robot.commands.OuttakeNoteCmd;
 import frc.robot.commands.PrimeShooterCmd;
@@ -48,7 +54,6 @@ import frc.robot.commands.ReverseShooterCmd;
 import frc.robot.commands.RunIndexDownCmd;
 import frc.robot.commands.RunIndexUpCmd;
 import frc.robot.commands.RunIndexUpContinuousCmd;
-import frc.robot.commands.autons.blue.ShootAndBackAuton;
 import frc.robot.subsystems.ClimberSubSys;
 import frc.robot.subsystems.IndexerSubSys;
 import frc.robot.subsystems.IntakeSubSys;
@@ -149,8 +154,8 @@ public class RobotContainer {
                 swerveDrive::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
                 new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your
                                                  // Constants class
-                        new PIDConstants(0.5, 0.0, 0.0), // TODO: check values. was kp = 5. Translation PID constants
-                        new PIDConstants(0.5, 0.0, 0.0), // TODO: check values. was kp = 5. Rotation PID constants
+                        new PIDConstants(3, 0.0, 0.0), // Translation PID constants
+                        new PIDConstants(1.75, 0.0, 0.0), // Rotation PID constants
                         swerveDrive.getMaxSpeed(), // Max module speed, in m/s
                         swerveDrive.getDriveBaseRadius(), // Drive base radius in meters. Distance from robot center to
                                                           // furthest module.
@@ -164,7 +169,11 @@ public class RobotContainer {
 
         // Build an auto chooser. This will use Commands.none() as the default option.
         autoChooser = AutoBuilder.buildAutoChooser();
-        autoChooser.addOption("Shoot and Back (Blue)", new ShootAndBackAuton(swerveDrive, shooterSubSysObj, indexerSubSysObj));
+        autoChooser.addOption("Center Note", new CenterNoteAuton(shooterSubSysObj, indexerSubSysObj, intakeSubSysObj, colorSensorObj));
+        autoChooser.addOption("Amp Side Note", new AmpSideNoteAuton(shooterSubSysObj, indexerSubSysObj, intakeSubSysObj, colorSensorObj));
+        autoChooser.addOption("Amp Side Out", new AmpSideOutAuton(shooterSubSysObj, indexerSubSysObj));
+        autoChooser.addOption("Stage Side Out", new StageSideOutAuton(shooterSubSysObj, indexerSubSysObj));
+        autoChooser.addOption("Stage Side Note", new StageSideNoteAuton(shooterSubSysObj, indexerSubSysObj, intakeSubSysObj, colorSensorObj));
         autoChooser.addOption("Do Nothing", Commands.none());
         SmartDashboard.putData("Auto Chooser", autoChooser);
         

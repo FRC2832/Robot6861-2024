@@ -40,6 +40,7 @@ public final class Constants {
     public static final double FL_SHOOTER_MOTOR_PCT = -10.0; // TODO: confirm these values
     public static final double FR_SHOOTER_MOTOR_REVERSE_PCT = -2.0;
     public static final double FL_SHOOTER_MOTOR_REVERSE_PCT = 2.0;
+    public static final double AUTON_TARGET_VELOCITY = 60.0;  //units in RPM
 
     // climber motor values
     public static final int CLIMBER_MOTOR_CAN_ID = 5;
