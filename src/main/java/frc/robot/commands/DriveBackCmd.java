@@ -36,7 +36,7 @@ public class DriveBackCmd extends Command {
     @Override
     public void execute() {
         // Might need to change value of yspeed (second parameter) to negative
-        swerveObj.swerveDrive(0, 0.3, 0); // Drive backwards at 30% speed
+        swerveObj.swerveDrive(0, -0.3, 0); // Drive backwards at 30% speed
         curPos = swerveObj.getSwervePositions();
     }
 

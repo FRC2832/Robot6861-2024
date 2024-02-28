@@ -14,11 +14,11 @@ import org.livoniawarriors.swerve.SwerveDriveTrain;
 
 public class ShootAndBackAuton extends SequentialCommandGroup {
     public ShootAndBackAuton(SwerveDriveTrain swerveObj, ShooterSubSys shooterObj, IndexerSubSys indexerObj) {
-        double distance = 2.0;
-        double tgtVelocity = 60.0;
+        double distance = 2.0; //units in meters
+        double tgtVelocity = 60.0;  //units in RPM
         addCommands(
-            new ShootRingAuton(shooterObj, indexerObj, tgtVelocity),
-            new DriveBackCmd(swerveObj, distance)
-        );
+                new ShootRingAuton(shooterObj, indexerObj, tgtVelocity),
+                new DriveBackCmd(swerveObj, distance)
+            );
     }
 }

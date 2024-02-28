@@ -9,6 +9,7 @@ import org.livoniawarriors.REVColorSensor;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubSys;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RunIndexUpCmd extends Command {
     /** Creates a new RunIndexUp. */
@@ -70,8 +71,6 @@ public class RunIndexUpCmd extends Command {
         double prox = colorSensorObj.getProximity();
         if (!isThresholdCrossed && prox >= PROX_THRESHOLD) {
             isThresholdCrossed = true;
-            //System.out.println("isThresholdCrossed " + isThresholdCrossed + " prox " + prox + " BUFFER_TIMER "
-                    //+ BUFFER_TIMER.get() + " TIMER " + TIMER.get());
             return false;
         }
         if (isThresholdCrossed) {

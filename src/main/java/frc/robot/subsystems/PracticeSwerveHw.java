@@ -12,6 +12,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
 @SuppressWarnings("removal")
@@ -121,10 +122,6 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
             turnPid[wheel] = new PIDController(0.5 / Math.PI, 0.2, 0.0); // TODO: modify turnPID values
 
             // driveEncoder[wheel] = driveMotors[wheel].getEncoder();
-            // System.out.println("Drive Encoder Position: " + driveEncoder[wheel].getPosition());
-            // System.out.println("getCornerDistance(): " + getCornerDistance(wheel) + "\n");
-            // //SmartDashboard.putNumber("drive encoder " + driveEncoder[wheel]);
-            //driveEncoderVelocity[wheel] = driveEncoder[wheel].getVelocity();
             
         }
         setDriveMotorBrakeMode(true);
@@ -169,14 +166,13 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
     public void setCornerState(int wheel, SwerveModuleState swerveModuleState) {
         // set the drive command
         double velPct = swerveModuleState.speedMetersPerSecond / 5; // TODO set equal to max module speed
-        System.out.println(velPct);
+        SmartDashboard.putNumber("Wheel Velocity ", velPct);
         double velVolts = velPct * 12.0; 
-        //System.out.println("module volts commanded" + velVolts);
-        //System.out.println("module PCT commanded" + velPct);
+
         // driveMotors[wheel].set(velPct);
         // CANSparkBase.ControlType.kDutyCycle ^
         driveMotors[wheel].setVoltage(velVolts);
-        // System.out.println("Commanded Volts" + velVolts);
+    
 
         // set the turn command
         // we need the request to be within the boundaries, not wrap around the 180

@@ -16,6 +16,7 @@ import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.DoubleSubscriber;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SwerveDriveTrain extends SubsystemBase {
@@ -38,7 +39,7 @@ public class SwerveDriveTrain extends SubsystemBase {
     private SwerveModulePosition[] swervePositions;
     private SwerveModuleState[] swerveTargets;
     private double gyroOffset = 0.0;
-    private PIDController pidZero = new PIDController(0.01, 0.0005, 0); // confirm these values.
+    private PIDController pidZero = new PIDController(0.01, 0.0000, 0); // confirm these values.
     private SwerveModuleState[] swerveStates;
     private boolean optimize;
     private boolean resetZeroPid;
@@ -141,7 +142,6 @@ public class SwerveDriveTrain extends SubsystemBase {
             wheelCalcAngle[wheel].set(angle);
             hardware.setCorrectedAngle(wheel, angle);
 
-            //System.out.println("getCornerDistance(): " + hardware.getCornerDistance(wheel));
 
         }
 
@@ -186,7 +186,7 @@ public class SwerveDriveTrain extends SubsystemBase {
         } else {
             // straighten the robot
             turn = pidZero.calculate(currentHeading.getDegrees(), gyroOffset);
-            System.out.println("turn: " + turn);
+            SmartDashboard.putNumber("turn ", turn);
         }
 
         if (fieldOriented) {
@@ -202,9 +202,8 @@ public class SwerveDriveTrain extends SubsystemBase {
 
         // log the request
         swerveXSpeed.set(xSpeed);
-        // System.out.println("xspeed " + xSpeed);
         swerveYSpeed.set(ySpeed);
-        // System.out.println("yspeed " + ySpeed);
+        
         swerveOmega.set(Math.toDegrees(turn));
         for (int i = 0; i < requestStates.length; i++) {
             wheelRequestAngle[i].set(requestStates[i].angle.getDegrees());
@@ -262,10 +261,7 @@ public class SwerveDriveTrain extends SubsystemBase {
             // whatever value is bigger flips when forwards vs backwards
             double value1 = currentState[i].speedMetersPerSecond - maxSpeedDelta;
             double value2 = currentState[i].speedMetersPerSecond + maxSpeedDelta;
-            // System.out.println("value 1 " + value1);
-            // System.out.println("value 2 " + value2);
-            // System.out.println("maxSpeedDelta " + maxSpeedDelta);
-
+            
 
             outputStates[i].speedMetersPerSecond = MathUtil.clamp(
                     speedReq, // current request
