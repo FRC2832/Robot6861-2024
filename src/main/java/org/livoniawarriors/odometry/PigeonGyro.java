@@ -33,7 +33,7 @@ public class PigeonGyro implements IGyroHardware {
 
     @Override
     public double getGyroAngle() {
-        return -yprDeg[0];
+        return yprDeg[0];  //was negative when Pigeon was upside down.
     }
 
     @Override
