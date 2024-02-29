@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -46,6 +47,9 @@ public class ShooterSubSys extends SubsystemBase {
         shooterVelPctFL = Constants.FL_SHOOTER_MOTOR_PCT;
         shooterVelVoltsFR = shooterVelPctFR * 12.0;
         shooterVelVoltsFL = shooterVelPctFL * 12.0;
+
+        shooterMotorFR.setIdleMode(IdleMode.kBrake); 
+        shooterMotorFL.setIdleMode(IdleMode.kBrake);
     }
 
     public void runShooter() {

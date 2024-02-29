@@ -19,7 +19,7 @@ public class PickUpNoteAutoCmd extends Command {
     private static final Timer TIMER = new Timer();
     private static final Timer BUFFER_TIMER = new Timer();
     private static final double AUTON_MAX_RUN_TIME = 6.0;
-    private static final double BUFFER_TIME = 1.0;
+    private static final double BUFFER_TIME = 0.5;
     private static final double PROX_THRESHOLD = 0.5;
 
     public PickUpNoteAutoCmd(IntakeSubSys intakeSubSysObj, IndexerSubSys indexerSubSysObj, REVColorSensor colorSensorObj) {
@@ -51,12 +51,14 @@ public class PickUpNoteAutoCmd extends Command {
         intakeSubSysObj.stopIntakeMotors();
         indexerSubSysObj.stopIndexMotors();
         TIMER.stop();
+        BUFFER_TIMER.stop();
     }
 
     @Override
     public boolean isFinished() {
         double prox = colorSensorObj.getProximity();
         if (!isThresholdCrossed && prox >= PROX_THRESHOLD) {
+            // top of note passes sensor
             isThresholdCrossed = true;
             return false;
         }

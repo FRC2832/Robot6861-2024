@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.78,
-        "y": 4.44
+        "x": 0.851841268497352,
+        "y": 4.429540141487691
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.8887189672527496,
-        "y": 1.327181464548115
+        "x": 0.9605602357501015,
+        "y": 1.3167216060358058
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "StageSideStart"
     },
     {
       "anchor": {
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 1.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -45,8 +45,8 @@
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": -61.04786481874892,
+    "rotation": -51.53408744233339,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

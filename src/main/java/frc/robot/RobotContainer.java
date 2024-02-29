@@ -42,11 +42,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ClimbDownCmd;
 import frc.robot.commands.ClimbUpCmd;
 import frc.robot.commands.ShowClimberEncoderCmd;
-import frc.robot.commands.autons.AmpSideNoteAuton;
-import frc.robot.commands.autons.AmpSideOutAuton;
-import frc.robot.commands.autons.CenterNoteAuton;
-import frc.robot.commands.autons.StageSideNoteAuton;
-import frc.robot.commands.autons.StageSideOutAuton;
+import frc.robot.commands.autons.PickUpNoteAutoCmd;
+import frc.robot.commands.autons.ShootRingAutoCmd;
+import frc.robot.commands.autons.WaitAutoCmd;
 import frc.robot.commands.IntakeNoteCmd;
 import frc.robot.commands.OuttakeNoteCmd;
 import frc.robot.commands.PrimeShooterCmd;
@@ -145,6 +143,9 @@ public class RobotContainer {
         // Register Named Commands for PathPlanner
         NamedCommands.registerCommand("flashRed", new LightningFlash(leds, Color.kFirstRed));
         NamedCommands.registerCommand("flashBlue", new LightningFlash(leds, Color.kFirstBlue));
+        NamedCommands.registerCommand("PickUpNote", new PickUpNoteAutoCmd(intakeSubSysObj, indexerSubSysObj, colorSensorObj));
+        NamedCommands.registerCommand("ShootRing", new ShootRingAutoCmd(shooterSubSysObj, indexerSubSysObj, Constants.AUTON_TARGET_VELOCITY));
+        NamedCommands.registerCommand("Wait", new WaitAutoCmd(8));
 
         // Configure the AutoBuilder
         AutoBuilder.configureHolonomic(
@@ -155,7 +156,7 @@ public class RobotContainer {
                 new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your
                                                  // Constants class
                         new PIDConstants(3, 0.0, 0.0), // Translation PID constants
-                        new PIDConstants(1.75, 0.0, 0.0), // Rotation PID constants
+                        new PIDConstants(1.25, 0.0, 0.0), // Rotation PID constants
                         swerveDrive.getMaxSpeed(), // Max module speed, in m/s
                         swerveDrive.getDriveBaseRadius(), // Drive base radius in meters. Distance from robot center to
                                                           // furthest module.
@@ -169,11 +170,6 @@ public class RobotContainer {
 
         // Build an auto chooser. This will use Commands.none() as the default option.
         autoChooser = AutoBuilder.buildAutoChooser();
-        autoChooser.addOption("Center Note", new CenterNoteAuton(shooterSubSysObj, indexerSubSysObj, intakeSubSysObj, colorSensorObj));
-        autoChooser.addOption("Amp Side Note", new AmpSideNoteAuton(shooterSubSysObj, indexerSubSysObj, intakeSubSysObj, colorSensorObj));
-        autoChooser.addOption("Amp Side Out", new AmpSideOutAuton(shooterSubSysObj, indexerSubSysObj));
-        autoChooser.addOption("Stage Side Out", new StageSideOutAuton(shooterSubSysObj, indexerSubSysObj));
-        autoChooser.addOption("Stage Side Note", new StageSideNoteAuton(shooterSubSysObj, indexerSubSysObj, intakeSubSysObj, colorSensorObj));
         autoChooser.addOption("Do Nothing", Commands.none());
         SmartDashboard.putData("Auto Chooser", autoChooser);
         

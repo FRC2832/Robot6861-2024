@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.851841268497352,
+      "y": 4.429540141487691
+    },
+    "rotation": -51.05152653869491
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootRing"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Stage Side Out"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

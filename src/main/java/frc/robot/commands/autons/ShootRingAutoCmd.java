@@ -31,6 +31,7 @@ public class ShootRingAutoCmd extends Command {
     @Override
     public void initialize() {
         TIMER.reset();
+        TIMER.start();
         isShooterPrimed = false;
     }
 
@@ -43,12 +44,18 @@ public class ShootRingAutoCmd extends Command {
             indexerSubSysObj.stopIndexMotors();
         }
         shooterSubSysObj.runShooter();
-        if (shooterSubSysObj.getShooterVelRPM() - tgtShooterVelRPM <= 0.1) {
+        if (!isShooterPrimed && TIMER.get() >= 1) {
             isShooterPrimed = true;
+            TIMER.reset();
             TIMER.start();
-        } else {
-            isShooterPrimed = false;
         }
+        // if (Math.abs(shooterSubSysObj.getShooterVelRPM() - tgtShooterVelRPM) <= 10) {
+        //     isShooterPrimed = true;
+        //     TIMER.start();
+        // } 
+        // else {
+        //     isShooterPrimed = false;
+        // }
     }
 
     // Called once the command ends or is interrupted.
