@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.882246070047696,
-      "y": 6.648081120236315
+      "x": 0.8752387134403901,
+      "y": 6.655266629977705
     },
-    "rotation": 50.94465189732513
+    "rotation": 50.69286997013815
   },
   "command": {
     "type": "sequential",
@@ -18,22 +18,15 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "wait",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Amp Side To Note"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "PickUpNote"
-                }
-              }
-            ]
+            "waitTime": 8.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Amp Side Out"
           }
         }
       ]
