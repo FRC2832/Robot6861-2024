@@ -16,6 +16,7 @@ import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.DoubleSubscriber;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SwerveDriveTrain extends SubsystemBase {
@@ -38,8 +39,7 @@ public class SwerveDriveTrain extends SubsystemBase {
     private SwerveModulePosition[] swervePositions;
     private SwerveModuleState[] swerveTargets;
     private double gyroOffset = 0.0;
-    private PIDController pidZero = new PIDController(0.00, 0.00000, 0); // TODO: was kp =0.15, ki = 0.001. Need
-                                                                         // different values?
+    private PIDController pidZero = new PIDController(0.000, 0.0000, 0); // confirm these values.
     private SwerveModuleState[] swerveStates;
     private boolean optimize;
     private boolean resetZeroPid;
@@ -92,12 +92,14 @@ public class SwerveDriveTrain extends SubsystemBase {
         wheelRequestAngle = new DoublePublisher[numWheels];
         wheelCommandSpeed = new DoublePublisher[numWheels];
         wheelRequestSpeed = new DoublePublisher[numWheels];
+        double[] wheelOffsetSettingBackups = { 18.19, 289.16, 345.23, 14.326 };
         for (int wheel = 0; wheel < numWheels; wheel++) {
             swervePositions[wheel] = new SwerveModulePosition();
             swerveTargets[wheel] = new SwerveModuleState();
             swerveStates[wheel] = new SwerveModuleState();
             wheelOffsetSetting[wheel] = UtilFunctions
-                    .getSettingSub("/Swerve Drive/Wheel Offset " + moduleNames[wheel] + " (deg)", 0);
+                    .getSettingSub("/Swerve Drive/Wheel Offset " + moduleNames[wheel] + " (deg)",
+                            wheelOffsetSettingBackups[wheel]);
             wheelCalcAngle[wheel] = UtilFunctions
                     .getNtPub("/Swerve Drive/Module " + moduleNames[wheel] + "/Calc Angle (deg)", 0);
             wheelCommandAngle[wheel] = UtilFunctions
@@ -139,6 +141,8 @@ public class SwerveDriveTrain extends SubsystemBase {
 
             wheelCalcAngle[wheel].set(angle);
             hardware.setCorrectedAngle(wheel, angle);
+
+
         }
 
         // when we are disabled, reset the turn pids as we don't want to act on the
@@ -182,6 +186,7 @@ public class SwerveDriveTrain extends SubsystemBase {
         } else {
             // straighten the robot
             turn = pidZero.calculate(currentHeading.getDegrees(), gyroOffset);
+            SmartDashboard.putNumber("turn ", turn);
         }
 
         if (fieldOriented) {
@@ -198,6 +203,7 @@ public class SwerveDriveTrain extends SubsystemBase {
         // log the request
         swerveXSpeed.set(xSpeed);
         swerveYSpeed.set(ySpeed);
+        
         swerveOmega.set(Math.toDegrees(turn));
         for (int i = 0; i < requestStates.length; i++) {
             wheelRequestAngle[i].set(requestStates[i].angle.getDegrees());
@@ -255,6 +261,8 @@ public class SwerveDriveTrain extends SubsystemBase {
             // whatever value is bigger flips when forwards vs backwards
             double value1 = currentState[i].speedMetersPerSecond - maxSpeedDelta;
             double value2 = currentState[i].speedMetersPerSecond + maxSpeedDelta;
+            
+
             outputStates[i].speedMetersPerSecond = MathUtil.clamp(
                     speedReq, // current request
                     Math.min(value1, value2), // last request minimum

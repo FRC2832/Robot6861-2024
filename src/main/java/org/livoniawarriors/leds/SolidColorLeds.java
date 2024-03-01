@@ -6,28 +6,30 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class SolidColorLeds extends Command {
     ILedSubsystem leds;
-    AddressableLEDBuffer m_ledBuffer;
+    AddressableLEDBuffer ledBuffer;
 
     public SolidColorLeds(ILedSubsystem leds, Color color) {
         this.leds = leds;
         addRequirements(leds);
-        m_ledBuffer = new AddressableLEDBuffer(leds.getLength());
-        for(int i=0; i<m_ledBuffer.getLength(); i++) {
-            m_ledBuffer.setLED(i, color);
+        ledBuffer = new AddressableLEDBuffer(leds.getLength());
+        for (int i = 0; i < ledBuffer.getLength(); i++) {
+            ledBuffer.setLED(i, color);
         }
     }
 
     @Override
-    public boolean runsWhenDisabled() { return true; }
-    
+    public boolean runsWhenDisabled() {
+        return true;
+    }
+
     @Override
-    public void initialize() { 
-        leds.setData(m_ledBuffer);
+    public void initialize() {
+        leds.setData(ledBuffer);
     }
 
     @Override
     public void execute() {
-        //since we set the color in init, no need to repeat it
+        // since we set the color in init, no need to repeat it
     }
 
     @Override
@@ -36,5 +38,7 @@ public class SolidColorLeds extends Command {
     }
 
     @Override
-    public void end(boolean interrupted) { }
+    public void end(boolean interrupted) {
+        // No op
+    }
 }

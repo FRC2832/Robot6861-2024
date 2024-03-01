@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubSys;
 
 public class RunIndexDownCmd extends Command {
-
     private final IndexerSubSys indexerSubSysObj;
 
     /** Creates a new RunIndexDown. */

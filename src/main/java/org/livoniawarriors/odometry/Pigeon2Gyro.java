@@ -5,61 +5,61 @@ import com.ctre.phoenix.sensors.Pigeon2;
 @SuppressWarnings("removal")
 public class Pigeon2Gyro implements IGyroHardware {
     private Pigeon2 pigeon;
-    private double[] ypr_deg;
-    private double[] xyz_mps;
+    private double[] yprDeg;
+    private double[] xyzMps;
 
     public Pigeon2Gyro(int id) {
         this(id, null);
     }
 
-    public Pigeon2Gyro(int id, String bus_name) {
-        if(bus_name != null) {
-            pigeon = new Pigeon2(id, bus_name);
+    public Pigeon2Gyro(int id, String busName) {
+        if (busName != null) {
+            pigeon = new Pigeon2(id, busName);
         } else {
             pigeon = new Pigeon2(id);
         }
-        ypr_deg = new double[3];
-        xyz_mps = new double[3];
+        yprDeg = new double[3];
+        xyzMps = new double[3];
     }
 
     @Override
     public void updateHardware() {
         short[] temp = new short[3];
-        pigeon.getYawPitchRoll(ypr_deg);
+        pigeon.getYawPitchRoll(yprDeg);
         pigeon.getBiasedAccelerometer(temp);
 
-        for(int i=0; i<3; i++) {
-            xyz_mps[i] = ((double)temp[i])/16384;
+        for (int i = 0; i < 3; i++) {
+            xyzMps[i] = ((double) temp[i]) / 16384;
         }
     }
 
     @Override
     public double getGyroAngle() {
-        return ypr_deg[0];
+        return yprDeg[0];
     }
 
     @Override
     public double getPitchAngle() {
-        return ypr_deg[1];
+        return yprDeg[1];
     }
 
     @Override
     public double getRollAngle() {
-        return ypr_deg[2];
+        return yprDeg[2];
     }
 
     @Override
     public double getXAccel() {
-        return xyz_mps[0];
+        return xyzMps[0];
     }
 
     @Override
     public double getYAccel() {
-        return xyz_mps[1];
+        return xyzMps[1];
     }
 
     @Override
     public double getZAccel() {
-        return xyz_mps[2];
+        return xyzMps[2];
     }
 }

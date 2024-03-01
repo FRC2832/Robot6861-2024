@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Odometry extends SubsystemBase {
     public static final double FIELD_LENGTH_METERS = 16.542;
     public static final double FIELD_WIDTH_METERS = 8.014;
-    
+
     IGyroHardware hardware;
     double lastVisionTime;
     SwerveDriveOdometry odometry;
@@ -34,7 +34,7 @@ public class Odometry extends SubsystemBase {
     SwerveDriveTrain drive;
     Pose2d robotPose;
     Pose2d startPose;
-    
+
     private Field2d field;
     private Translation2d[] swervePositions;
     private BooleanSubscriber resetPos;
@@ -44,8 +44,9 @@ public class Odometry extends SubsystemBase {
         super();
         hardware = new BlankGyro();
         robotPose = new Pose2d(FIELD_LENGTH_METERS / 2, FIELD_WIDTH_METERS / 2, new Rotation2d());
+        //SmartDashboard.putData(robotPose);
         startPose = new Pose2d(FIELD_LENGTH_METERS / 2, FIELD_WIDTH_METERS / 2, new Rotation2d());
-        lastVisionTime = 0;
+        lastVisionTime = 0.0;
 
         field = new Field2d();
         resetPos = UtilFunctions.getNtSub("/Odometry/Reset Position", false);
@@ -55,40 +56,40 @@ public class Odometry extends SubsystemBase {
         Logger.registerSensor("Gyro Yaw", this::getGyroAngle);
         Logger.registerSensor("Gyro Pitch", this::getGyroPitch);
         Logger.registerSensor("Gyro Roll", this::getGyroRoll);
-        Logger.registerSensor("Gyro X Accel", hardware::getXAccel);
-        Logger.registerSensor("Gyro Y Accel", hardware::getYAccel);
-        Logger.registerSensor("Gyro Z Accel", hardware::getZAccel);
+        //Logger.registerSensor("Gyro X Accel", hardware::getXAccel);
+        //Logger.registerSensor("Gyro Y Accel", hardware::getYAccel);
+        //Logger.registerSensor("Gyro Z Accel", hardware::getZAccel);
     }
 
     public void setSwerveDrive(SwerveDriveTrain drive) {
         this.drive = drive;
         swervePositions = drive.getCornerLocations();
         odometry = new SwerveDriveOdometry(
-            drive.getKinematics(), 
-            getGyroRotation(), 
-            drive.getSwervePositions());
+                drive.getKinematics(),
+                getGyroRotation(),
+                drive.getSwervePositions());
         poseEstimator = new SwerveDrivePoseEstimator(
-            drive.getKinematics(),
-            getGyroRotation(),
-            drive.getSwervePositions(),
-            startPose,
-            //TODO: Make these calibratable
-            VecBuilder.fill(0.1, 0.1, 0.1),
-            VecBuilder.fill(0.9, 0.9, 0.9)
-        );
+                drive.getKinematics(),
+                getGyroRotation(),
+                drive.getSwervePositions(),
+                startPose,
+                // TODO: Make these calibratable
+                VecBuilder.fill(0.1, 0.1, 0.1),
+                VecBuilder.fill(0.9, 0.9, 0.9));
     }
 
     public void setGyroHardware(IGyroHardware hardware) {
         this.hardware = hardware;
         hardware.updateHardware();
     }
-   
+
     @Override
     public void periodic() {
         hardware.updateHardware();
         Rotation2d heading = getGyroRotation();
+        //SmartDashboard.putData("heading ", getGyroRotation());
 
-        if(drive != null) {
+        if (drive != null) {
             SwerveModulePosition[] states = drive.getSwervePositions();
             robotPose = odometry.update(heading, states);
             poseEstimator.update(heading, states);
@@ -96,16 +97,17 @@ public class Odometry extends SubsystemBase {
             field.getObject("Vision Pose").setPose(poseEstimator.getEstimatedPosition());
 
             Pose2d[] swervePoses;
-            if(plotCorners.get()) {
+            if (plotCorners.get()) {
                 // Update the poses for the swerveModules. Note that the order of rotating the
                 // position and then adding the translation matters
                 swervePoses = new Pose2d[swervePositions.length];
                 for (int i = 0; i < swervePositions.length; i++) {
-                    Translation2d modulePositionFromChassis = swervePositions[i].rotateBy(heading).plus(robotPose.getTranslation());
+                    Translation2d modulePositionFromChassis = swervePositions[i].rotateBy(heading)
+                            .plus(robotPose.getTranslation());
 
                     // Module's heading is it's angle relative to the chassis heading
                     swervePoses[i] = new Pose2d(modulePositionFromChassis,
-                        states[i].angle.plus(robotPose.getRotation()));
+                            states[i].angle.plus(robotPose.getRotation()));
                 }
             } else {
                 swervePoses = new Pose2d[0];
@@ -113,10 +115,10 @@ public class Odometry extends SubsystemBase {
             field.getObject("Swerve Modules").setPoses(swervePoses);
         }
 
-        //if the user requests a reset of position, do it
-        if(resetPos.get()) {
+        // if the user requests a reset of position, do it
+        if (resetPos.get()) {
             resetPose(flipAlliance(startPose));
-            //turn off the request
+            // turn off the request
             resetPos.getTopic().publish().set(false);
         }
     }
@@ -133,15 +135,17 @@ public class Odometry extends SubsystemBase {
         Optional<Alliance> alliance = DriverStation.getAlliance();
         if (alliance.isPresent() && alliance.get() == Alliance.Red) {
             return poseToFlip.relativeTo(new Pose2d(
-                new Translation2d(FIELD_LENGTH_METERS, FIELD_WIDTH_METERS),
-                new Rotation2d(Math.PI)));
+                    new Translation2d(FIELD_LENGTH_METERS, FIELD_WIDTH_METERS),
+                    new Rotation2d(Math.PI)));
         } else {
             return poseToFlip;
         }
     }
 
     /**
-     * Supplier that determines if paths should be flipped to the other side of the field. This will maintain a global blue alliance origin.
+     * Supplier that determines if paths should be flipped to the other side of the
+     * field. This will maintain a global blue alliance origin.
+     * 
      * @return If we need to flip
      */
     public boolean shouldFlipAlliance() {
@@ -163,8 +167,8 @@ public class Odometry extends SubsystemBase {
     }
 
     public void resetHeading() {
-        //reset the robot back to it's spot, just facing forward now
-        Pose2d pose = new Pose2d(robotPose.getTranslation(),Rotation2d.fromDegrees(0));
+        // reset the robot back to it's spot, just facing forward now
+        Pose2d pose = new Pose2d(robotPose.getTranslation(), Rotation2d.fromDegrees(0));
         odometry.resetPosition(getGyroRotation(), drive.getSwervePositions(), pose);
     }
 

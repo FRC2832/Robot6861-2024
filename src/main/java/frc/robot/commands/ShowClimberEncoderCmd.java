@@ -5,34 +5,34 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.IntakeSubSys;
+import frc.robot.subsystems.ClimberSubSys;
 
-public class OuttakeNoteCmd extends Command {
-    private final IntakeSubSys intakeSubSysObj;
+public class ShowClimberEncoderCmd extends Command {
+    /** Creates a new ShowClimberEnvoder. */
+    private ClimberSubSys climberSubSysObj;
 
-    /** Creates a new OuttakeNoteCmd. */
-    public OuttakeNoteCmd(IntakeSubSys intakeSubSysObj) {
-        this.intakeSubSysObj = intakeSubSysObj;
-        addRequirements(intakeSubSysObj);
+    public ShowClimberEncoderCmd(ClimberSubSys climberSubSysObj) {
         // Use addRequirements() here to declare subsystem dependencies.
+        this.climberSubSysObj = climberSubSysObj;
+        addRequirements(climberSubSysObj);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        // No op
+        climberSubSysObj.resetEncoders();
+
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        intakeSubSysObj.runOuttake();
+        climberSubSysObj.showEncoders();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        intakeSubSysObj.stopIntakeMotors();
     }
 
     // Returns true when the command should end.

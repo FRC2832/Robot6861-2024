@@ -5,16 +5,24 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.IntakeSubSys;
+import frc.robot.subsystems.IndexerSubSys;
 
-public class OuttakeNoteCmd extends Command {
-    private final IntakeSubSys intakeSubSysObj;
+public class RunIndexUpContinuousCmd extends Command {
+    /** Creates a new RunIndexUp. */
+    private final IndexerSubSys indexerSubSysObj;
 
-    /** Creates a new OuttakeNoteCmd. */
-    public OuttakeNoteCmd(IntakeSubSys intakeSubSysObj) {
-        this.intakeSubSysObj = intakeSubSysObj;
-        addRequirements(intakeSubSysObj);
+    /**
+     * Creates a new RunIndexUpCmd.
+     * Makes indexerSubSysObj a requirement
+     * 
+     * @param indexerSubSysObj The IndexerSubsystem from the where it is being
+     *                         called
+     */
+
+    public RunIndexUpContinuousCmd(IndexerSubSys indexerSubSysObj) {
         // Use addRequirements() here to declare subsystem dependencies.
+        this.indexerSubSysObj = indexerSubSysObj;
+        addRequirements(indexerSubSysObj);
     }
 
     // Called when the command is initially scheduled.
@@ -26,13 +34,13 @@ public class OuttakeNoteCmd extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        intakeSubSysObj.runOuttake();
+        indexerSubSysObj.runIndexerUp();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        intakeSubSysObj.stopIntakeMotors();
+        indexerSubSysObj.stopIndexMotors();
     }
 
     // Returns true when the command should end.

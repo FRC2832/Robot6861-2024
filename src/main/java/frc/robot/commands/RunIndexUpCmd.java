@@ -6,17 +6,21 @@ package frc.robot.commands;
 
 import org.livoniawarriors.REVColorSensor;
 
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubSys;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RunIndexUpCmd extends Command {
     /** Creates a new RunIndexUp. */
+    private boolean isThresholdCrossed;
     private final IndexerSubSys indexerSubSysObj;
     private final REVColorSensor colorSensorObj;
+    private static final Timer BUFFER_TIMER = new Timer();
     private static final Timer TIMER = new Timer();
     private static final double MAX_RUN_TIME = 3.5; // TODO: confirm this time
+    private static final double BUFFER_TIME = 1.0;
+    private static final double PROX_THRESHOLD = 0.5;
 
     /**
      * Creates a new RunIndexUpCmd.
@@ -31,7 +35,6 @@ public class RunIndexUpCmd extends Command {
         this.indexerSubSysObj = indexerSubSysObj;
         this.colorSensorObj = colorSensorObj;
         addRequirements(indexerSubSysObj);
-
     }
 
     // Called when the command is initially scheduled.
@@ -39,12 +42,17 @@ public class RunIndexUpCmd extends Command {
     public void initialize() {
         TIMER.reset();
         TIMER.start();
+        BUFFER_TIMER.reset();
+        isThresholdCrossed = false;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         indexerSubSysObj.runIndexerUp();
+        if (isThresholdCrossed) {
+            BUFFER_TIMER.start();
+        }
     }
 
     // Called once the command ends or is interrupted.
@@ -57,10 +65,22 @@ public class RunIndexUpCmd extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        Color color = colorSensorObj.getColor();
-        return color == Color.kOrange || color == Color.kOrangeRed || TIMER.get() >= MAX_RUN_TIME;
+        // Color color = colorSensorObj.getColor();
+        // return color == Color.kOrange || color == Color.kOrangeRed || TIMER.get() >=
+        // MAX_RUN_TIME;
+        double prox = colorSensorObj.getProximity();
+        if (!isThresholdCrossed && prox >= PROX_THRESHOLD) {
+            isThresholdCrossed = true;
+            return false;
+        }
+        if (isThresholdCrossed) {
+            return (prox < PROX_THRESHOLD && BUFFER_TIMER.get() >= BUFFER_TIME) || TIMER.get() >= MAX_RUN_TIME;
+        }
+        return TIMER.get() >= MAX_RUN_TIME;
+        // double prox = colorSensorObj.getProximity();
+        // return prox >= PROX_THRESHOLD || TIMER.get() >= MAX_RUN_TIME;
+
         // return colorSensorObj.getProximity() >= 0.5;
         // return TIMER.get() >= MAX_RUN_TIME;
-
     }
 }

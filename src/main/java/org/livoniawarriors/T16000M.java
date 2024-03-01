@@ -11,22 +11,22 @@ import edu.wpi.first.wpilibj.event.EventLoop;
 public class T16000M extends GenericHID {
     /** Represents a digital button on an Saitek. */
     public enum Button {
-        trigger(1),
-        middle(2),
-        left(3),
-        right(4),
-        leftSideUpLeft(5),
-        leftSideUpMiddle(6),
-        leftSideUpRight(7),
-        leftSideDownRight(8),
-        leftSideDownMiddle(9),
-        leftSideDownLeft(10),
-        rightSideUpLeft(11),
-        rightSideUpMiddle(12),
-        rightSideUpRight(13),
-        rightSideDownRight(14),
-        rightSideDownMiddle(15),
-        rightSideDownLeft(16);
+        TRIGGER(1),
+        MIDDLE(2),
+        LEFT(3),
+        RIGHT(4),
+        LEFT_SIDE_UP_LEFT(5),
+        LEFT_SIDE_UP_MIDDLE(6),
+        LEFT_SIDE_UP_RIGHT(7),
+        LEFT_SIDE_DOWN_RIGHT(8),
+        LEFT_SIDE_DOWN_MIDDLE(9),
+        LEFT_SIDE_DOWN_LEFT(10),
+        RIGHT_SIDE_UP_LEFT(11),
+        RIGHT_SIDE_UP_MIDDLE(12),
+        RIGHT_SIDE_UP_RIGHT(13),
+        RIGHT_SIDE_DOWN_RIGHT(14),
+        RIGHT_SIDE_DOWN_MIDDLE(15),
+        RIGHT_SIDE_DOWN_LEFT(16);
 
         public final int value;
 
@@ -37,10 +37,10 @@ public class T16000M extends GenericHID {
     }
 
     public enum Axis {
-        xAxis(0),
-        yAxis(1),
-        rotate(2),
-        slider(3);
+        X_AXIS(0),
+        Y_AXIS(1),
+        ROTATE(2),
+        SLIDER(3);
 
         public final int value;
 
@@ -55,32 +55,32 @@ public class T16000M extends GenericHID {
     }
 
     public double getxAxis1() {
-        return getRawAxis(Axis.xAxis.value);
+        return getRawAxis(Axis.X_AXIS.value);
     }
 
     public double getyAxis1() {
-        return getRawAxis(Axis.yAxis.value);
+        return getRawAxis(Axis.Y_AXIS.value);
     }
 
     public double rotate() {
-        return getRawAxis(Axis.rotate.value);
+        return getRawAxis(Axis.ROTATE.value);
     }
 
     public double slider() {
-        return getRawAxis(Axis.slider.value);
+        return getRawAxis(Axis.SLIDER.value);
     }
 
     // Trigger Detection
     public boolean getTrigger() {
-        return getRawButton(Button.trigger.value);
+        return getRawButton(Button.TRIGGER.value);
     }
 
     public boolean getTriggerPressed() {
-        return getRawButtonPressed(Button.trigger.value);
+        return getRawButtonPressed(Button.TRIGGER.value);
     }
 
     public boolean getTriggerReleased() {
-        return getRawButtonReleased(Button.trigger.value);
+        return getRawButtonReleased(Button.TRIGGER.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -89,15 +89,15 @@ public class T16000M extends GenericHID {
     }
 
     public boolean getMiddle() {
-        return getRawButton(Button.middle.value);
+        return getRawButton(Button.MIDDLE.value);
     }
 
     public boolean getMiddlePressed() {
-        return getRawButtonPressed(Button.middle.value);
+        return getRawButtonPressed(Button.MIDDLE.value);
     }
 
     public boolean getMiddleReleased() {
-        return getRawButtonReleased(Button.middle.value);
+        return getRawButtonReleased(Button.MIDDLE.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -106,15 +106,15 @@ public class T16000M extends GenericHID {
     }
 
     public boolean getLeft() {
-        return getRawButton(Button.left.value);
+        return getRawButton(Button.LEFT.value);
     }
 
     public boolean getLeftPressed() {
-        return getRawButtonPressed(Button.left.value);
+        return getRawButtonPressed(Button.LEFT.value);
     }
 
     public boolean getLeftReleased() {
-        return getRawButtonReleased(Button.left.value);
+        return getRawButtonReleased(Button.LEFT.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -123,15 +123,15 @@ public class T16000M extends GenericHID {
     }
 
     public boolean getRight() {
-        return getRawButton(Button.middle.value);
+        return getRawButton(Button.MIDDLE.value);
     }
 
     public boolean getRightPressed() {
-        return getRawButtonPressed(Button.right.value);
+        return getRawButtonPressed(Button.RIGHT.value);
     }
 
     public boolean getRightReleased() {
-        return getRawButtonReleased(Button.right.value);
+        return getRawButtonReleased(Button.RIGHT.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -140,15 +140,15 @@ public class T16000M extends GenericHID {
     }
 
     public boolean getLeftSideUpLeft() {
-        return getRawButton(Button.leftSideUpLeft.value);
+        return getRawButton(Button.LEFT_SIDE_UP_LEFT.value);
     }
 
     public boolean getLeftSideUpLeftPressed() {
-        return getRawButtonPressed(Button.leftSideUpLeft.value);
+        return getRawButtonPressed(Button.LEFT_SIDE_UP_LEFT.value);
     }
 
     public boolean getLeftSideUpLeftReleased() {
-        return getRawButtonReleased(Button.leftSideUpLeft.value);
+        return getRawButtonReleased(Button.LEFT_SIDE_UP_LEFT.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -157,15 +157,15 @@ public class T16000M extends GenericHID {
     }
 
     public boolean getLeftSideUpMiddle() {
-        return getRawButton(Button.leftSideUpMiddle.value);
+        return getRawButton(Button.LEFT_SIDE_UP_MIDDLE.value);
     }
 
     public boolean getLeftSideUpMiddlePressed() {
-        return getRawButtonPressed(Button.leftSideUpMiddle.value);
+        return getRawButtonPressed(Button.LEFT_SIDE_UP_MIDDLE.value);
     }
 
     public boolean getLeftSideUpMiddleReleased() {
-        return getRawButtonReleased(Button.leftSideUpMiddle.value);
+        return getRawButtonReleased(Button.LEFT_SIDE_UP_MIDDLE.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -174,15 +174,15 @@ public class T16000M extends GenericHID {
     }
 
     public boolean getLeftSideUpRight() {
-        return getRawButton(Button.leftSideUpRight.value);
+        return getRawButton(Button.LEFT_SIDE_UP_RIGHT.value);
     }
 
     public boolean getLeftSideUpRightPressed() {
-        return getRawButtonPressed(Button.leftSideUpRight.value);
+        return getRawButtonPressed(Button.LEFT_SIDE_UP_RIGHT.value);
     }
 
     public boolean getLeftSideUpRightReleased() {
-        return getRawButtonReleased(Button.leftSideUpMiddle.value);
+        return getRawButtonReleased(Button.LEFT_SIDE_UP_MIDDLE.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -191,15 +191,15 @@ public class T16000M extends GenericHID {
     }
 
     public boolean getLeftSideDownRight() {
-        return getRawButton(Button.leftSideDownRight.value);
+        return getRawButton(Button.LEFT_SIDE_DOWN_RIGHT.value);
     }
 
     public boolean getLeftSideDownRightPressed() {
-        return getRawButtonPressed(Button.leftSideDownRight.value);
+        return getRawButtonPressed(Button.LEFT_SIDE_DOWN_RIGHT.value);
     }
 
     public boolean getLeftSideDownRightReleased() {
-        return getRawButtonReleased(Button.leftSideDownRight.value);
+        return getRawButtonReleased(Button.LEFT_SIDE_DOWN_RIGHT.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -208,15 +208,15 @@ public class T16000M extends GenericHID {
     }
 
     public boolean getLeftSideDownMiddle() {
-        return getRawButton(Button.leftSideDownMiddle.value);
+        return getRawButton(Button.LEFT_SIDE_DOWN_MIDDLE.value);
     }
 
     public boolean getLeftSideDownMiddlePressed() {
-        return getRawButtonPressed(Button.leftSideDownMiddle.value);
+        return getRawButtonPressed(Button.LEFT_SIDE_DOWN_MIDDLE.value);
     }
 
     public boolean getLeftSideDownMiddleReleased() {
-        return getRawButtonReleased(Button.leftSideDownMiddle.value);
+        return getRawButtonReleased(Button.LEFT_SIDE_DOWN_MIDDLE.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -225,15 +225,15 @@ public class T16000M extends GenericHID {
     }
 
     public boolean getLeftSideDownLeft() {
-        return getRawButton(Button.leftSideDownLeft.value);
+        return getRawButton(Button.LEFT_SIDE_DOWN_LEFT.value);
     }
 
     public boolean getLeftSideDownLeftPressed() {
-        return getRawButtonPressed(Button.leftSideDownLeft.value);
+        return getRawButtonPressed(Button.LEFT_SIDE_DOWN_LEFT.value);
     }
 
     public boolean getLeftSideDownLeftReleased() {
-        return getRawButtonReleased(Button.leftSideDownLeft.value);
+        return getRawButtonReleased(Button.LEFT_SIDE_DOWN_LEFT.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -242,15 +242,15 @@ public class T16000M extends GenericHID {
     }
 
     public boolean getRightSideUpLeft() {
-        return getRawButton(Button.rightSideUpLeft.value);
+        return getRawButton(Button.RIGHT_SIDE_UP_LEFT.value);
     }
 
     public boolean getRightSideUpLeftPressed() {
-        return getRawButtonPressed(Button.rightSideUpLeft.value);
+        return getRawButtonPressed(Button.RIGHT_SIDE_UP_LEFT.value);
     }
 
     public boolean getRightSideUpLeftReleased() {
-        return getRawButtonReleased(Button.leftSideUpLeft.value);
+        return getRawButtonReleased(Button.LEFT_SIDE_UP_LEFT.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -259,15 +259,15 @@ public class T16000M extends GenericHID {
     }
 
     public boolean getRightSideUpMiddle() {
-        return getRawButton(Button.leftSideUpMiddle.value);
+        return getRawButton(Button.LEFT_SIDE_UP_MIDDLE.value);
     }
 
     public boolean getRightSideUpMiddlePressed() {
-        return getRawButtonPressed(Button.rightSideUpMiddle.value);
+        return getRawButtonPressed(Button.RIGHT_SIDE_UP_MIDDLE.value);
     }
 
     public boolean getRightSideUpMiddleReleased() {
-        return getRawButtonReleased(Button.rightSideUpMiddle.value);
+        return getRawButtonReleased(Button.RIGHT_SIDE_UP_MIDDLE.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -276,15 +276,15 @@ public class T16000M extends GenericHID {
     }
 
     public boolean getRightSideUpRight() {
-        return getRawButton(Button.rightSideUpRight.value);
+        return getRawButton(Button.RIGHT_SIDE_UP_RIGHT.value);
     }
 
     public boolean getRightSideUpRightPressed() {
-        return getRawButtonPressed(Button.rightSideUpRight.value);
+        return getRawButtonPressed(Button.RIGHT_SIDE_UP_RIGHT.value);
     }
 
     public boolean getRightSideUpRightReleased() {
-        return getRawButtonReleased(Button.rightSideUpMiddle.value);
+        return getRawButtonReleased(Button.RIGHT_SIDE_UP_MIDDLE.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -293,15 +293,15 @@ public class T16000M extends GenericHID {
     }
 
     public boolean getRightSideDownRight() {
-        return getRawButton(Button.rightSideDownRight.value);
+        return getRawButton(Button.RIGHT_SIDE_DOWN_RIGHT.value);
     }
 
     public boolean getRightSideDownRightPressed() {
-        return getRawButtonPressed(Button.rightSideDownRight.value);
+        return getRawButtonPressed(Button.RIGHT_SIDE_DOWN_RIGHT.value);
     }
 
     public boolean getRightSideDownRightReleased() {
-        return getRawButtonReleased(Button.rightSideDownRight.value);
+        return getRawButtonReleased(Button.RIGHT_SIDE_DOWN_RIGHT.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -310,15 +310,15 @@ public class T16000M extends GenericHID {
     }
 
     public boolean getRightSideDownMiddle() {
-        return getRawButton(Button.rightSideDownMiddle.value);
+        return getRawButton(Button.RIGHT_SIDE_DOWN_MIDDLE.value);
     }
 
     public boolean getRightSideDownMiddlePressed() {
-        return getRawButtonPressed(Button.rightSideDownMiddle.value);
+        return getRawButtonPressed(Button.RIGHT_SIDE_DOWN_MIDDLE.value);
     }
 
     public boolean getRightSideDownMiddleReleased() {
-        return getRawButtonReleased(Button.rightSideDownMiddle.value);
+        return getRawButtonReleased(Button.RIGHT_SIDE_DOWN_MIDDLE.value);
     }
 
     @SuppressWarnings("MethodName")
@@ -327,15 +327,15 @@ public class T16000M extends GenericHID {
     }
 
     public boolean getRightSideDownLeft() {
-        return getRawButton(Button.rightSideDownLeft.value);
+        return getRawButton(Button.RIGHT_SIDE_DOWN_LEFT.value);
     }
 
     public boolean getRightSideDownLeftPressed() {
-        return getRawButtonPressed(Button.rightSideDownLeft.value);
+        return getRawButtonPressed(Button.RIGHT_SIDE_DOWN_LEFT.value);
     }
 
     public boolean getRightSideDownLeftReleased() {
-        return getRawButtonReleased(Button.rightSideDownLeft.value);
+        return getRawButtonReleased(Button.RIGHT_SIDE_DOWN_LEFT.value);
     }
 
     @SuppressWarnings("MethodName")

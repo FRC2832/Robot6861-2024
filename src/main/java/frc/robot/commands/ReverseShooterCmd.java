@@ -5,15 +5,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.IntakeSubSys;
+import frc.robot.subsystems.ShooterSubSys;
 
-public class OuttakeNoteCmd extends Command {
-    private final IntakeSubSys intakeSubSysObj;
+public class ReverseShooterCmd extends Command {
+    private final ShooterSubSys shooterSubSysObj;
 
-    /** Creates a new OuttakeNoteCmd. */
-    public OuttakeNoteCmd(IntakeSubSys intakeSubSysObj) {
-        this.intakeSubSysObj = intakeSubSysObj;
-        addRequirements(intakeSubSysObj);
+    /** Creates a new ShootNoteCmd. */
+    public ReverseShooterCmd(ShooterSubSys shooterSubSysObj) {
+        this.shooterSubSysObj = shooterSubSysObj;
+        addRequirements(shooterSubSysObj);
         // Use addRequirements() here to declare subsystem dependencies.
     }
 
@@ -26,13 +26,13 @@ public class OuttakeNoteCmd extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        intakeSubSysObj.runOuttake();
+        shooterSubSysObj.runShooterReverse();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        intakeSubSysObj.stopIntakeMotors();
+        shooterSubSysObj.stopShooter();
     }
 
     // Returns true when the command should end.

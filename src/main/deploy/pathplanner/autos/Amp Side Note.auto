@@ -2,38 +2,38 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.84,
-      "y": 0.62
+      "x": 0.882246070047696,
+      "y": 6.648081120236315
     },
-    "rotation": 0
+    "rotation": 50.94465189732513
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "ShootRing"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "flashRed"
+                  "pathName": "Amp Side To Note"
                 }
               },
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "Drive Straight - Right Side"
+                  "name": "PickUpNote"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "flashBlue"
           }
         }
       ]

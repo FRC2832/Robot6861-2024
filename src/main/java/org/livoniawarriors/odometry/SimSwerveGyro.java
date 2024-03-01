@@ -8,14 +8,15 @@ import edu.wpi.first.wpilibj.TimedRobot;
 public class SimSwerveGyro implements IGyroHardware {
     private SwerveDriveTrain swerve;
     private double chassisAngle;
-    private double accelX, accelY;
+    private double accelX;
+    private double accelY;
     private ChassisSpeeds lastSpeeds;
 
     public SimSwerveGyro(SwerveDriveTrain swerve) {
         this.swerve = swerve;
-        chassisAngle = 0;
-        accelX = 0;
-        accelY = 0;
+        chassisAngle = 0.0;
+        accelX = 0.0;
+        accelY = 0.0;
         lastSpeeds = new ChassisSpeeds();
     }
 
@@ -36,12 +37,12 @@ public class SimSwerveGyro implements IGyroHardware {
 
     @Override
     public double getPitchAngle() {
-        return 0;
+        return 0.0;
     }
 
     @Override
     public double getRollAngle() {
-        return 0;
+        return 0.0;
     }
 
     @Override
@@ -56,7 +57,6 @@ public class SimSwerveGyro implements IGyroHardware {
 
     @Override
     public double getZAccel() {
-        return 0;
+        return 0.0;
     }
-    
 }

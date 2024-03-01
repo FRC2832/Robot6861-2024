@@ -13,9 +13,8 @@ import edu.wpi.first.networktables.NetworkTableEvent;
 
 /**
  * This class lets us configure PIDs using our units that make sense. The input
- * units should be
- * something like meters or degrees, and the output would be in volts, with max
- * as 12V.
+ * units should be something like meters or degrees, and the output would be in
+ * volts, with max as 12V.
  */
 @SuppressWarnings("removal")
 public class PidConstants {
@@ -88,11 +87,9 @@ public class PidConstants {
 
     /**
      * How much range you want before the I-Term enables. For example, if kiZone=10,
-     * and the measurement
-     * is 12 units off, ignore the I term. OK to start at zero, this is used to stop
-     * integral windup when
-     * the mechanism starts moving and usually adds more overshoot after reaching
-     * the target.
+     * and the measurement is 12 units off, ignore the I term. OK to start at zero,
+     * this is used to stop integral windup when the mechanism starts moving and
+     * usually adds more overshoot after reaching the target.
      * 
      * Units: Distance
      */
@@ -100,10 +97,9 @@ public class PidConstants {
 
     /**
      * How much range is allowable to turn off the PID. For example, if kiError = 2,
-     * and the mechanism is 1
-     * unit away, the PID would turn off. OK to start at zero. This has a side
-     * effect of basically always
-     * stopping control the iError off, so probably good to keep off.
+     * and the mechanism is 1 unit away, the PID would turn off. OK to start at
+     * zero. This has a side effect of basically always stopping control the iError
+     * off, so probably good to keep off.
      * 
      * Units: Distance
      */
@@ -128,18 +124,18 @@ public class PidConstants {
      * Create a generic Constants table with no backing
      */
     public PidConstants() {
-        kP = 0;
-        kI = 0;
-        kD = 0;
-        kF = 0;
-        kS = 0;
-        kG = 0;
-        kV = 0;
-        kA = 0;
-        kiZone = 0;
-        kiError = 0;
-        kVelMax = 0;
-        kAccelMax = 0;
+        kP = 0.0;
+        kI = 0.0;
+        kD = 0.0;
+        kF = 0.0;
+        kS = 0.0;
+        kG = 0.0;
+        kV = 0.0;
+        kA = 0.0;
+        kiZone = 0.0;
+        kiError = 0.0;
+        kVelMax = 0.0;
+        kAccelMax = 0.0;
         key = null;
     }
 

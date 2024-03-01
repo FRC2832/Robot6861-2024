@@ -96,6 +96,7 @@ public class REVColorSensor {
                 SmartDashboard.putString("Color Sensor Color", color.toHexString());
                 SmartDashboard.putNumber("Color Read TimeStamp", endTime);
                 SmartDashboard.putNumber("Color Read Time", endTime - startTime);
+                SmartDashboard.putNumber("Color Sensor Prox", proximity);
 
                 // wait till next loop
                 try {

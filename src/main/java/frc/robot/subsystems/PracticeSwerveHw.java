@@ -12,6 +12,8 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
 
 @SuppressWarnings("removal")
 public class PracticeSwerveHw implements ISwerveDriveIo {
@@ -41,6 +43,8 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
     };
 
     private CANSparkMax[] driveMotors;
+    private RelativeEncoder[] driveEncoder;
+   // private RelativeEncoder[] driveEncoderVelocity;
     private CANSparkMax[] turnMotors;
     private RelativeEncoder[] turnEncoder;
     private CANCoder[] turnSensors;
@@ -53,6 +57,8 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
         // allocate our hardware
         int numMotors = swervePositions.length;
         driveMotors = new CANSparkMax[numMotors];
+       driveEncoder = new RelativeEncoder[numMotors];
+       // driveEncoderVelocity = new RelativeEncoder[numMotors];
         turnMotors = new CANSparkMax[numMotors];
         turnSensors = new CANCoder[numMotors];
         correctedAngle = new double[numMotors];
@@ -84,6 +90,16 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
         turnSensors[3] = new CANCoder(43);
         // driveMotors[3].setInverted(true);
 
+        // Current Limit for Drive and Turn (20 and 40)
+        for (CANSparkMax drive : driveMotors) {
+            drive.setSmartCurrentLimit(Constants.DRIVE_MOTOR_PRIMARY_CURRENT_LIMIT);
+            drive.setSecondaryCurrentLimit(Constants.DRIVE_MOTOR_SECONDARY_CURRENT_LIMIT);
+        }
+        for (CANSparkMax turn : turnMotors) {
+            turn.setSmartCurrentLimit(Constants.TURN_MOTOR_PRIMARY_CURRENT_LIMIT);
+            turn.setSecondaryCurrentLimit(Constants.TURN_MOTOR_SECONDARY_CURRENT_LIMIT);
+        }
+
         for (CANCoder sensor : turnSensors) {
             sensor.setStatusFramePeriod(CANCoderStatusFrame.SensorData, 18);
             sensor.setStatusFramePeriod(CANCoderStatusFrame.VbatAndFaults, 250);
@@ -101,8 +117,14 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
 
             // initialize hardware
             turnEncoder[wheel] = turnMotors[wheel].getEncoder();
+            driveMotors[wheel].getEncoder().setPositionConversionFactor(1/21.92);
+            driveMotors[wheel].getEncoder().setVelocityConversionFactor(1/(21.92 * 60));
             turnPid[wheel] = new PIDController(0.5 / Math.PI, 0.2, 0.0); // TODO: modify turnPID values
+
+            // driveEncoder[wheel] = driveMotors[wheel].getEncoder();
+            
         }
+        setDriveMotorBrakeMode(true);
     }
 
     @Override
@@ -117,7 +139,12 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
 
     @Override
     public double getCornerDistance(int wheel) {
-        return driveMotors[wheel].getEncoder().getPosition() / COUNTS_PER_METER;
+        double encoderRotations = driveMotors[wheel].getEncoder().getPosition();
+        //double wheelRotations = encoderRotations * 6.75;
+        //double circumference = 0.3191858; // meters
+        //double distance = wheelRotations * circumference;
+        return encoderRotations;
+        // return driveMotors[wheel].getEncoder().getPosition() / COUNTS_PER_METER;
     }
 
     @Override
@@ -126,8 +153,8 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
     }
 
     @Override
-    public double getCornerSpeed(int wheel) {
-        return driveMotors[wheel].getEncoder().getVelocity() / VELO_PER_METER;
+    public double getCornerSpeed(int wheel) { 
+        return driveMotors[wheel].getEncoder().getVelocity();
     }
 
     @Override
@@ -139,11 +166,13 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
     public void setCornerState(int wheel, SwerveModuleState swerveModuleState) {
         // set the drive command
         double velPct = swerveModuleState.speedMetersPerSecond / 5; // TODO set equal to max module speed
+        SmartDashboard.putNumber("Wheel Velocity ", velPct);
         double velVolts = velPct * 12.0; 
+
         // driveMotors[wheel].set(velPct);
         // CANSparkBase.ControlType.kDutyCycle ^
         driveMotors[wheel].setVoltage(velVolts);
-        // System.out.println("Commanded Volts" + velVolts);
+    
 
         // set the turn command
         // we need the request to be within the boundaries, not wrap around the 180
@@ -198,7 +227,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
 
     @Override
     public void updateInputs() {
-
+        // No op
     }
 
 }

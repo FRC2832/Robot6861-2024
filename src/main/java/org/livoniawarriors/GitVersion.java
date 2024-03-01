@@ -16,35 +16,36 @@ import edu.wpi.first.networktables.NetworkTable;
 
 public class GitVersion implements Serializable {
     static final long serialVersionUID = 12345;
-    public String LastCommit;
-    public boolean IsModified;
-    public Date BuildDate;
-    public String BuildAuthor;
+    public String lastCommit;
+    public boolean isModified;
+    public Date buildDate;
+    public String buildAuthor;
 
     public void printVersions() {
         NetworkTable table = NetworkTableInstance.getDefault().getTable("SW Version");
-        table.getEntry("Build Date").setString(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(BuildDate));
-        table.getEntry("Build Author").setString(BuildAuthor);
-        table.getEntry("Current Commit").setString(LastCommit);
-        table.getEntry("Modified").setBoolean(IsModified);
+        table.getEntry("Build Date").setString(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(buildDate));
+        table.getEntry("Build Author").setString(buildAuthor);
+        table.getEntry("Current Commit").setString(lastCommit);
+        table.getEntry("Modified").setBoolean(isModified);
     }
 
     public static GitVersion loadVersion() {
-        var path = Filesystem.getDeployDirectory() + "/gitinfo.obj";
+        String path = Filesystem.getDeployDirectory() + "/gitinfo.obj";
         GitVersion obj;
 
         try {
             FileInputStream fileInputStream = new FileInputStream(path);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             obj = (GitVersion) objectInputStream.readObject();
-            objectInputStream.close(); 
+            objectInputStream.close();
         } catch (Exception e) {
-            //generic catch is usually bad, but here we are using it to create a default whenever there is an issue loading it
+            // generic catch is usually bad, but here we are using it to create a default
+            // whenever there is an issue loading it
             obj = new GitVersion();
-            obj.BuildDate = new Date();
-            obj.IsModified = false;
-            obj.BuildAuthor = "Unknown";
-            obj.LastCommit = "Unknown";
+            obj.buildDate = new Date();
+            obj.isModified = false;
+            obj.buildAuthor = "Unknown";
+            obj.lastCommit = "Unknown";
         }
         return obj;
     }
@@ -56,27 +57,27 @@ public class GitVersion implements Serializable {
             GitVersion result = new GitVersion();
             Runtime rt = Runtime.getRuntime();
             Process pr;
-            result.BuildDate = new Date();
+            result.buildDate = new Date();
 
-            //get the user who made the commit
+            // get the user who made the commit
             pr = rt.exec("git config user.name");
             pr.waitFor();
-            result.BuildAuthor = new String(pr.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-            //remove newline at end of name
-            result.BuildAuthor = result.BuildAuthor.substring(0, result.BuildAuthor.length()-1);
+            result.buildAuthor = new String(pr.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+            // remove newline at end of name
+            result.buildAuthor = result.buildAuthor.substring(0, result.buildAuthor.length() - 1);
 
             // run git log to get the last commits hash
             pr = rt.exec("git log -1 --pretty=tformat:%h");
             pr.waitFor();
-            result.LastCommit = new String(pr.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-            if(result.LastCommit.length() > 7) {
-                result.LastCommit = result.LastCommit.substring(0, 7);
+            result.lastCommit = new String(pr.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+            if (result.lastCommit.length() > 7) {
+                result.lastCommit = result.lastCommit.substring(0, 7);
             }
 
             // get the status to see if any files have changed
             pr = rt.exec("git status -s");
-            var temp = new String(pr.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-            result.IsModified = temp.length() != 0;
+            String temp = new String(pr.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+            result.isModified = temp.length() != 0;
 
             // write object file
             FileOutputStream fileOutputStream = new FileOutputStream("src/main/deploy/gitinfo.obj");

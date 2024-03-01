@@ -33,6 +33,7 @@ public class IndexerSubSys extends SubsystemBase {
     public IndexerSubSys() {
         indexMotor = new CANSparkMax(Constants.INDEX_MOTOR_CAN_ID, MotorType.kBrushless);
         indexMotor.setSmartCurrentLimit(Constants.INDEX_MOTOR_SMART_CURRENT_LIMIT);
+        indexMotor.setSecondaryCurrentLimit(Constants.INDEX_MOTOR_SECONDARY_CURRENT_LIMIT);
         indexMotor.setIdleMode(IdleMode.kBrake);
 
         upIndexVelPct = Constants.UPINDEX_MOTOR_PCT;

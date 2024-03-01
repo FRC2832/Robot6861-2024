@@ -11,25 +11,26 @@ public class LedSubsystem extends SubsystemBase implements ILedSubsystem {
 
     /**
      * Setup the Led Hardware
+     * 
      * @param channel What PWM channel the strip is connected to
-     * @param length How long the LED string is
+     * @param length  How long the LED string is
      */
     public LedSubsystem(int channel, int length) {
         super();
-        //create the hardware device on the specified
+        // create the hardware device on the specified
         leds = new AddressableLED(channel);
         buffer = new AddressableLEDBuffer(length);
         leds.setLength(length);
-        //start the strip
+        // start the strip
         leds.start();
     }
 
     @Override
     public void periodic() {
-        //actually command the leds to show the pattern
+        // actually command the leds to show the pattern
         leds.setData(buffer);
     }
-    
+
     @Override
     public int getLength() {
         return buffer.getLength();
