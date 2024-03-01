@@ -42,10 +42,10 @@ public final class Constants {
     public static final double FL_SHOOTER_MOTOR_REVERSE_PCT = 2.0;
     public static final double AUTON_TARGET_VELOCITY = 80.0;  //units in RPM
 
-    // climber motor values
+    // climber motor values NEO
     public static final int CLIMBER_MOTOR_CAN_ID = 5;
-    public static final int CLIMBER_MOTOR_SMART_CURRENT_LIMIT = 30; // TODO: confirm this value
-    public static final int CLIMBER_MOTOR_SECONDARY_CURRENT_LIMIT = 50; // TODO: confirm this value
+    public static final int CLIMBER_MOTOR_SMART_CURRENT_LIMIT = 50; // TODO: confirm this value
+    public static final int CLIMBER_MOTOR_SECONDARY_CURRENT_LIMIT = 60; // TODO: confirm this value
     public static final int UPCLIMB_MOTOR_PCT = 20; // TODO: confirm this value
     public static final int DOWNCLIMB_MOTOR_PCT = -70; // TODO: Confirm this value
 
