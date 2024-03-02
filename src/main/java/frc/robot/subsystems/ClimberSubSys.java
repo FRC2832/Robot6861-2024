@@ -105,11 +105,11 @@ public class ClimberSubSys extends SubsystemBase {
         SmartDashboard.putNumber("Climb motor encoder - down", climberEncoder.getPosition());
 
          // PID coefficients
-         kP = 0.0;
+         kP = 0.2;
          kI = 0.0;
          kD = 0.0;
          kIz = 0.0;
-         kFF = .9;
+         kFF = 1.0;
          kMaxOutput = 0.9;
          kMinOutput = -0.9;
  
