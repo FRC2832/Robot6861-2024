@@ -111,7 +111,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
             Logger.registerCanSparkMax(moduleNames[wheel] + " Turn", turnMotors[wheel]);
             Logger.registerCanSparkMax(moduleNames[wheel] + " Drive", driveMotors[wheel]);
             Logger.registerCanCoder(moduleNames[wheel] + " Abs", turnSensors[wheel]);
-            Logger.registerSensor(moduleNames[wheel] + " Speed", () -> getCornerSpeed(wheelFinal));
+            Logger.registerSensor(moduleNames[wheel] + " Speed, volts", () -> getCornerSpeed(wheelFinal));
             Logger.registerSensor(moduleNames[wheel] + " Turn Pos", () -> getCornerAngle(wheelFinal));
             Logger.registerSensor(moduleNames[wheel] + " Drive Dist", () -> getCornerDistance(wheelFinal));
 

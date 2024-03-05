@@ -50,10 +50,10 @@ public final class Constants {
     public static final int DOWNCLIMB_MOTOR_PCT = -70; // TODO: Confirm this value
 
     // Swerve current limits
-    public static final int DRIVE_MOTOR_PRIMARY_CURRENT_LIMIT = 40;
-    public static final int DRIVE_MOTOR_SECONDARY_CURRENT_LIMIT = 60;
-    public static final int TURN_MOTOR_PRIMARY_CURRENT_LIMIT = 40;
-    public static final int TURN_MOTOR_SECONDARY_CURRENT_LIMIT = 60;
+    public static final int DRIVE_MOTOR_PRIMARY_CURRENT_LIMIT = 45;
+    public static final int DRIVE_MOTOR_SECONDARY_CURRENT_LIMIT = 65;
+    public static final int TURN_MOTOR_PRIMARY_CURRENT_LIMIT = 45;
+    public static final int TURN_MOTOR_SECONDARY_CURRENT_LIMIT = 65;
 
     // Drive mode factors
     public static final double TURTLE_MODE = 0.5;
