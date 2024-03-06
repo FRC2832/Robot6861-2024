@@ -17,12 +17,12 @@ import com.revrobotics.SparkPIDController;
 
 public class ClimberSubSys extends SubsystemBase {
     /** Creates a new Climber. */
-    // if Operator DPad up is climber up. run climber motor CAN Id 5
-    // TODO: double check CAN ID on robot, and update here
+    // if Operator DPad up is climber up.
+    //climber motor CAN Id 5
 
-    // Neo? motor
-    // Climb up is in positive volts????? CHECK
-    // CLIMber Down is negative volts???? CHECK
+    // Neo motor
+    // Climb up is in positive volts
+    // CliMber Down is negative volts
     //
 
     private final CANSparkMax climberMotor;
