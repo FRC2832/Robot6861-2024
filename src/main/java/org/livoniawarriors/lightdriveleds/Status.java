@@ -14,10 +14,7 @@ public class Status {
     }
 
     public Boolean isEnabled() {
-        if ((this.raw & 0x1) > 0) {
-            return true;
-        }
-        return false;
+        return (this.raw & 0x1) > 0;
     }
 
     public Mode getMode() {

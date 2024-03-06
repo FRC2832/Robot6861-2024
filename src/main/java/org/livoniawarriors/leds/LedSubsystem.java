@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LedSubsystem extends SubsystemBase implements ILedSubsystem {
-    AddressableLED leds;
-    AddressableLEDBuffer buffer;
+    private AddressableLED leds;
+    private AddressableLEDBuffer buffer;
 
     /**
      * Setup the Led Hardware

@@ -4,14 +4,16 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-
-import frc.robot.Constants;
+import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
 
 public class ShooterSubSys extends SubsystemBase {
     /** Creates a new Shooter. */
@@ -34,12 +36,29 @@ public class ShooterSubSys extends SubsystemBase {
     private double shooterVelPctFR;
     private double shooterVelPctFL;
     private double shooterVelRPM;
+    private SparkPIDController shooterPIDControllerFR;
+    private SparkPIDController shooterPIDControllerFL;
+    private double kP;
+    private double kI;
+    private double kD;
+    private double kIz;
+    private double kFF;
+    private double kMaxOutputFL;
+    private double kMinOutputFL;
+    private double kMaxOutputFR;
+    private double kMinOutputFR;
+    private double maxRPM;
+
+
 
     public ShooterSubSys() {
+        // Main Shooter Module
         shooterMotorFR = new CANSparkMax(Constants.FR_SHOOTER_MOTOR_CAN_ID, MotorType.kBrushless);
         shooterMotorFL = new CANSparkMax(Constants.FL_SHOOTER_MOTOR_CAN_ID, MotorType.kBrushless);
         shooterMotorFREncoder = shooterMotorFR.getEncoder();
         shooterMotorFLEncoder = shooterMotorFL.getEncoder();
+        shooterPIDControllerFR = shooterMotorFR.getPIDController();
+        shooterPIDControllerFL = shooterMotorFL.getPIDController();
         shooterMotorFR.setSmartCurrentLimit(Constants.FR_SHOOTER_MOTOR_SMART_CURRENT_LIMIT);
         shooterMotorFL.setSmartCurrentLimit(Constants.FL_SHOOTER_MOTOR_SMART_CURRENT_LIMIT);
 
@@ -54,9 +73,52 @@ public class ShooterSubSys extends SubsystemBase {
 
     public void runShooter() {
         // calculate
-        shooterMotorFR.setVoltage(shooterVelVoltsFR);
-        shooterMotorFL.setVoltage(shooterVelVoltsFL);
+
+         // PID coefficients
+         kP = 6e-5;   // REV suggested value. May need to change for our motors
+         kI = 0;
+         kD = 0; 
+         kIz = 0; 
+         kFF = 0.000015; // REV suggested value. May need to change for our motors
+         kMaxOutputFL = 0.9; 
+         kMinOutputFL= -0.9;
+         kMaxOutputFL = 0.9; 
+         kMinOutputFL= -0.9;
+         maxRPM = 5676;  // from REV data sheet. 
+
+        // set PID coefficients FL motor
+        shooterPIDControllerFL.setP(kP);
+        shooterPIDControllerFL.setP(kI);
+        shooterPIDControllerFL.setP(kD);
+        shooterPIDControllerFL.setIZone(kIz);
+        shooterPIDControllerFL.setFF(kFF);
+        shooterPIDControllerFL.setOutputRange(kMinOutputFL, kMaxOutputFL);
+
+        // set PID coefficients FR motor
+        shooterPIDControllerFR.setP(kP);
+        shooterPIDControllerFR.setP(kI);
+        shooterPIDControllerFR.setP(kD);
+        shooterPIDControllerFR.setIZone(kIz);
+        shooterPIDControllerFR.setFF(kFF);
+        shooterPIDControllerFR.setOutputRange(kMinOutputFR, kMaxOutputFR);
+
+
+        
+        double rpmFL = 50.0;  // TODO: get encoder values from smartdashboard
+        double rpmFR = 50.0;  // TODO: get encoder values from smartdashboard
+
+        // shooterMotorFR.setVoltage(shooterVelVoltsFR);
+        // shooterMotorFL.setVoltage(shooterVelVoltsFL);
+
+
+        shooterPIDControllerFL.setReference(rpmFL, CANSparkBase.ControlType.kVelocity);
+
+        SmartDashboard.putNumber("RPM FL Shooter", rpmFL);
+        SmartDashboard.putNumber("RPM FR Shooter", rpmFR);
+        SmartDashboard.putNumber("ProcessVariable Shooter FL", shooterMotorFLEncoder.getVelocity());
+        SmartDashboard.putNumber("ProcessVariable Shooter FR", shooterMotorFREncoder.getVelocity());
     }
+
 
     public void runShooterReverse() {
         double shooterVelVoltsReverseFR = Constants.FR_SHOOTER_MOTOR_REVERSE_PCT * 12.0;
@@ -72,6 +134,19 @@ public class ShooterSubSys extends SubsystemBase {
         shooterMotorFREncoder.setPosition(0.0);
     }
 
+    /* 
+    * public void runLinearActuator() {
+    *   linearActuatorMotor.setVoltage(linearActuatorVelVolts);
+    * }
+    */
+
+    /* 
+    * public void runLinearActuatorReverse() {
+    *   linearActuatorMotor.setVoltage(linearActuatorVelVoltsReverse);
+    * }
+    */
+
+   
     @Override
     public void periodic() {
         // TODO: Calculate average RPM and display on SmartDashboard.

@@ -10,9 +10,9 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.networktables.NetworkTable;
 
 public class GitVersion implements Serializable {
     static final long serialVersionUID = 12345;

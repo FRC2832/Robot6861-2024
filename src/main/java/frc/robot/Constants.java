@@ -40,7 +40,7 @@ public final class Constants {
     public static final double FL_SHOOTER_MOTOR_PCT = -10.0; // TODO: confirm these values
     public static final double FR_SHOOTER_MOTOR_REVERSE_PCT = -2.0;
     public static final double FL_SHOOTER_MOTOR_REVERSE_PCT = 2.0;
-    public static final double AUTON_TARGET_VELOCITY = 80.0;  //units in RPM
+    public static final double AUTON_TARGET_VELOCITY = 80.0; // units in RPM
 
     // climber motor values NEO
     public static final int CLIMBER_MOTOR_CAN_ID = 5;
@@ -64,6 +64,14 @@ public final class Constants {
     public static final int IMAGE_WIDTH = 640;
     public static final int IMAGE_HEIGHT = 480;
     public static final int FRAMERATE = 20;
+
+    // Linear Actuator Values
+    // TODO: Finalize values for this section. Most of the values are placeholders
+    public static final int LINEAR_ACTUATOR_MOTOR_CAN_ID = 8;
+    public static final int LINEAR_ACTUATOR_MOTOR_SMART_CURRENT_LIMIT = 40;
+    public static final double LINEAR_ACTUATOR_MOTOR_PCT = 100.0;
+    public static final double LINEAR_ACTUATOR_MOTOR_REVERSE_PCT = 100.0;
+    
 
     private Constants() {
         // No-op. This is a utility class. Keep the constructor private to prevent

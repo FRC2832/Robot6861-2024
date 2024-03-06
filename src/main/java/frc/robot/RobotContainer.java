@@ -5,9 +5,9 @@
 package frc.robot;
 
 import org.livoniawarriors.REVColorSensor;
+import org.livoniawarriors.leds.BreathLeds;
 import org.livoniawarriors.leds.LedSubsystem;
 import org.livoniawarriors.leds.LightningFlash;
-import org.livoniawarriors.leds.RainbowLeds;
 import org.livoniawarriors.leds.TestLeds;
 import org.livoniawarriors.odometry.Odometry;
 import org.livoniawarriors.odometry.PigeonGyro;
@@ -19,7 +19,6 @@ import org.livoniawarriors.swerve.SwerveDriveTrain;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
@@ -28,23 +27,20 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ClimbDownCmd;
 import frc.robot.commands.ClimbUpCmd;
-import frc.robot.commands.ShowClimberEncoderCmd;
-import frc.robot.commands.autons.PickUpNoteAutoCmd;
-import frc.robot.commands.autons.ShootRingAutoCmd;
-import frc.robot.commands.autons.WaitAutoCmd;
 import frc.robot.commands.IntakeNoteCmd;
 import frc.robot.commands.OuttakeNoteCmd;
 import frc.robot.commands.PrimeShooterCmd;
@@ -52,6 +48,9 @@ import frc.robot.commands.ReverseShooterCmd;
 import frc.robot.commands.RunIndexDownCmd;
 import frc.robot.commands.RunIndexUpCmd;
 import frc.robot.commands.RunIndexUpContinuousCmd;
+import frc.robot.commands.autons.PickUpNoteAutoCmd;
+import frc.robot.commands.autons.ShootRingAutoCmd;
+import frc.robot.commands.autons.WaitAutoCmd;
 import frc.robot.subsystems.ClimberSubSys;
 import frc.robot.subsystems.IndexerSubSys;
 import frc.robot.subsystems.IntakeSubSys;
@@ -138,13 +137,14 @@ public class RobotContainer {
         SmartDashboard.putData("Drive Wheels Diamond", new MoveWheels(swerveDrive, MoveWheels.driveWheelsDiamond()));
         SmartDashboard.putData("Test Leds", new TestLeds(leds));
         SmartDashboard.putNumber("Climb motor encoder", climberSubSysObj.showEncoders());
-        
 
         // Register Named Commands for PathPlanner
         NamedCommands.registerCommand("flashRed", new LightningFlash(leds, Color.kFirstRed));
         NamedCommands.registerCommand("flashBlue", new LightningFlash(leds, Color.kFirstBlue));
-        NamedCommands.registerCommand("PickUpNote", new PickUpNoteAutoCmd(intakeSubSysObj, indexerSubSysObj, colorSensorObj));
-        NamedCommands.registerCommand("ShootRing", new ShootRingAutoCmd(shooterSubSysObj, indexerSubSysObj, Constants.AUTON_TARGET_VELOCITY));
+        NamedCommands.registerCommand("PickUpNote",
+                new PickUpNoteAutoCmd(intakeSubSysObj, indexerSubSysObj, colorSensorObj));
+        NamedCommands.registerCommand("ShootRing",
+                new ShootRingAutoCmd(shooterSubSysObj, indexerSubSysObj, Constants.AUTON_TARGET_VELOCITY));
         NamedCommands.registerCommand("Wait", new WaitAutoCmd(8));
 
         // Configure the AutoBuilder
@@ -172,7 +172,7 @@ public class RobotContainer {
         autoChooser = AutoBuilder.buildAutoChooser();
         autoChooser.addOption("Do Nothing", Commands.none());
         SmartDashboard.putData("Auto Chooser", autoChooser);
-        
+
     }
 
     /**
@@ -190,9 +190,8 @@ public class RobotContainer {
     public void configureBindings() {
         // setup default commands that are used for driving
         swerveDrive.setDefaultCommand(new DriveXbox(swerveDrive, driverController));
-        leds.setDefaultCommand(new RainbowLeds(leds));
-        //ClimberSubSys.setDefaultCommand(new ShowClimberEncoderCmd(climberSubSysObj));
-        
+        leds.setDefaultCommand(new BreathLeds(leds, Color.kAqua));
+        // ClimberSubSys.setDefaultCommand(new ShowClimberEncoderCmd(climberSubSysObj));
 
         // setup button bindings
         Trigger operatorLeftTrigger = operatorController.leftTrigger();
@@ -207,10 +206,9 @@ public class RobotContainer {
         Trigger driverRightTrigger = driverController.rightTrigger();
         Trigger driverXButton = driverController.x();
 
-
-        ParallelCommandGroup intakeGroup = new ParallelCommandGroup(
+        SequentialCommandGroup intakeGroup = new SequentialCommandGroup(new ParallelCommandGroup(
                 new IntakeNoteCmd(intakeSubSysObj, colorSensorObj, driverController, operatorController),
-                new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
+                new RunIndexUpCmd(indexerSubSysObj, colorSensorObj), new LightningFlash(leds, Color.kHotPink)));
         ParallelCommandGroup outtakeGroup = new ParallelCommandGroup(new OuttakeNoteCmd(intakeSubSysObj),
                 new RunIndexDownCmd(indexerSubSysObj));
 

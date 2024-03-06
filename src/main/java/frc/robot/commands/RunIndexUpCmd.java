@@ -9,7 +9,6 @@ import org.livoniawarriors.REVColorSensor;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubSys;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RunIndexUpCmd extends Command {
     /** Creates a new RunIndexUp. */

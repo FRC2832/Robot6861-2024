@@ -4,16 +4,16 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkPIDController;
 
-import frc.robot.Constants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.math.controller.PIDController;
-import com.revrobotics.SparkPIDController;
+import frc.robot.Constants;
 
 public class ClimberSubSys extends SubsystemBase {
     /** Creates a new Climber. */
@@ -33,7 +33,13 @@ public class ClimberSubSys extends SubsystemBase {
     private double downClimbVelPct;
     // private PIDController climberPID;
     private SparkPIDController climberPIDController;
-    public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
+    private double kP;
+    private double kI;
+    private double kD;
+    private double kIz;
+    private double kFF;
+    private double kMaxOutput;
+    private double kMinOutput;
 
     public ClimberSubSys() {
         climberMotor = new CANSparkMax(Constants.CLIMBER_MOTOR_CAN_ID, MotorType.kBrushless);
@@ -47,9 +53,8 @@ public class ClimberSubSys extends SubsystemBase {
         upClimbVelVolts = upClimbVelPct * 12.0;
         downClimbVelVolts = downClimbVelPct * 12.0;
 
-        climberMotor.setIdleMode(IdleMode.kBrake);  //set to coast when needing to work on climber
+        climberMotor.setIdleMode(IdleMode.kBrake); // set to coast when needing to work on climber
 
-        
     }
 
     public void resetEncoders() {
@@ -57,13 +62,8 @@ public class ClimberSubSys extends SubsystemBase {
     }
 
     public double showEncoders() {
-        //climberEncoder.getPosition();
         return climberEncoder.getPosition();
     }
-
-
-
-
 
     // Runs the Climb Motor in a positive direction to raise climber arm up. //TODO:
     // check if this is correct
@@ -87,50 +87,49 @@ public class ClimberSubSys extends SubsystemBase {
         climberPIDController.setIZone(kIz);
         climberPIDController.setFF(kFF);
         climberPIDController.setOutputRange(kMinOutput, kMaxOutput);
-        
-         double rotations = 50.0;
- 
-         //climberMotor.setVoltage(downClimbVelVolts);
- 
-         climberPIDController.setReference(rotations, CANSparkMax.ControlType.kPosition);
-     
-         SmartDashboard.putNumber("SetPoint", rotations);
-         SmartDashboard.putNumber("ProcessVariable", climberEncoder.getPosition());
 
-        //climberMotor.setVoltage(upClimbVelVolts);
+        double rotations = 50.0;
+
+        // climberMotor.setVoltage(downClimbVelVolts);
+
+        climberPIDController.setReference(rotations, CANSparkBase.ControlType.kPosition);
+
+        SmartDashboard.putNumber("SetPoint", rotations);
+        SmartDashboard.putNumber("ProcessVariable", climberEncoder.getPosition());
+
+        // climberMotor.setVoltage(upClimbVelVolts);
     }
 
     // Runs the Climber eMotor in a negative direction
     public void runClimberDown() {
         SmartDashboard.putNumber("Climb motor encoder - down", climberEncoder.getPosition());
 
-         // PID coefficients
-         kP = 0.2;
-         kI = 0.0;
-         kD = 0.0;
-         kIz = 0.0;
-         kFF = 1.0;
-         kMaxOutput = 0.9;
-         kMinOutput = -0.9;
- 
-         // set PID coefficients
-         climberPIDController.setP(kP);
-         climberPIDController.setI(kI);
-         climberPIDController.setD(kD);
-         climberPIDController.setIZone(kIz);
-         climberPIDController.setFF(kFF);
-         climberPIDController.setOutputRange(kMinOutput, kMaxOutput);
-       
+        // PID coefficients
+        kP = 0.2;
+        kI = 0.0;
+        kD = 0.0;
+        kIz = 0.0;
+        kFF = 1.0;
+        kMaxOutput = 0.9;
+        kMinOutput = -0.9;
+
+        // set PID coefficients
+        climberPIDController.setP(kP);
+        climberPIDController.setI(kI);
+        climberPIDController.setD(kD);
+        climberPIDController.setIZone(kIz);
+        climberPIDController.setFF(kFF);
+        climberPIDController.setOutputRange(kMinOutput, kMaxOutput);
+
         double rotations = -8.0;
-        
 
-        //climberMotor.setVoltage(downClimbVelVolts);
+        // climberMotor.setVoltage(downClimbVelVolts);
 
-        climberPIDController.setReference(rotations, CANSparkMax.ControlType.kPosition);
-    
+        climberPIDController.setReference(rotations, CANSparkBase.ControlType.kPosition);
+
         SmartDashboard.putNumber("SetPoint", rotations);
         SmartDashboard.putNumber("ProcessVariable", climberEncoder.getPosition());
-       
+
     }
 
     public void stopClimberMotor() {

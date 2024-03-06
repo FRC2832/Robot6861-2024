@@ -5,34 +5,34 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ClimberSubSys;
+import frc.robot.subsystems.ShooterAnglerSubSys;
 
-public class ShowClimberEncoderCmd extends Command {
-    /** Creates a new ShowClimberEncoder. */
-    private ClimberSubSys climberSubSysObj;
+public class AngleShooterDown extends Command {
+    private final ShooterAnglerSubSys shooterAnglerSubSysObj;
 
-    public ShowClimberEncoderCmd(ClimberSubSys climberSubSysObj) {
+    /** Creates a new AngleShooterDown. */
+    public AngleShooterDown(ShooterAnglerSubSys shooterAnglerSubSysObj) {
+        this.shooterAnglerSubSysObj = shooterAnglerSubSysObj;
+        addRequirements(shooterAnglerSubSysObj);
         // Use addRequirements() here to declare subsystem dependencies.
-        this.climberSubSysObj = climberSubSysObj;
-        addRequirements(climberSubSysObj);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        climberSubSysObj.resetEncoders();
-
+        // No-op
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        climberSubSysObj.showEncoders();
+        shooterAnglerSubSysObj.runLinearActuatorReverse();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        shooterAnglerSubSysObj.stopLinearActuator();
     }
 
     // Returns true when the command should end.

@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class SolidColorLeds extends Command {
-    ILedSubsystem leds;
-    AddressableLEDBuffer ledBuffer;
+    private ILedSubsystem leds;
+    private AddressableLEDBuffer ledBuffer;
 
     public SolidColorLeds(ILedSubsystem leds, Color color) {
         this.leds = leds;

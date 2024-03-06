@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class WaitAutoCmd extends Command {
     private double waitTime;
-    private static final Timer timer = new Timer();
+    private static final Timer TIMER = new Timer();
 
     public WaitAutoCmd(double seconds) {
         waitTime = seconds;
@@ -17,8 +17,8 @@ public class WaitAutoCmd extends Command {
 
     @Override
     public void initialize() {
-        timer.reset();
-        timer.start();
+        TIMER.reset();
+        TIMER.start();
     }
 
     @Override
@@ -28,11 +28,11 @@ public class WaitAutoCmd extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        timer.stop();
+        TIMER.stop();
     }
 
     @Override
     public boolean isFinished() {
-        return timer.get() >= waitTime;
+        return TIMER.get() >= waitTime;
     }
 }
