@@ -47,8 +47,14 @@ public class DriveXbox extends Command {
         double ySpeed = UtilFunctions.deadband(-cont.getLeftX(), dead);
         double turn = UtilFunctions.deadband(-cont.getRightX(), dead);
 
+        //cube joystick inputs:
+        double xSpeedCubed = Math.pow(xSpeed, 3);
+        double ySpeedCubed = Math.pow(ySpeed, 3);
+        double turnCubed = Math.pow(turn, 3);
+
         double newXSpeed;
         double newYSpeed;
+        double newTurn;
         if (cont.getLeftBumper()) { // snail mode
             SmartDashboard.putString("Drive mode:", "Snail");
             newXSpeed = Constants.SNAIL_MODE * xSpeed * drive.getMaxDriverSpeed();
@@ -69,12 +75,13 @@ public class DriveXbox extends Command {
                     turn * drive.getMaxDriverOmega());
         } else {
             SmartDashboard.putString("Drive mode:", "Normal");
-            newXSpeed = xSpeed * drive.getMaxDriverSpeed();
-            newYSpeed = ySpeed * drive.getMaxDriverSpeed();
+            newXSpeed = xSpeedCubed * drive.getMaxDriverSpeed();
+            newYSpeed = ySpeedCubed * drive.getMaxDriverSpeed();
+            newTurn = turnCubed * drive.getMaxDriverOmega();
             drive.swerveDrive(
                     newXSpeed,
                     newYSpeed,
-                    turn * drive.getMaxDriverOmega());
+                    newTurn);
         }
         SmartDashboard.putNumber("xSpeed:", newXSpeed);
         SmartDashboard.putNumber("ySpeed:", newYSpeed);

@@ -5,6 +5,8 @@ public interface IGyroHardware {
 
     double getGyroAngle();
 
+    double zeroGyroAngle();
+
     double getPitchAngle();
 
     double getRollAngle();

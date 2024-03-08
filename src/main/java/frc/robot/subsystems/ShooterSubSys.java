@@ -59,6 +59,8 @@ public class ShooterSubSys extends SubsystemBase {
         shooterMotorFL = new CANSparkMax(Constants.FL_SHOOTER_MOTOR_CAN_ID, MotorType.kBrushless);
         shooterMotorFREncoder = shooterMotorFR.getEncoder();
         shooterMotorFLEncoder = shooterMotorFL.getEncoder();
+        shooterMotorFREncoder.setPosition(0.0);
+        shooterMotorFLEncoder.setPosition(0.0);
         shooterPIDControllerFR = shooterMotorFR.getPIDController();
         shooterPIDControllerFL = shooterMotorFL.getPIDController();
         shooterMotorFR.setSmartCurrentLimit(Constants.FR_SHOOTER_MOTOR_SMART_CURRENT_LIMIT);
@@ -72,6 +74,12 @@ public class ShooterSubSys extends SubsystemBase {
         shooterMotorFR.setIdleMode(IdleMode.kBrake); 
         shooterMotorFL.setIdleMode(IdleMode.kBrake);
     }
+
+    public void resetEncoders() {
+        shooterMotorFLEncoder.setPosition(0.0);
+        shooterMotorFREncoder.setPosition(0.0);
+    }
+
 
     public void runShooterLowSpeed() {
         shooterMotorFL.set(Constants.FL_SHOOTER_MOTOR_PCT_AMP / 100.0);
@@ -139,8 +147,7 @@ public class ShooterSubSys extends SubsystemBase {
     public void stopShooter() {
         shooterMotorFR.setVoltage(0.0);
         shooterMotorFL.setVoltage(0.0);
-        shooterMotorFLEncoder.setPosition(0.0);
-        shooterMotorFREncoder.setPosition(0.0);
+        
     }
 
     /* 
