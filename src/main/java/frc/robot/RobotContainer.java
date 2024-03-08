@@ -39,6 +39,8 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.AngleShooterDown;
+import frc.robot.commands.AngleShooterUp;
 import frc.robot.commands.ClimbDownCmd;
 import frc.robot.commands.ClimbUpCmd;
 import frc.robot.commands.IntakeNoteCmd;
@@ -55,6 +57,7 @@ import frc.robot.subsystems.ClimberSubSys;
 import frc.robot.subsystems.IndexerSubSys;
 import frc.robot.subsystems.IntakeSubSys;
 import frc.robot.subsystems.PracticeSwerveHw;
+import frc.robot.subsystems.ShooterAnglerSubSys;
 import frc.robot.subsystems.ShooterSubSys;
 
 /**
@@ -76,6 +79,7 @@ public class RobotContainer {
     private ShooterSubSys shooterSubSysObj;
     private REVColorSensor colorSensorObj;
     private ClimberSubSys climberSubSysObj;
+    private ShooterAnglerSubSys shooterAnglerSubSysObj;
     // private VisionSystem visionSystemObj;
     private UsbCamera camera;
     // TODO: Make a JoystickSubSystem
@@ -91,6 +95,7 @@ public class RobotContainer {
         indexerSubSysObj = new IndexerSubSys();
         shooterSubSysObj = new ShooterSubSys();
         climberSubSysObj = new ClimberSubSys();
+        shooterAnglerSubSysObj = new ShooterAnglerSubSys();
         colorSensorObj = new REVColorSensor(Port.kMXP); // TODO: Verify this port.
         String serNum = RobotController.getSerialNumber();
         SmartDashboard.putString("Serial Number", serNum);
@@ -199,6 +204,8 @@ public class RobotContainer {
         Trigger operatorLeftBumper = operatorController.leftBumper();
         Trigger operatorRightBumper = operatorController.rightBumper();
         Trigger operatorAButton = operatorController.a();
+        Trigger operatorBButton = operatorController.b();
+        Trigger operatorXButton = operatorController.x();
         Trigger operatorYButton = operatorController.y();
         Trigger operatorDPadDown = operatorController.povDown();
         Trigger operatorDPadUp = operatorController.povUp();
@@ -211,6 +218,7 @@ public class RobotContainer {
                 new RunIndexUpCmd(indexerSubSysObj, colorSensorObj), new LightningFlash(leds, Color.kHotPink)));
         ParallelCommandGroup outtakeGroup = new ParallelCommandGroup(new OuttakeNoteCmd(intakeSubSysObj),
                 new RunIndexDownCmd(indexerSubSysObj));
+        SequentialCommandGroup anglerGroup = new SequentialCommandGroup(new AngleShooterDown(shooterAnglerSubSysObj), new AngleShooterUp(shooterAnglerSubSysObj));
 
         // operatorRightTrigger.whileTrue(new IntakeNoteCmd(intakeSubSysObj));
         operatorLeftTrigger.whileTrue(outtakeGroup);
@@ -218,6 +226,8 @@ public class RobotContainer {
         operatorLeftBumper.whileTrue(new RunIndexDownCmd(indexerSubSysObj));
         operatorRightBumper.whileTrue(new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
         operatorAButton.whileTrue(new PrimeShooterCmd(shooterSubSysObj));
+        operatorBButton.whileTrue(anglerGroup);
+        operatorXButton.whileTrue(new AngleShooterUp(shooterAnglerSubSysObj));
         operatorYButton.whileTrue(new ReverseShooterCmd(shooterSubSysObj));
         operatorDPadDown.whileTrue(new ClimbDownCmd(climberSubSysObj));
         operatorDPadUp.whileTrue(new ClimbUpCmd(climberSubSysObj));

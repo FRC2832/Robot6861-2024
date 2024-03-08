@@ -62,8 +62,8 @@ public class ShooterSubSys extends SubsystemBase {
         shooterMotorFR.setSmartCurrentLimit(Constants.FR_SHOOTER_MOTOR_SMART_CURRENT_LIMIT);
         shooterMotorFL.setSmartCurrentLimit(Constants.FL_SHOOTER_MOTOR_SMART_CURRENT_LIMIT);
 
-        shooterVelPctFR = Constants.FR_SHOOTER_MOTOR_PCT;
-        shooterVelPctFL = Constants.FL_SHOOTER_MOTOR_PCT;
+        shooterVelPctFR = Constants.FR_SHOOTER_MOTOR_PCT/100.0;
+        shooterVelPctFL = Constants.FL_SHOOTER_MOTOR_PCT/100.0;
         shooterVelVoltsFR = shooterVelPctFR * 12.0;
         shooterVelVoltsFL = shooterVelPctFL * 12.0;
 
@@ -107,11 +107,11 @@ public class ShooterSubSys extends SubsystemBase {
         double rpmFL = 50.0;  // TODO: get encoder values from smartdashboard
         double rpmFR = 50.0;  // TODO: get encoder values from smartdashboard
 
-        // shooterMotorFR.setVoltage(shooterVelVoltsFR);
-        // shooterMotorFL.setVoltage(shooterVelVoltsFL);
+        shooterMotorFR.setVoltage(shooterVelVoltsFR);
+        shooterMotorFL.setVoltage(shooterVelVoltsFL);
 
 
-        shooterPIDControllerFL.setReference(rpmFL, CANSparkBase.ControlType.kVelocity);
+        //shooterPIDControllerFL.setReference(rpmFL, CANSparkBase.ControlType.kVelocity);
 
         SmartDashboard.putNumber("RPM FL Shooter", rpmFL);
         SmartDashboard.putNumber("RPM FR Shooter", rpmFR);

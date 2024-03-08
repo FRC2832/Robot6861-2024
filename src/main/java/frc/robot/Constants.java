@@ -31,15 +31,15 @@ public final class Constants {
     public static final double UPINDEX_MOTOR_PCT = 95.0; // TODO: confirm these values
     public static final double DOWNINDEX_MOTOR_PCT = -20.0; // TODO: confirm these values
 
-    // Shooter Motor Values
+    // Shooter Motor Values NEO
     public static final int FR_SHOOTER_MOTOR_CAN_ID = 4;
     public static final int FL_SHOOTER_MOTOR_CAN_ID = 3;
-    public static final int FR_SHOOTER_MOTOR_SMART_CURRENT_LIMIT = 20;
-    public static final int FL_SHOOTER_MOTOR_SMART_CURRENT_LIMIT = 20;
-    public static final double FR_SHOOTER_MOTOR_PCT = 10.0; // TODO: confirm these values
-    public static final double FL_SHOOTER_MOTOR_PCT = -10.0; // TODO: confirm these values
-    public static final double FR_SHOOTER_MOTOR_REVERSE_PCT = -2.0;
-    public static final double FL_SHOOTER_MOTOR_REVERSE_PCT = 2.0;
+    public static final int FR_SHOOTER_MOTOR_SMART_CURRENT_LIMIT = 30; //NEO Motor
+    public static final int FL_SHOOTER_MOTOR_SMART_CURRENT_LIMIT = 30;
+    public static final double FR_SHOOTER_MOTOR_PCT = 90.0; // TODO: confirm these values
+    public static final double FL_SHOOTER_MOTOR_PCT = -95.0; // TODO: confirm these values
+    public static final double FR_SHOOTER_MOTOR_REVERSE_PCT = -10.0;
+    public static final double FL_SHOOTER_MOTOR_REVERSE_PCT = 10.0;
     public static final double AUTON_TARGET_VELOCITY = 80.0; // units in RPM
 
     // climber motor values NEO
@@ -66,11 +66,10 @@ public final class Constants {
     public static final int FRAMERATE = 20;
 
     // Linear Actuator Values
-    // TODO: Finalize values for this section. Most of the values are placeholders
-    public static final int LINEAR_ACTUATOR_MOTOR_CAN_ID = 8;
-    public static final int LINEAR_ACTUATOR_MOTOR_SMART_CURRENT_LIMIT = 40;
-    public static final double LINEAR_ACTUATOR_MOTOR_PCT = 100.0;
-    public static final double LINEAR_ACTUATOR_MOTOR_REVERSE_PCT = 100.0;
+    public static final int LINEAR_ACTUATOR_MOTOR_CAN_ID = 7;
+    public static final int LINEAR_ACTUATOR_MOTOR_SMART_CURRENT_LIMIT = 3;
+    public static final double LINEAR_ACTUATOR_MOTOR_PCT = 99.0;
+    public static final double LINEAR_ACTUATOR_MOTOR_REVERSE_PCT = -99.0;
     
 
     private Constants() {

@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -13,6 +14,8 @@ import frc.robot.Constants;
 
 public class ShooterAnglerSubSys extends SubsystemBase {
     private final CANSparkMax linearActuatorMotor;
+    private static final Timer TIMER = new Timer();
+    private final double timerLim;
     private double linearActuatorVelVolts;
     private double linearActuatorVelPct;
     private double linearActuatorVelReversePct;
@@ -24,14 +27,22 @@ public class ShooterAnglerSubSys extends SubsystemBase {
         linearActuatorMotor = new CANSparkMax(Constants.LINEAR_ACTUATOR_MOTOR_CAN_ID, MotorType.kBrushed);
         linearActuatorMotor.setSmartCurrentLimit(Constants.LINEAR_ACTUATOR_MOTOR_SMART_CURRENT_LIMIT);
 
-        linearActuatorVelPct = 1 / Constants.LINEAR_ACTUATOR_MOTOR_PCT;
-        linearActuatorVelReversePct = 1 / Constants.LINEAR_ACTUATOR_MOTOR_REVERSE_PCT;
+        linearActuatorVelPct = Constants.LINEAR_ACTUATOR_MOTOR_PCT/100.0;
+        linearActuatorVelReversePct = Constants.LINEAR_ACTUATOR_MOTOR_REVERSE_PCT/100.0;
         linearActuatorVelVolts = linearActuatorVelPct * 12.0;
         linearActuatorVelVoltsReverse = linearActuatorVelReversePct * 12.0;
+
+        timerLim = 1.75;  
     }
 
     public void runLinearActuator() {
-        linearActuatorMotor.setVoltage(linearActuatorVelVolts);
+        TIMER.restart();
+        while (TIMER.get() < timerLim) {
+            linearActuatorMotor.setVoltage(linearActuatorVelVolts);
+        }
+        linearActuatorMotor.setVoltage(0.0);
+        TIMER.stop();
+        TIMER.reset();
     }
 
     public void runLinearActuatorReverse() {
