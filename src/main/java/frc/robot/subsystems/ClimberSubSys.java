@@ -48,8 +48,8 @@ public class ClimberSubSys extends SubsystemBase {
         climberPIDController = climberMotor.getPIDController();
         climberMotor.setSmartCurrentLimit(Constants.CLIMBER_MOTOR_SMART_CURRENT_LIMIT);
         climberMotor.setSecondaryCurrentLimit(Constants.CLIMBER_MOTOR_SECONDARY_CURRENT_LIMIT);
-        upClimbVelPct = Constants.UPCLIMB_MOTOR_PCT;
-        downClimbVelPct = Constants.DOWNCLIMB_MOTOR_PCT;
+        upClimbVelPct = Constants.UPCLIMB_MOTOR_PCT/100.0;
+        downClimbVelPct = Constants.DOWNCLIMB_MOTOR_PCT/100.0;
         upClimbVelVolts = upClimbVelPct * 12.0;
         downClimbVelVolts = downClimbVelPct * 12.0;
 

@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import org.livoniawarriors.Logger;
+
 import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -62,8 +64,8 @@ public class ShooterSubSys extends SubsystemBase {
         shooterMotorFR.setSmartCurrentLimit(Constants.FR_SHOOTER_MOTOR_SMART_CURRENT_LIMIT);
         shooterMotorFL.setSmartCurrentLimit(Constants.FL_SHOOTER_MOTOR_SMART_CURRENT_LIMIT);
 
-        shooterVelPctFR = Constants.FR_SHOOTER_MOTOR_PCT/100.0;
-        shooterVelPctFL = Constants.FL_SHOOTER_MOTOR_PCT/100.0;
+        shooterVelPctFR = Constants.FR_SHOOTER_MOTOR_PCT_SPEAKER / 100.0;
+        shooterVelPctFL = Constants.FL_SHOOTER_MOTOR_PCT_SPEAKER / 100.0;
         shooterVelVoltsFR = shooterVelPctFR * 12.0;
         shooterVelVoltsFL = shooterVelPctFL * 12.0;
 
@@ -71,7 +73,12 @@ public class ShooterSubSys extends SubsystemBase {
         shooterMotorFL.setIdleMode(IdleMode.kBrake);
     }
 
-    public void runShooter() {
+    public void runShooterLowSpeed() {
+        shooterMotorFL.set(Constants.FL_SHOOTER_MOTOR_PCT_AMP / 100.0);
+        shooterMotorFR.set(Constants.FR_SHOOTER_MOTOR_PCT_AMP / 100.0);
+    }
+
+    public void runShooterHighSpeed() {
         // calculate
 
          // PID coefficients
@@ -104,19 +111,21 @@ public class ShooterSubSys extends SubsystemBase {
 
 
         
-        double rpmFL = 50.0;  // TODO: get encoder values from smartdashboard
-        double rpmFR = 50.0;  // TODO: get encoder values from smartdashboard
+        double flRPM = 50.0;  // TODO: get encoder values from smartdashboard
+        double frRPM = 50.0;  // TODO: get encoder values from smartdashboard
 
         shooterMotorFR.setVoltage(shooterVelVoltsFR);
         shooterMotorFL.setVoltage(shooterVelVoltsFL);
 
 
-        //shooterPIDControllerFL.setReference(rpmFL, CANSparkBase.ControlType.kVelocity);
+        //shooterPIDControllerFL.setReference(flRPM, CANSparkBase.ControlType.kVelocity);
 
-        SmartDashboard.putNumber("RPM FL Shooter", rpmFL);
-        SmartDashboard.putNumber("RPM FR Shooter", rpmFR);
+        SmartDashboard.putNumber("RPM FL Shooter", flRPM);
+        SmartDashboard.putNumber("RPM FR Shooter", frRPM);
         SmartDashboard.putNumber("ProcessVariable Shooter FL", shooterMotorFLEncoder.getVelocity());
         SmartDashboard.putNumber("ProcessVariable Shooter FR", shooterMotorFREncoder.getVelocity());
+       // Logger.registerCanSparkMax("Shooter Motor FL", () -> getVelocity());
+       // Logger.registerCanSparkMax("Shooter Motor FR", shooterMotorFREncoder.getVelocity());
     }
 
 

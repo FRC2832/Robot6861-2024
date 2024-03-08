@@ -20,34 +20,40 @@ public final class Constants {
     public static final int INDEX_MOTOR_CAN_ID = 1;
 
     // Intake Motor Values
-    public static final int INTAKE_MOTOR_SMART_CURRENT_LIMIT = 10; // NEO 550 - TODO: increase once development work
-    public static final int INTAKE_MOTOR_SECONDARY_CURRENT_LIMIT = 20; // complete
+    public static final int INTAKE_MOTOR_SMART_CURRENT_LIMIT = 20; // NEO 550
+    public static final int INTAKE_MOTOR_SECONDARY_CURRENT_LIMIT = 40; // complete
     public static final double INTAKE_MOTOR_PCT = 15.0; // TODO: increase these values. Maybe 70.0
     public static final double OUTTAKE_MOTOR_PCT = -20.0; // TODO: confirm these values
 
     // Indexer Motor Values
-    public static final int INDEX_MOTOR_SMART_CURRENT_LIMIT = 10; // NEO 550 - TODO: increase once development work
-    public static final int INDEX_MOTOR_SECONDARY_CURRENT_LIMIT = 20; // complete
+    public static final int INDEX_MOTOR_SMART_CURRENT_LIMIT = 20; // NEO 550 
+    public static final int INDEX_MOTOR_SECONDARY_CURRENT_LIMIT = 40; // complete
     public static final double UPINDEX_MOTOR_PCT = 95.0; // TODO: confirm these values
-    public static final double DOWNINDEX_MOTOR_PCT = -20.0; // TODO: confirm these values
+    public static final double DOWNINDEX_MOTOR_PCT = -20.0; 
 
     // Shooter Motor Values NEO
     public static final int FR_SHOOTER_MOTOR_CAN_ID = 4;
     public static final int FL_SHOOTER_MOTOR_CAN_ID = 3;
     public static final int FR_SHOOTER_MOTOR_SMART_CURRENT_LIMIT = 30; //NEO Motor
     public static final int FL_SHOOTER_MOTOR_SMART_CURRENT_LIMIT = 30;
-    public static final double FR_SHOOTER_MOTOR_PCT = 90.0; // TODO: confirm these values
-    public static final double FL_SHOOTER_MOTOR_PCT = -95.0; // TODO: confirm these values
+    public static final double FR_SHOOTER_MOTOR_PCT_SPEAKER = 90.0; // TODO: confirm these values
+    public static final double FL_SHOOTER_MOTOR_PCT_SPEAKER = -95.0; // TODO: confirm these values
     public static final double FR_SHOOTER_MOTOR_REVERSE_PCT = -10.0;
     public static final double FL_SHOOTER_MOTOR_REVERSE_PCT = 10.0;
     public static final double AUTON_TARGET_VELOCITY = 80.0; // units in RPM
+
+    // Amp
+    public static final double FR_SHOOTER_MOTOR_PCT_AMP = 20.0;
+    public static final double FL_SHOOTER_MOTOR_PCT_AMP = -20.0;
+
+    
 
     // climber motor values NEO
     public static final int CLIMBER_MOTOR_CAN_ID = 5;
     public static final int CLIMBER_MOTOR_SMART_CURRENT_LIMIT = 50; // TODO: confirm this value
     public static final int CLIMBER_MOTOR_SECONDARY_CURRENT_LIMIT = 60; // TODO: confirm this value
-    public static final int UPCLIMB_MOTOR_PCT = 20; // TODO: confirm this value
-    public static final int DOWNCLIMB_MOTOR_PCT = -70; // TODO: Confirm this value
+    public static final double UPCLIMB_MOTOR_PCT = 20.0; // TODO: confirm this value
+    public static final double DOWNCLIMB_MOTOR_PCT = -70.0; // TODO: Confirm this value
 
     // Swerve current limits
     public static final int DRIVE_MOTOR_PRIMARY_CURRENT_LIMIT = 45;

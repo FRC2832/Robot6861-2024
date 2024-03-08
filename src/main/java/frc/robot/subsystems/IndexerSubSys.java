@@ -35,8 +35,8 @@ public class IndexerSubSys extends SubsystemBase {
         indexMotor.setSecondaryCurrentLimit(Constants.INDEX_MOTOR_SECONDARY_CURRENT_LIMIT);
         indexMotor.setIdleMode(IdleMode.kBrake);
 
-        upIndexVelPct = Constants.UPINDEX_MOTOR_PCT;
-        downIndexVelPct = Constants.DOWNINDEX_MOTOR_PCT;
+        upIndexVelPct = Constants.UPINDEX_MOTOR_PCT/100.0;
+        downIndexVelPct = Constants.DOWNINDEX_MOTOR_PCT/100.0;
         upIndexVelVolts = upIndexVelPct * 12.0;
         downIndexVelVolts = downIndexVelPct * 12.0;
     }

@@ -31,8 +31,8 @@ public class IntakeSubSys extends SubsystemBase {
         intakeMotor.setSmartCurrentLimit(Constants.INTAKE_MOTOR_SMART_CURRENT_LIMIT);
         intakeMotor.setSecondaryCurrentLimit(Constants.INTAKE_MOTOR_SECONDARY_CURRENT_LIMIT);
         intakeMotor.setIdleMode(IdleMode.kBrake);
-        intakeVelPct = Constants.INTAKE_MOTOR_PCT;
-        outtakeVelPct = Constants.OUTTAKE_MOTOR_PCT;
+        intakeVelPct = Constants.INTAKE_MOTOR_PCT/100.0;
+        outtakeVelPct = Constants.OUTTAKE_MOTOR_PCT/100.0;
         intakeVelVolts = intakeVelPct * 12.0;
         outtakeVelVolts = outtakeVelPct * 12.0;
     }

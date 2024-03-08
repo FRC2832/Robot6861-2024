@@ -7,11 +7,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ShooterSubSys;
 
-public class PrimeShooterCmd extends Command {
+public class PrimeShooterAmpCmd extends Command {
     private final ShooterSubSys shooterSubSysObj;
-
-    /** Creates a new ShootNoteCmd. */
-    public PrimeShooterCmd(ShooterSubSys shooterSubSysObj) {
+    /** Creates a new PrimeShooterAmpCmd. */
+    public PrimeShooterAmpCmd(ShooterSubSys shooterSubSysObj) {
         this.shooterSubSysObj = shooterSubSysObj;
         addRequirements(shooterSubSysObj);
         // Use addRequirements() here to declare subsystem dependencies.
@@ -26,7 +25,7 @@ public class PrimeShooterCmd extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        shooterSubSysObj.runShooter();
+        shooterSubSysObj.runShooterLowSpeed();
     }
 
     // Called once the command ends or is interrupted.

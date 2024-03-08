@@ -45,7 +45,8 @@ import frc.robot.commands.ClimbDownCmd;
 import frc.robot.commands.ClimbUpCmd;
 import frc.robot.commands.IntakeNoteCmd;
 import frc.robot.commands.OuttakeNoteCmd;
-import frc.robot.commands.PrimeShooterCmd;
+import frc.robot.commands.PrimeShooterAmpCmd;
+import frc.robot.commands.PrimeShooterSpeakerCmd;
 import frc.robot.commands.ReverseShooterCmd;
 import frc.robot.commands.RunIndexDownCmd;
 import frc.robot.commands.RunIndexUpCmd;
@@ -209,6 +210,7 @@ public class RobotContainer {
         Trigger operatorYButton = operatorController.y();
         Trigger operatorDPadDown = operatorController.povDown();
         Trigger operatorDPadUp = operatorController.povUp();
+        Trigger operatorStart = operatorController.start();
 
         Trigger driverRightTrigger = driverController.rightTrigger();
         Trigger driverXButton = driverController.x();
@@ -218,19 +220,21 @@ public class RobotContainer {
                 new RunIndexUpCmd(indexerSubSysObj, colorSensorObj), new LightningFlash(leds, Color.kHotPink)));
         ParallelCommandGroup outtakeGroup = new ParallelCommandGroup(new OuttakeNoteCmd(intakeSubSysObj),
                 new RunIndexDownCmd(indexerSubSysObj));
-        SequentialCommandGroup anglerGroup = new SequentialCommandGroup(new AngleShooterDown(shooterAnglerSubSysObj), new AngleShooterUp(shooterAnglerSubSysObj));
+        SequentialCommandGroup anglerGroup = new SequentialCommandGroup(new AngleShooterDown(shooterAnglerSubSysObj),
+                new AngleShooterUp(shooterAnglerSubSysObj));
 
         // operatorRightTrigger.whileTrue(new IntakeNoteCmd(intakeSubSysObj));
         operatorLeftTrigger.whileTrue(outtakeGroup);
         operatorRightTrigger.whileTrue(intakeGroup);
         operatorLeftBumper.whileTrue(new RunIndexDownCmd(indexerSubSysObj));
         operatorRightBumper.whileTrue(new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
-        operatorAButton.whileTrue(new PrimeShooterCmd(shooterSubSysObj));
+        operatorAButton.whileTrue(new PrimeShooterSpeakerCmd(shooterSubSysObj));
         operatorBButton.whileTrue(anglerGroup);
         operatorXButton.whileTrue(new AngleShooterUp(shooterAnglerSubSysObj));
         operatorYButton.whileTrue(new ReverseShooterCmd(shooterSubSysObj));
         operatorDPadDown.whileTrue(new ClimbDownCmd(climberSubSysObj));
         operatorDPadUp.whileTrue(new ClimbUpCmd(climberSubSysObj));
+        operatorStart.whileTrue(new PrimeShooterAmpCmd(shooterSubSysObj));
 
         driverRightTrigger.whileTrue(new RunIndexUpContinuousCmd(indexerSubSysObj));
         driverXButton.whileTrue(new RunIndexDownCmd(indexerSubSysObj));

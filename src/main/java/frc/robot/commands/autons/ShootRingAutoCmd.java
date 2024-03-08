@@ -43,7 +43,7 @@ public class ShootRingAutoCmd extends Command {
         } else {
             indexerSubSysObj.stopIndexMotors();
         }
-        shooterSubSysObj.runShooter();
+        shooterSubSysObj.runShooterHighSpeed();
         if (!isShooterPrimed && TIMER.get() >= 1) {
             isShooterPrimed = true;
             TIMER.reset();

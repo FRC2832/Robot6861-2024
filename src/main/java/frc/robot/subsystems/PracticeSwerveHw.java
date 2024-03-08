@@ -167,7 +167,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
     @Override
     public void setCornerState(int wheel, SwerveModuleState swerveModuleState) {
         // set the drive command
-        double velPct = swerveModuleState.speedMetersPerSecond / 5; // TODO set equal to max module speed
+        double velPct = swerveModuleState.speedMetersPerSecond / 4.8; // TODO set equal to max module speed
         SmartDashboard.putNumber("Wheel Velocity ", velPct);
         double velVolts = velPct * 12.0; 
 
