@@ -4,9 +4,6 @@
 
 package frc.robot.subsystems;
 
-import org.livoniawarriors.Logger;
-
-import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;

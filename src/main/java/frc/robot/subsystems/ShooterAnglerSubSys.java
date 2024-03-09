@@ -27,12 +27,12 @@ public class ShooterAnglerSubSys extends SubsystemBase {
         linearActuatorMotor = new CANSparkMax(Constants.LINEAR_ACTUATOR_MOTOR_CAN_ID, MotorType.kBrushed);
         linearActuatorMotor.setSmartCurrentLimit(Constants.LINEAR_ACTUATOR_MOTOR_SMART_CURRENT_LIMIT);
 
-        linearActuatorVelPct = Constants.LINEAR_ACTUATOR_MOTOR_PCT/100.0;
-        linearActuatorVelReversePct = Constants.LINEAR_ACTUATOR_MOTOR_REVERSE_PCT/100.0;
+        linearActuatorVelPct = Constants.LINEAR_ACTUATOR_MOTOR_PCT / 100.0;
+        linearActuatorVelReversePct = Constants.LINEAR_ACTUATOR_MOTOR_REVERSE_PCT / 100.0;
         linearActuatorVelVolts = linearActuatorVelPct * 12.0;
         linearActuatorVelVoltsReverse = linearActuatorVelReversePct * 12.0;
 
-        timerLim = 1.75;  
+        timerLim = 1.75;
     }
 
     public void runLinearActuator() {
