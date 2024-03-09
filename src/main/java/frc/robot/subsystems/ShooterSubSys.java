@@ -84,22 +84,28 @@ public class ShooterSubSys extends SubsystemBase {
     public void runShooterLowSpeed() {
         shooterMotorFL.set(Constants.FL_SHOOTER_MOTOR_PCT_AMP / 100.0);
         shooterMotorFR.set(Constants.FR_SHOOTER_MOTOR_PCT_AMP / 100.0);
+
+        SmartDashboard.putNumber("FL rpm for amp", shooterMotorFLEncoder.getVelocity());
+        SmartDashboard.putNumber("FR rpm for amp", shooterMotorFREncoder.getVelocity());
+       
     }
 
     public void runShooterHighSpeed() {
-        // calculate
 
-         // PID coefficients
-         kP = 6e-5;   // REV suggested value. May need to change for our motors
+        shooterMotorFR.setVoltage(shooterVelVoltsFR);  // comment this out when running PID
+        shooterMotorFL.setVoltage(shooterVelVoltsFL);  // comment this out when running PID
+
+         // PID FL & FR Motor coefficients
+         kP = 0.0;  //6e-5;   // REV suggested value. May need to change for our motors
          kI = 0;
          kD = 0; 
          kIz = 0; 
          kFF = 0.000015; // REV suggested value. May need to change for our motors
          kMaxOutputFL = 0.9; 
          kMinOutputFL= -0.9;
-         kMaxOutputFL = 0.9; 
-         kMinOutputFL= -0.9;
-         maxRPM = 5676;  // from REV data sheet. 
+         kMaxOutputFR = 0.9; 
+         kMinOutputFR= -0.9;
+         maxRPM = 5676;  // from REV data sheet
 
         // set PID coefficients FL motor
         shooterPIDControllerFL.setP(kP);
@@ -119,14 +125,12 @@ public class ShooterSubSys extends SubsystemBase {
 
 
         
-        double flRPM = 50.0;  // TODO: get encoder values from smartdashboard
-        double frRPM = 50.0;  // TODO: get encoder values from smartdashboard
-
-        shooterMotorFR.setVoltage(shooterVelVoltsFR);
-        shooterMotorFL.setVoltage(shooterVelVoltsFL);
-
+        double flRPM =  -5320.0;  // TODO: get encoder values from smartdashboard
+        double frRPM =  5205.0;  // TODO: get encoder values from smartdashboard
 
         //shooterPIDControllerFL.setReference(flRPM, CANSparkBase.ControlType.kVelocity);
+        //shooterPIDControllerFR.setReference(frRPM, CANSparkBase.ControlType.kVelocity);
+
 
         SmartDashboard.putNumber("RPM FL Shooter", flRPM);
         SmartDashboard.putNumber("RPM FR Shooter", frRPM);
