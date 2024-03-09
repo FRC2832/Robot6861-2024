@@ -4,9 +4,6 @@
 
 package frc.robot.subsystems;
 
-import org.livoniawarriors.Logger;
-
-import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
@@ -91,15 +88,15 @@ public class ShooterSubSys extends SubsystemBase {
 
          // PID coefficients
          kP = 6e-5;   // REV suggested value. May need to change for our motors
-         kI = 0;
-         kD = 0; 
-         kIz = 0; 
+         kI = 0.0;
+         kD = 0.0;
+         kIz = 0.0;
          kFF = 0.000015; // REV suggested value. May need to change for our motors
          kMaxOutputFL = 0.9; 
          kMinOutputFL= -0.9;
          kMaxOutputFL = 0.9; 
          kMinOutputFL= -0.9;
-         maxRPM = 5676;  // from REV data sheet. 
+         maxRPM = 5676.0;  // from REV data sheet. 
 
         // set PID coefficients FL motor
         shooterPIDControllerFL.setP(kP);
