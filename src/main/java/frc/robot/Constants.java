@@ -22,7 +22,7 @@ public final class Constants {
     // Intake Motor Values
     public static final int INTAKE_MOTOR_SMART_CURRENT_LIMIT = 20; // NEO 550
     public static final int INTAKE_MOTOR_SECONDARY_CURRENT_LIMIT = 40; // complete
-    public static final double INTAKE_MOTOR_PCT = 15.0; // TODO: increase these values. Maybe 70.0
+    public static final double INTAKE_MOTOR_PCT = 35.0; // TODO: increase these values. Maybe 70.0
     public static final double OUTTAKE_MOTOR_PCT = -20.0; // TODO: confirm these values
 
     // Indexer Motor Values
@@ -43,8 +43,8 @@ public final class Constants {
     public static final double AUTON_TARGET_VELOCITY = 80.0; // units in RPM
 
     // Amp
-    public static final double FR_SHOOTER_MOTOR_PCT_AMP = 70.0;
-    public static final double FL_SHOOTER_MOTOR_PCT_AMP = -75.0;
+    public static final double FR_SHOOTER_MOTOR_PCT_AMP = 45.0;
+    public static final double FL_SHOOTER_MOTOR_PCT_AMP = -45.0;
 
     
 
@@ -62,7 +62,7 @@ public final class Constants {
     public static final int TURN_MOTOR_SECONDARY_CURRENT_LIMIT = 65;
 
     // Drive mode factors
-    public static final double TURTLE_MODE = 0.5;
+    public static final double TURTLE_MODE = 0.4;
     public static final double SNAIL_MODE = 0.25;
 
     // Vision system values

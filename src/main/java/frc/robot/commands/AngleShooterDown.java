@@ -5,11 +5,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.units.Angle;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ShooterAnglerSubSys;
 
 public class AngleShooterDown extends Command {
     private final ShooterAnglerSubSys shooterAnglerSubSysObj;
+    private static final Timer TIMER = new Timer();
+    private double timerLim = 0.6;
 
     /** Creates a new AngleShooterDown. */
     public AngleShooterDown(ShooterAnglerSubSys shooterAnglerSubSysObj) {
@@ -21,13 +24,17 @@ public class AngleShooterDown extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        TIMER.restart();
         // No-op
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        shooterAnglerSubSysObj.runLinearActuatorReverse();
+        while (TIMER.get() < timerLim) {
+            shooterAnglerSubSysObj.runLinearActuatorReverse();
+        }
+        shooterAnglerSubSysObj.stopLinearActuator();
     }
 
     // Called once the command ends or is interrupted.
@@ -35,6 +42,8 @@ public class AngleShooterDown extends Command {
     public void end(boolean interrupted) {
         // shooterAnglerSubSysObj.stopLinearActuator();   
         shooterAnglerSubSysObj.runLinearActuator();
+        TIMER.stop();
+        TIMER.reset();
     }
 
     // Returns true when the command should end.

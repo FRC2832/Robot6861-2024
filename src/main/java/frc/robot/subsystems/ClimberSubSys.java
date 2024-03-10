@@ -65,19 +65,19 @@ public class ClimberSubSys extends SubsystemBase {
         return climberEncoder.getPosition();
     }
 
-    // Runs the Climb Motor in a positive direction to raise climber arm up. //TODO:
-    // check if this is correct
+    // Runs the Climb Motor in a positive direction to raise climber arm up. 
+
 
     public void runClimberUp() {
         SmartDashboard.putNumber("Climb motor encoder - up", climberEncoder.getPosition());
 
         // PID coefficients
-        kP = 0.15;
+        kP = 0.74;
         kI = 0.0;
         kD = 0.0;
         kIz = 0.0;
         kFF = 0.0;
-        kMaxOutput = 0.5;
+        kMaxOutput = 0.9;
         kMinOutput = -0.9;
 
         // set PID coefficients
@@ -88,16 +88,17 @@ public class ClimberSubSys extends SubsystemBase {
         climberPIDController.setFF(kFF);
         climberPIDController.setOutputRange(kMinOutput, kMaxOutput);
 
-        double rotations = 50.0;
-
-        // climberMotor.setVoltage(downClimbVelVolts);
+        double rotations = 45.0;  //TODO: change to 50 when PID is faster
 
         climberPIDController.setReference(rotations, CANSparkBase.ControlType.kPosition);
+         // climberMotor.setVoltage(upClimbVelVolts);
 
         SmartDashboard.putNumber("SetPoint", rotations);
         SmartDashboard.putNumber("ProcessVariable", climberEncoder.getPosition());
+        SmartDashboard.putNumber("CLimber Motor Speed", climberEncoder.getVelocity());
 
-        // climberMotor.setVoltage(upClimbVelVolts);
+
+       
     }
 
     // Runs the Climber eMotor in a negative direction

@@ -113,7 +113,7 @@ public class SwerveDriveTrain extends SubsystemBase {
         }
 
         /** How fast we want the driver to go during normal operation in m/s */
-        driverMaxSpeed = UtilFunctions.getSettingSub("/Swerve Drive/Max Driver Speed (mps)", 2.5);
+        driverMaxSpeed = UtilFunctions.getSettingSub("/Swerve Drive/Max Driver Speed (mps)", 3.5);
         /** How fast we want the driver to turn during normal operation in deg/s */
         driverMaxOmega = UtilFunctions.getSettingSub("/Swerve Drive/Max Driver Omega (dps)", 625); // 1.8 * Pi rad/sec
 
@@ -270,6 +270,11 @@ public class SwerveDriveTrain extends SubsystemBase {
                     speedReq, // current request
                     Math.min(value1, value2), // last request minimum
                     Math.max(value1, value2)); // last request maximum
+
+
+
+
+
 
             // smooth out turn command
             double maxAngleDelta = maxOmega * TimedRobot.kDefaultPeriod; // acceleration * loop time

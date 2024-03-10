@@ -26,7 +26,7 @@ public class DriveXbox extends Command {
     public DriveXbox(SwerveDriveTrain drive, CommandXboxController cont) {
         this.drive = drive;
         this.cont = cont.getHID();
-        deadband = UtilFunctions.getSettingSub("DriveXbox/Deadband", 0.13);
+        deadband = UtilFunctions.getSettingSub("DriveXbox/Deadband", 0.16);
         addRequirements(drive);
     }
 
@@ -55,6 +55,8 @@ public class DriveXbox extends Command {
         double newXSpeed;
         double newYSpeed;
         double newTurn;
+
+
         if (cont.getLeftBumper()) { // snail mode
             SmartDashboard.putString("Drive mode:", "Snail");
             newXSpeed = Constants.SNAIL_MODE * xSpeed * drive.getMaxDriverSpeed();
@@ -75,9 +77,9 @@ public class DriveXbox extends Command {
                     turn * drive.getMaxDriverOmega());
         } else {
             SmartDashboard.putString("Drive mode:", "Normal");
-            newXSpeed = xSpeedCubed * drive.getMaxDriverSpeed();
-            newYSpeed = ySpeedCubed * drive.getMaxDriverSpeed();
-            newTurn = turnCubed * drive.getMaxDriverOmega();
+            newXSpeed = xSpeed * drive.getMaxDriverSpeed();  // removed cubed to see if that's causing unintended autonomous
+            newYSpeed = ySpeed * drive.getMaxDriverSpeed();
+            newTurn = turn * drive.getMaxDriverOmega();
             drive.swerveDrive(
                     newXSpeed,
                     newYSpeed,

@@ -55,6 +55,10 @@ public class IntakeSubSys extends SubsystemBase {
 
     // Runs the IntakeMotors in a positive direction(Inwards)
     public void runIntake() {
+       
+        intakeMotor.setVoltage(intakeVelVolts); // TODO: Old code before pid
+
+
         kP = 0.0; // Suggested Value: 0
         kI = 0.0;
         kD = 0.0;
@@ -70,10 +74,10 @@ public class IntakeSubSys extends SubsystemBase {
         intakePidController.setIZone(kIz);
         intakePidController.setFF(kFF);
         intakePidController.setOutputRange(kMinOutput, kMaxOutput);
-        // intakeMotor.setVoltage(intakeVelVolts); // TODO: Old code before pid
-
+        
+        
         // double setPoint = m_stick.getY()*maxRPM;
-        intakePidController.setReference(maxRPM, CANSparkMax.ControlType.kVelocity);
+        //intakePidController.setReference(maxRPM, CANSparkMax.ControlType.kVelocity);
 
         // SmartDashboard.putNumber("SetPoint", setPoint);
         SmartDashboard.putNumber("ProcessVariable", intakeEncoder.getVelocity());
