@@ -160,6 +160,8 @@ public class SwerveDriveTrain extends SubsystemBase {
         resetZeroPid = false;
 
         pushSwerveStates(swerveStates, swerveTargets);
+
+        
         minSpeed = UtilFunctions.getSetting(MIN_SPEED_KEY, 0.1); // TODO: may need to increase to 0.5 once max speed
                                                                  // increases
         maxSpeed = UtilFunctions.getSetting(MAX_SPEED_KEY, 4.8);

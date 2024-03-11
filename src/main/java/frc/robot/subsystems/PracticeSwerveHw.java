@@ -113,7 +113,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
             Logger.registerCanSparkMax(moduleNames[wheel] + " Turn", turnMotors[wheel]);
             Logger.registerCanSparkMax(moduleNames[wheel] + " Drive", driveMotors[wheel]);
             Logger.registerCanCoder(moduleNames[wheel] + " Abs", turnSensors[wheel]);
-            Logger.registerSensor(moduleNames[wheel] + " Speed, volts", () -> getCornerSpeed(wheelFinal));
+            Logger.registerSensor(moduleNames[wheel] + " Speed", () -> getCornerSpeed(wheelFinal));
             Logger.registerSensor(moduleNames[wheel] + " Turn Pos", () -> getCornerAngle(wheelFinal));
             Logger.registerSensor(moduleNames[wheel] + " Drive Dist", () -> getCornerDistance(wheelFinal));
 
@@ -169,11 +169,11 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
         // set the drive command
         double velPct = swerveModuleState.speedMetersPerSecond / 4.8; 
         SmartDashboard.putNumber("Wheel Velocity ", velPct);
-        double velVolts = velPct * 12.0; 
+        //double velVolts = velPct * 12.0; 
 
-        // driveMotors[wheel].set(velPct);
+        driveMotors[wheel].set(velPct);
         // CANSparkBase.ControlType.kDutyCycle ^
-        driveMotors[wheel].setVoltage(velVolts);
+        //driveMotors[wheel].setVoltage(velVolts);
     
 
         // set the turn command
