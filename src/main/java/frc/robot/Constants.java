@@ -42,7 +42,12 @@ public final class Constants {
     public static final double FL_SHOOTER_MOTOR_REVERSE_PCT = 10.0;
     public static final double AUTON_TARGET_VELOCITY = 80.0; // units in RPM
 
-    // Amp
+    // Amp Neo 550
+    public static final int AMP_MOTOR_CAN_ID = 6;
+    public static final int AMP_MOTOR_SMART_CURRENT_LIMIT = 20; // NEO 550 
+    public static final int AMP_MOTOR_SECONDARY_CURRENT_LIMIT = 40;
+    public static final double AMP_UP_PCT = 10.0;     // TODO: confirm these values and direction
+    public static final double AMP_DOWN_PCT = -10.0;   // TODO: confirm these values and direction
     public static final double FR_SHOOTER_MOTOR_PCT_AMP = 45.0;
     public static final double FL_SHOOTER_MOTOR_PCT_AMP = -45.0;
 
@@ -76,6 +81,9 @@ public final class Constants {
     public static final int LINEAR_ACTUATOR_MOTOR_SMART_CURRENT_LIMIT = 3;
     public static final double LINEAR_ACTUATOR_MOTOR_PCT = 99.0;
     public static final double LINEAR_ACTUATOR_MOTOR_REVERSE_PCT = -99.0;
+
+   
+    
     
 
     private Constants() {

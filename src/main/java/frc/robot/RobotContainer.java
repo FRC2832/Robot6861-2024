@@ -44,9 +44,11 @@ import frc.robot.commands.AngleShooterUp;
 import frc.robot.commands.ClimbDownCmd;
 import frc.robot.commands.ClimbUpCmd;
 import frc.robot.commands.IntakeNoteCmd;
+import frc.robot.commands.LowerAmpCmd;
 import frc.robot.commands.OuttakeNoteCmd;
 import frc.robot.commands.PrimeShooterAmpCmd;
 import frc.robot.commands.PrimeShooterSpeakerCmd;
+import frc.robot.commands.RaiseAmpCmd;
 import frc.robot.commands.ReverseShooterCmd;
 import frc.robot.commands.RunIndexDownCmd;
 import frc.robot.commands.RunIndexUpCmd;
@@ -54,6 +56,7 @@ import frc.robot.commands.RunIndexUpContinuousCmd;
 import frc.robot.commands.autons.PickUpNoteAutoCmd;
 import frc.robot.commands.autons.ShootRingAutoCmd;
 import frc.robot.commands.autons.WaitAutoCmd;
+import frc.robot.subsystems.AmpScorerSubSys;
 import frc.robot.subsystems.ClimberSubSys;
 import frc.robot.subsystems.IndexerSubSys;
 import frc.robot.subsystems.IntakeSubSys;
@@ -81,6 +84,7 @@ public class RobotContainer {
     private REVColorSensor colorSensorObj;
     private ClimberSubSys climberSubSysObj;
     private ShooterAnglerSubSys shooterAnglerSubSysObj;
+    private AmpScorerSubSys ampScorerSubSysObj;
     // private VisionSystem visionSystemObj;
     private UsbCamera camera;
     // TODO: Make a JoystickSubSystem
@@ -97,6 +101,7 @@ public class RobotContainer {
         shooterSubSysObj = new ShooterSubSys();
         climberSubSysObj = new ClimberSubSys();
         shooterAnglerSubSysObj = new ShooterAnglerSubSys();
+        ampScorerSubSysObj = new AmpScorerSubSys();
         colorSensorObj = new REVColorSensor(Port.kMXP); // TODO: Verify this port.
         String serNum = RobotController.getSerialNumber();
         SmartDashboard.putString("Serial Number", serNum);
@@ -196,6 +201,7 @@ public class RobotContainer {
     public void configureBindings() {
         // setup default commands that are used for driving
         swerveDrive.setDefaultCommand(new DriveXbox(swerveDrive, driverController));
+        // ampScorerSubSysObj.setDefaultCommand(new LowerAmpCmd(ampScorerSubSysObj));
         leds.setDefaultCommand(new BreathLeds(leds, Color.kAqua));
         // ClimberSubSys.setDefaultCommand(new ShowClimberEncoderCmd(climberSubSysObj));
         
@@ -212,6 +218,8 @@ public class RobotContainer {
         Trigger operatorDPadDown = operatorController.povDown();
         Trigger operatorDPadUp = operatorController.povUp();
         Trigger operatorStart = operatorController.start();
+        Trigger operatorBack = operatorController.back();
+        double operatorLeftY = operatorController.getLeftY();
 
         Trigger driverRightTrigger = driverController.rightTrigger();
         Trigger driverXButton = driverController.x();
@@ -236,6 +244,10 @@ public class RobotContainer {
         operatorDPadDown.whileTrue(new ClimbDownCmd(climberSubSysObj));
         operatorDPadUp.whileTrue(new ClimbUpCmd(climberSubSysObj));
         operatorStart.whileTrue(new PrimeShooterAmpCmd(shooterSubSysObj));
+        operatorBack.whileTrue(new RaiseAmpCmd(ampScorerSubSysObj));
+        while (operatorLeftY < -0.5) {
+                new LowerAmpCmd(ampScorerSubSysObj);
+        }
 
         driverRightTrigger.whileTrue(new RunIndexUpContinuousCmd(indexerSubSysObj));
         driverXButton.whileTrue(new RunIndexDownCmd(indexerSubSysObj));
