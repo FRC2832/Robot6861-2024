@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.ShootingAmp;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.units.Angle;
@@ -14,7 +14,7 @@ public class AngleShooterAmpCmd extends Command {
   private final ShooterAnglerSubSys shooterAnglerSubSysObj;
 
   private static final Timer TIMER = new Timer();
-  private double timerLim = 0.8;
+  private double timerLim = 0.45;
 
 
   public AngleShooterAmpCmd(ShooterAnglerSubSys shooterAnglerSubSysObj) {

@@ -119,8 +119,8 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
 
             // initialize hardware
             turnEncoder[wheel] = turnMotors[wheel].getEncoder();
-            driveMotors[wheel].getEncoder().setPositionConversionFactor(1/21.92);
-            driveMotors[wheel].getEncoder().setVelocityConversionFactor(1/(21.92 * 60));
+            driveMotors[wheel].getEncoder().setPositionConversionFactor(1/21.92);  
+            driveMotors[wheel].getEncoder().setVelocityConversionFactor(1/(21.92 * 60));    
             turnPid[wheel] = new PIDController(0.5 / Math.PI, .2, 0.0); // TODO: modify turnPID values, ki was 0.2
 
             // driveEncoder[wheel] = driveMotors[wheel].getEncoder();

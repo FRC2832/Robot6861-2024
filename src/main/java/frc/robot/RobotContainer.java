@@ -39,20 +39,20 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.AngleShooterDown;
-import frc.robot.commands.AngleShooterUp;
-import frc.robot.commands.ClimbDownCmd;
-import frc.robot.commands.ClimbUpCmd;
 import frc.robot.commands.IntakeNoteCmd;
-import frc.robot.commands.LowerAmpCmd;
 import frc.robot.commands.OuttakeNoteCmd;
-import frc.robot.commands.PrimeShooterAmpCmd;
-import frc.robot.commands.PrimeShooterSpeakerCmd;
-import frc.robot.commands.RaiseAmpCmd;
 import frc.robot.commands.ReverseShooterCmd;
-import frc.robot.commands.RunIndexDownCmd;
-import frc.robot.commands.RunIndexUpCmd;
-import frc.robot.commands.RunIndexUpContinuousCmd;
+import frc.robot.commands.Climbing.ClimbDownCmd;
+import frc.robot.commands.Climbing.ClimbUpCmd;
+import frc.robot.commands.Indexing.RunIndexDownCmd;
+import frc.robot.commands.Indexing.RunIndexUpCmd;
+import frc.robot.commands.Indexing.RunIndexUpContinuousCmd;
+import frc.robot.commands.ShootingAmp.LowerAmpCmd;
+import frc.robot.commands.ShootingAmp.PrimeShooterAmpCmd;
+import frc.robot.commands.ShootingAmp.RaiseAmpCmd;
+import frc.robot.commands.ShootingSpeaker.AngleShooterDown;
+import frc.robot.commands.ShootingSpeaker.AngleShooterUp;
+import frc.robot.commands.ShootingSpeaker.PrimeShooterSpeakerCmd;
 import frc.robot.commands.autons.PickUpNoteAutoCmd;
 import frc.robot.commands.autons.ShootRingAutoCmd;
 import frc.robot.commands.autons.WaitAutoCmd;
@@ -86,7 +86,7 @@ public class RobotContainer {
     private ShooterAnglerSubSys shooterAnglerSubSysObj;
     private AmpScorerSubSys ampScorerSubSysObj;
     // private VisionSystem visionSystemObj;
-    private UsbCamera camera;
+    private UsbCamera camera;  
     // TODO: Make a JoystickSubSystem
     private CommandXboxController driverController;
     private CommandXboxController operatorController;
@@ -219,7 +219,7 @@ public class RobotContainer {
         Trigger operatorDPadUp = operatorController.povUp();
         Trigger operatorStart = operatorController.start();
         Trigger operatorBack = operatorController.back();
-        double operatorLeftY = operatorController.getLeftY();
+        Trigger operatorLeftStickTrigger = operatorController.leftStick();
 
         Trigger driverRightTrigger = driverController.rightTrigger();
         Trigger driverXButton = driverController.x();
@@ -245,9 +245,7 @@ public class RobotContainer {
         operatorDPadUp.whileTrue(new ClimbUpCmd(climberSubSysObj));
         operatorStart.whileTrue(new PrimeShooterAmpCmd(shooterSubSysObj));
         operatorBack.whileTrue(new RaiseAmpCmd(ampScorerSubSysObj));
-        while (operatorLeftY < -0.5) {
-                new LowerAmpCmd(ampScorerSubSysObj);
-        }
+        operatorLeftStickTrigger.whileTrue(new LowerAmpCmd(ampScorerSubSysObj));
 
         driverRightTrigger.whileTrue(new RunIndexUpContinuousCmd(indexerSubSysObj));
         driverXButton.whileTrue(new RunIndexDownCmd(indexerSubSysObj));

@@ -2,18 +2,19 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Climbing;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ShooterSubSys;
+import frc.robot.subsystems.ClimberSubSys;
 
-public class PrimeShooterAmpCmd extends Command {
-    private final ShooterSubSys shooterSubSysObj;
-    /** Creates a new PrimeShooterAmpCmd. */
-    public PrimeShooterAmpCmd(ShooterSubSys shooterSubSysObj) {
-        this.shooterSubSysObj = shooterSubSysObj;
-        addRequirements(shooterSubSysObj);
+public class ClimbUpCmd extends Command {
+    private final ClimberSubSys climberSubSysObj;
+
+    /** Creates a new ClimbUpCmd. */
+    public ClimbUpCmd(ClimberSubSys climberSubSysObj) {
+        this.climberSubSysObj = climberSubSysObj;
         // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(climberSubSysObj);
     }
 
     // Called when the command is initially scheduled.
@@ -25,13 +26,13 @@ public class PrimeShooterAmpCmd extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        shooterSubSysObj.runShooterLowSpeed();
+        climberSubSysObj.runClimberUp();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        shooterSubSysObj.stopShooter();
+        climberSubSysObj.stopClimberMotor();
     }
 
     // Returns true when the command should end.

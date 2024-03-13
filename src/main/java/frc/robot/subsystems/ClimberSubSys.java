@@ -43,11 +43,13 @@ public class ClimberSubSys extends SubsystemBase {
 
     public ClimberSubSys() {
         climberMotor = new CANSparkMax(Constants.CLIMBER_MOTOR_CAN_ID, MotorType.kBrushless);
-        climberEncoder = climberMotor.getEncoder(); // TODO: Correct countsPerRev
+        climberEncoder = climberMotor.getEncoder(); 
         climberEncoder.setPosition(0.0);
         climberPIDController = climberMotor.getPIDController();
+
         climberMotor.setSmartCurrentLimit(Constants.CLIMBER_MOTOR_SMART_CURRENT_LIMIT);
         climberMotor.setSecondaryCurrentLimit(Constants.CLIMBER_MOTOR_SECONDARY_CURRENT_LIMIT);
+
         upClimbVelPct = Constants.UPCLIMB_MOTOR_PCT / 100.0;
         downClimbVelPct = Constants.DOWNCLIMB_MOTOR_PCT / 100.0;
         upClimbVelVolts = upClimbVelPct * 12.0;
@@ -88,7 +90,7 @@ public class ClimberSubSys extends SubsystemBase {
         climberPIDController.setFF(kFF);
         climberPIDController.setOutputRange(kMinOutput, kMaxOutput);
 
-        double rotations = 45.0;  //TODO: change to 50 when PID is faster
+        double rotations = 50.0;  
 
         climberPIDController.setReference(rotations, CANSparkBase.ControlType.kPosition);
          // climberMotor.setVoltage(upClimbVelVolts);
@@ -106,11 +108,11 @@ public class ClimberSubSys extends SubsystemBase {
         SmartDashboard.putNumber("Climb motor encoder - down", climberEncoder.getPosition());
 
         // PID coefficients
-        kP = 0.2;
+        kP = 0.5;
         kI = 0.0;
         kD = 0.0;
         kIz = 0.0;
-        kFF = 1.0;
+        kFF = 0.0;
         kMaxOutput = 0.9;
         kMinOutput = -0.9;
 
@@ -122,7 +124,7 @@ public class ClimberSubSys extends SubsystemBase {
         climberPIDController.setFF(kFF);
         climberPIDController.setOutputRange(kMinOutput, kMaxOutput);
 
-        double rotations = -8.0;
+        double rotations = -5.0;
 
         // climberMotor.setVoltage(downClimbVelVolts);
 
