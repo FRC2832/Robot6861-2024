@@ -47,6 +47,7 @@ import frc.robot.commands.Climbing.ClimbUpCmd;
 import frc.robot.commands.Indexing.RunIndexDownCmd;
 import frc.robot.commands.Indexing.RunIndexUpCmd;
 import frc.robot.commands.Indexing.RunIndexUpContinuousCmd;
+import frc.robot.commands.ShootingAmp.AngleShooterAmpCmd;
 import frc.robot.commands.ShootingAmp.LowerAmpCmd;
 import frc.robot.commands.ShootingAmp.PrimeShooterAmpCmd;
 import frc.robot.commands.ShootingAmp.RaiseAmpCmd;
@@ -232,13 +233,18 @@ public class RobotContainer {
         SequentialCommandGroup anglerGroup = new SequentialCommandGroup(new AngleShooterDown(shooterAnglerSubSysObj),
                 new AngleShooterUp(shooterAnglerSubSysObj));
 
+        SequentialCommandGroup anglerAmpGroup = new SequentialCommandGroup(new AngleShooterAmpCmd(shooterAnglerSubSysObj),
+                new AngleShooterUp(shooterAnglerSubSysObj));
+
+
+
         // operatorRightTrigger.whileTrue(new IntakeNoteCmd(intakeSubSysObj));
         operatorLeftTrigger.whileTrue(outtakeGroup);
         operatorRightTrigger.whileTrue(intakeGroup);
         operatorLeftBumper.whileTrue(new RunIndexDownCmd(indexerSubSysObj));
         operatorRightBumper.whileTrue(new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
         operatorAButton.whileTrue(new PrimeShooterSpeakerCmd(shooterSubSysObj));
-        operatorBButton.whileTrue(anglerGroup);
+        operatorBButton.whileTrue(anglerAmpGroup);
         operatorXButton.whileTrue(new AngleShooterUp(shooterAnglerSubSysObj));
         operatorYButton.whileTrue(new ReverseShooterCmd(shooterSubSysObj));
         operatorDPadDown.whileTrue(new ClimbDownCmd(climberSubSysObj));

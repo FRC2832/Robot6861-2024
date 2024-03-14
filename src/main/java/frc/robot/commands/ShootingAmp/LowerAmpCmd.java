@@ -12,7 +12,7 @@ public class LowerAmpCmd extends Command {
   private final AmpScorerSubSys ampScorerSubSysObj;
   private static final Timer TIMER = new Timer();
 
-  private double timerLim = 4.0;
+  private double timerLim = 3.5;
 
   /** Creates a new LowerAmpCmd. */
   public LowerAmpCmd(AmpScorerSubSys ampScorerSubSysObj) {

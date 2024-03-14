@@ -46,8 +46,8 @@ public final class Constants {
     public static final int AMP_MOTOR_CAN_ID = 6;
     public static final int AMP_MOTOR_SMART_CURRENT_LIMIT = 10; // NEO 550 
     public static final int AMP_MOTOR_SECONDARY_CURRENT_LIMIT = 20;
-    public static final double AMP_UP_PCT = 10.0;     // TODO: confirm these values and direction
-    public static final double AMP_DOWN_PCT = -10.0;   // TODO: confirm these values and direction
+    public static final double AMP_UP_PCT = 10.0;     
+    public static final double AMP_DOWN_PCT = -10.0;   
     public static final double FR_SHOOTER_MOTOR_PCT_AMP = 45.0;
     public static final double FL_SHOOTER_MOTOR_PCT_AMP = -45.0;
 
@@ -55,10 +55,10 @@ public final class Constants {
 
     // climber motor values NEO
     public static final int CLIMBER_MOTOR_CAN_ID = 5;
-    public static final int CLIMBER_MOTOR_SMART_CURRENT_LIMIT = 50; // TODO: confirm this value
-    public static final int CLIMBER_MOTOR_SECONDARY_CURRENT_LIMIT = 60; // TODO: confirm this value
-    public static final double UPCLIMB_MOTOR_PCT = 20.0; // TODO: confirm this value
-    public static final double DOWNCLIMB_MOTOR_PCT = -70.0; // TODO: Confirm this value
+    public static final int CLIMBER_MOTOR_SMART_CURRENT_LIMIT = 50; 
+    public static final int CLIMBER_MOTOR_SECONDARY_CURRENT_LIMIT = 60; 
+    public static final double UPCLIMB_MOTOR_PCT = 20.0; 
+    public static final double DOWNCLIMB_MOTOR_PCT = -70.0; 
 
     // Swerve current limits
     public static final int DRIVE_MOTOR_PRIMARY_CURRENT_LIMIT = 45;

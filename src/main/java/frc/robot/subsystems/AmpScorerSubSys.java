@@ -60,7 +60,7 @@ public class AmpScorerSubSys extends SubsystemBase {
   public void runAmpMotor() {  //runs amp arm up
      
     // PID coefficients
-      kP = 0.5;
+      kP = 0.6;
       kI = 0.0;
       kD = 0.0;
       kIz = 0.0;
@@ -76,7 +76,7 @@ public class AmpScorerSubSys extends SubsystemBase {
       ampPIDController.setFF(kFF);
       ampPIDController.setOutputRange(kMinOutput, kMaxOutput);
 
-      double rotations = 280.0;  
+      double rotations = 300.0;  
 
       ampPIDController.setReference(rotations, CANSparkBase.ControlType.kPosition);
         //ampMotor.setVoltage(ampMotorVolts);
@@ -105,7 +105,7 @@ public class AmpScorerSubSys extends SubsystemBase {
       ampPIDController.setFF(kFF);
       ampPIDController.setOutputRange(kMinOutput, kMaxOutput);
 
-      double rotations = -18.0;  
+      double rotations = 0.0;  
 
       ampPIDController.setReference(rotations, CANSparkBase.ControlType.kPosition);
       //ampMotor.setVoltage(ampMotorReverseVolts);

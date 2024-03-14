@@ -14,7 +14,7 @@ public class AngleShooterAmpCmd extends Command {
   private final ShooterAnglerSubSys shooterAnglerSubSysObj;
 
   private static final Timer TIMER = new Timer();
-  private double timerLim = 0.45;
+  private double timerLim = 0.375;
 
 
   public AngleShooterAmpCmd(ShooterAnglerSubSys shooterAnglerSubSysObj) {
