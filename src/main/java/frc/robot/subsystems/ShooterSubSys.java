@@ -37,6 +37,18 @@ public class ShooterSubSys extends SubsystemBase {
     private double shooterVelRPM;
     private SparkPIDController shooterPIDControllerFR;
     private SparkPIDController shooterPIDControllerFL;
+    private double lowKpFl;    
+    private double lowKiFl;
+    private double lowKdFl;
+    private double lowKizFl; 
+    private double lowKffFl;
+    private double lowKpFr;  
+    private double lowKiFr;
+    private double lowKdFr; 
+    private double lowKizFr; 
+    private double lowKffFr;
+
+
     private double kPFl;
     private double kIFl;
     private double kDFl;
@@ -84,8 +96,60 @@ public class ShooterSubSys extends SubsystemBase {
 
 
     public void runShooterLowSpeed() {
-        shooterMotorFL.set(Constants.FL_SHOOTER_MOTOR_PCT_AMP / 100.0);
-        shooterMotorFR.set(Constants.FR_SHOOTER_MOTOR_PCT_AMP / 100.0);
+        //shooterMotorFL.set(Constants.FL_SHOOTER_MOTOR_PCT_AMP / 100.0);
+        //shooterMotorFR.set(Constants.FR_SHOOTER_MOTOR_PCT_AMP / 100.0);
+
+
+         // PID FL  Motor coefficients
+         lowKpFl = 0.0256;    
+         lowKiFl = 0.0;
+         lowKdFl = 0.0; 
+         lowKizFl = 0.0; 
+         lowKffFl = 0.00016; 
+         kMaxOutputFL = 0.98; 
+         kMinOutputFL = -0.98;
+         maxRPM = 5676.0;  // from REV data sheet
+
+        // set PID coefficients FL motor
+        shooterPIDControllerFL.setP(lowKpFl);
+        shooterPIDControllerFL.setP(lowKiFl);
+        shooterPIDControllerFL.setP(lowKdFl);
+        shooterPIDControllerFL.setIZone(lowKizFl);
+        shooterPIDControllerFL.setFF(lowKffFl);
+        shooterPIDControllerFL.setOutputRange(kMinOutputFL, kMaxOutputFL);
+
+        // PID FR  Motor coefficients
+         lowKpFr = 0.0256;  
+         lowKiFr = 0.0;
+         lowKdFr = 0.0; 
+         lowKizFr = 0.0; 
+         lowKffFr = 0.00016; 
+         kMaxOutputFR = 0.98; 
+         kMinOutputFR = -0.98;
+         maxRPM = 5676.0;  // from REV data sheet
+
+
+        // set PID coefficients FR motor
+        shooterPIDControllerFR.setP(lowKpFr);
+        shooterPIDControllerFR.setP(lowKiFr);
+        shooterPIDControllerFR.setP(lowKdFr);
+        shooterPIDControllerFR.setIZone(lowKizFr);
+        shooterPIDControllerFR.setFF(lowKffFr);
+        shooterPIDControllerFR.setOutputRange(kMinOutputFR, kMaxOutputFR);
+
+
+        
+        double lowFlRPM =  -3000.0;  
+        double lowFrRPM =  3000.0;  
+
+        shooterPIDControllerFL.setReference(lowFlRPM, CANSparkMax.ControlType.kVelocity);
+        shooterPIDControllerFR.setReference(lowFrRPM, CANSparkMax.ControlType.kVelocity);
+
+
+        SmartDashboard.putNumber("RPM FL Shooter", lowFlRPM);
+        SmartDashboard.putNumber("RPM FR Shooter", lowFrRPM);
+        SmartDashboard.putNumber("ProcessVariable Shooter FL", shooterMotorFLEncoder.getVelocity());
+        SmartDashboard.putNumber("ProcessVariable Shooter FR", shooterMotorFREncoder.getVelocity());
 
         SmartDashboard.putNumber("FL rpm for amp", shooterMotorFLEncoder.getVelocity());
         SmartDashboard.putNumber("FR rpm for amp", shooterMotorFREncoder.getVelocity());
@@ -98,11 +162,11 @@ public class ShooterSubSys extends SubsystemBase {
         // shooterMotorFL.setVoltage(shooterVelVoltsFL);  // comment this out when running PID
 
          // PID FL  Motor coefficients
-         kPFl = 0.0016;  //6e-5;   // REV suggested value. May need to change for our motors
+         kPFl = 0.0016;    
          kIFl = 0.0;
          kDFl = 0.0; 
          kIzFl = 0.0; 
-         kFFFl = 0.00040; // REV suggested value. May need to change for our motors
+         kFFFl = 0.00040; 
          kMaxOutputFL = 0.98; 
          kMinOutputFL = -0.98;
          maxRPM = 5676.0;  // from REV data sheet
@@ -136,8 +200,8 @@ public class ShooterSubSys extends SubsystemBase {
 
 
         
-        double flRPM =  -5320.0;  // TODO: get encoder values from smartdashboard
-        double frRPM =  5205.0;  // TODO: get encoder values from smartdashboard
+        double flRPM =  -5350.0;  // TODO: was 5320.  Might need 2 speeds for far and away. get encoder values from smartdashboard
+        double frRPM =  5300.0;  // TODO: was 5205.  get encoder values from smartdashboard
 
         shooterPIDControllerFL.setReference(flRPM, CANSparkMax.ControlType.kVelocity);
         shooterPIDControllerFR.setReference(frRPM, CANSparkMax.ControlType.kVelocity);

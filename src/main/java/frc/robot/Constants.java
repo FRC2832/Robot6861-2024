@@ -48,8 +48,8 @@ public final class Constants {
     public static final int AMP_MOTOR_SECONDARY_CURRENT_LIMIT = 20;
     public static final double AMP_UP_PCT = 10.0;     
     public static final double AMP_DOWN_PCT = -10.0;   
-    public static final double FR_SHOOTER_MOTOR_PCT_AMP = 45.0;
-    public static final double FL_SHOOTER_MOTOR_PCT_AMP = -45.0;
+    public static final double FR_SHOOTER_MOTOR_PCT_AMP = 55.0;
+    public static final double FL_SHOOTER_MOTOR_PCT_AMP = -55.0;
 
     
 

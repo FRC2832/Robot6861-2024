@@ -76,7 +76,7 @@ public class AmpScorerSubSys extends SubsystemBase {
       ampPIDController.setFF(kFF);
       ampPIDController.setOutputRange(kMinOutput, kMaxOutput);
 
-      double rotations = 300.0;  
+      double rotations = 304.0;  
 
       ampPIDController.setReference(rotations, CANSparkBase.ControlType.kPosition);
         //ampMotor.setVoltage(ampMotorVolts);

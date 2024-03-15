@@ -14,7 +14,7 @@ public class AngleShooterAmpCmd extends Command {
   private final ShooterAnglerSubSys shooterAnglerSubSysObj;
 
   private static final Timer TIMER = new Timer();
-  private double timerLim = 0.375;
+  private double timerLim = 0.45;  //0.375 for shooter rotates about 49 deg. works well for amp.  0.45 is 47deg.
 
 
   public AngleShooterAmpCmd(ShooterAnglerSubSys shooterAnglerSubSysObj) {

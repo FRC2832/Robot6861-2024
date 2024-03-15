@@ -202,7 +202,7 @@ public class RobotContainer {
     public void configureBindings() {
         // setup default commands that are used for driving
         swerveDrive.setDefaultCommand(new DriveXbox(swerveDrive, driverController));
-        // ampScorerSubSysObj.setDefaultCommand(new LowerAmpCmd(ampScorerSubSysObj));
+        ampScorerSubSysObj.setDefaultCommand(new LowerAmpCmd(ampScorerSubSysObj));
         leds.setDefaultCommand(new BreathLeds(leds, Color.kAqua));
         // ClimberSubSys.setDefaultCommand(new ShowClimberEncoderCmd(climberSubSysObj));
         
@@ -233,7 +233,15 @@ public class RobotContainer {
         SequentialCommandGroup anglerGroup = new SequentialCommandGroup(new AngleShooterDown(shooterAnglerSubSysObj),
                 new AngleShooterUp(shooterAnglerSubSysObj));
 
-        SequentialCommandGroup anglerAmpGroup = new SequentialCommandGroup(new AngleShooterAmpCmd(shooterAnglerSubSysObj),
+        
+        ParallelCommandGroup primenAngleGroup = new ParallelCommandGroup(new PrimeShooterSpeakerCmd(shooterSubSysObj),
+                new AngleShooterDown(shooterAnglerSubSysObj));
+
+
+        ParallelCommandGroup primenAmpAngleGroup = new ParallelCommandGroup(new PrimeShooterAmpCmd(shooterSubSysObj),
+                new AngleShooterAmpCmd(shooterAnglerSubSysObj));
+
+        SequentialCommandGroup anglerAmpGroup = new SequentialCommandGroup(primenAmpAngleGroup,
                 new AngleShooterUp(shooterAnglerSubSysObj));
 
 
@@ -241,15 +249,20 @@ public class RobotContainer {
         // operatorRightTrigger.whileTrue(new IntakeNoteCmd(intakeSubSysObj));
         operatorLeftTrigger.whileTrue(outtakeGroup);
         operatorRightTrigger.whileTrue(intakeGroup);
+
         operatorLeftBumper.whileTrue(new RunIndexDownCmd(indexerSubSysObj));
         operatorRightBumper.whileTrue(new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
+
         operatorAButton.whileTrue(new PrimeShooterSpeakerCmd(shooterSubSysObj));
-        operatorBButton.whileTrue(anglerAmpGroup);
-        operatorXButton.whileTrue(new AngleShooterUp(shooterAnglerSubSysObj));
+        operatorBButton.whileTrue(primenAngleGroup);
         operatorYButton.whileTrue(new ReverseShooterCmd(shooterSubSysObj));
+
+        operatorXButton.whileTrue(new AngleShooterUp(shooterAnglerSubSysObj));
+        
         operatorDPadDown.whileTrue(new ClimbDownCmd(climberSubSysObj));
         operatorDPadUp.whileTrue(new ClimbUpCmd(climberSubSysObj));
-        operatorStart.whileTrue(new PrimeShooterAmpCmd(shooterSubSysObj));
+
+        operatorStart.whileTrue(anglerAmpGroup);
         operatorBack.whileTrue(new RaiseAmpCmd(ampScorerSubSysObj));
         operatorLeftStickTrigger.whileTrue(new LowerAmpCmd(ampScorerSubSysObj));
 

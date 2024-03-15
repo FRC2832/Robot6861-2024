@@ -47,10 +47,11 @@ public class DriveXbox extends Command {
         double ySpeed = UtilFunctions.deadband(-cont.getLeftX(), dead);
         double turn = UtilFunctions.deadband(-cont.getRightX(), dead);
 
+        // Alex didn't like the sharp exponential rise when commanding full speed
         //cube joystick inputs:
-        double xSpeedCubed = Math.pow(xSpeed, 3);
-        double ySpeedCubed = Math.pow(ySpeed, 3);
-        double turnCubed = Math.pow(turn, 3);
+        // double xSpeedCubed = Math.pow(xSpeed, 3);
+        // double ySpeedCubed = Math.pow(ySpeed, 3);
+        //double turnCubed = Math.pow(turn, 3);
 
         double newXSpeed;
         double newYSpeed;
