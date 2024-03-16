@@ -57,8 +57,8 @@ import frc.robot.commands.ShootingSpeaker.AngleShooterDownCmd;
 import frc.robot.commands.ShootingSpeaker.AngleShooterUpCmd;
 import frc.robot.commands.ShootingSpeaker.PrimeShooterSpeakerCmd;
 import frc.robot.commands.autons.PickUpNoteAutoCmd;
+import frc.robot.commands.autons.ShootBlackLineAutoCmd;
 import frc.robot.commands.autons.ShootRingAutoCmd;
-import frc.robot.commands.autons.WaitAutoCmd;
 import frc.robot.subsystems.AmpScorerSubSys;
 import frc.robot.subsystems.ClimberSubSys;
 import frc.robot.subsystems.IndexerSubSys;
@@ -159,7 +159,7 @@ public class RobotContainer {
                 new PickUpNoteAutoCmd(intakeSubSysObj, indexerSubSysObj, colorSensorObj));
         NamedCommands.registerCommand("ShootRing",
                 new ShootRingAutoCmd(shooterSubSysObj, indexerSubSysObj, Constants.AUTON_TARGET_VELOCITY));
-        NamesCommands.registerCommand("ShootBlackLine", new ShootBlackLineAutoCmd(shooterSubSysObj, indexerSubSysObj, tgtShooterVelRPM));
+        NamedCommands.registerCommand("ShootBlackLine", new ShootBlackLineAutoCmd(shooterSubSysObj, indexerSubSysObj, Constants.AUTON_TARGET_VELOCITY, shooterAnglerSubSysObj));
 
         // Configure the AutoBuilder
         AutoBuilder.configureHolonomic(

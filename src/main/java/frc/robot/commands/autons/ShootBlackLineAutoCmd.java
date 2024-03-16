@@ -7,12 +7,15 @@ package frc.robot.commands.autons;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubSys;
+import frc.robot.subsystems.ShooterAnglerSubSys;
 import frc.robot.subsystems.ShooterSubSys;
 import frc.robot.commands.ShootingSpeaker.AngleShooterBlackLineCmd;
 import frc.robot.commands.ShootingSpeaker.AngleShooterUpCmd;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class ShootBlackLineAutoCmd extends Command {
     private final ShooterSubSys shooterSubSysObj;
+    private final ShooterAnglerSubSys shooterAnglerSubSysObj;
     private final IndexerSubSys indexerSubSysObj;
     private final double tgtShooterVelRPM;
     private static final double INDEXER_RUN_TIME = 1.0; // Length of time to run the indexer.
@@ -21,10 +24,11 @@ public class ShootBlackLineAutoCmd extends Command {
 
     private static final Timer TIMER = new Timer();
 
-    public ShootBlackLineAutoCmd(ShooterSubSys shooterSubSysObj, IndexerSubSys indexerSubSysObj, double tgtShooterVelRPM) {
+    public ShootBlackLineAutoCmd(ShooterSubSys shooterSubSysObj, IndexerSubSys indexerSubSysObj, double tgtShooterVelRPM, ShooterAnglerSubSys shooterAnglerSubSysObj) {
         this.shooterSubSysObj = shooterSubSysObj;
         this.indexerSubSysObj = indexerSubSysObj;
         this.tgtShooterVelRPM = tgtShooterVelRPM;
+        this.shooterAnglerSubSysObj = shooterAnglerSubSysObj;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(shooterSubSysObj, indexerSubSysObj);
     }
@@ -47,7 +51,7 @@ public class ShootBlackLineAutoCmd extends Command {
         }
 
         shooterSubSysObj.runShooterHighSpeed();
-        CommandScheduler.getInstance().schedule(new AngleShooterBlackLineCmd(ShooterAnglerSubSys shooterAnglerSubSysObj));
+        CommandScheduler.getInstance().schedule(new AngleShooterBlackLineCmd(shooterAnglerSubSysObj));
 
         if (!isShooterPrimed && TIMER.get() >= PRIME_SHOOTER_TIME) {
             isShooterPrimed = true;
