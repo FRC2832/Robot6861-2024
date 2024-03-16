@@ -9,13 +9,13 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ShooterAnglerSubSys;
 
-public class AngleShooterDown extends Command {
+public class AngleShooterDownCmd extends Command {
     private final ShooterAnglerSubSys shooterAnglerSubSysObj;
     private static final Timer TIMER = new Timer();
     private double timerLim = 0.6;   //shooter about 42 deg.
 
     /** Creates a new AngleShooterDown. */
-    public AngleShooterDown(ShooterAnglerSubSys shooterAnglerSubSysObj) {
+    public AngleShooterDownCmd(ShooterAnglerSubSys shooterAnglerSubSysObj) {
         this.shooterAnglerSubSysObj = shooterAnglerSubSysObj;
         addRequirements(shooterAnglerSubSysObj);
         // Use addRequirements() here to declare subsystem dependencies.
