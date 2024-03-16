@@ -159,7 +159,7 @@ public class RobotContainer {
                 new PickUpNoteAutoCmd(intakeSubSysObj, indexerSubSysObj, colorSensorObj));
         NamedCommands.registerCommand("ShootRing",
                 new ShootRingAutoCmd(shooterSubSysObj, indexerSubSysObj, Constants.AUTON_TARGET_VELOCITY));
-        NamedCommands.registerCommand("Wait", new WaitAutoCmd(8));
+        NamesCommands.registerCommand("ShootBlackLine", new ShootBlackLineAutoCmd(shooterSubSysObj, indexerSubSysObj, tgtShooterVelRPM));
 
         // Configure the AutoBuilder
         AutoBuilder.configureHolonomic(

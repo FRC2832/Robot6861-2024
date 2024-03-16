@@ -8,8 +8,10 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubSys;
 import frc.robot.subsystems.ShooterSubSys;
+import frc.robot.commands.ShootingSpeaker.AngleShooterBlackLineCmd;
+import frc.robot.commands.ShootingSpeaker.AngleShooterUpCmd;
 
-public class ShootRingAutoCmd extends Command {
+public class ShootBlackLineAutoCmd extends Command {
     private final ShooterSubSys shooterSubSysObj;
     private final IndexerSubSys indexerSubSysObj;
     private final double tgtShooterVelRPM;
@@ -19,8 +21,7 @@ public class ShootRingAutoCmd extends Command {
 
     private static final Timer TIMER = new Timer();
 
-    /** Creates a new ShootRingAuton. */
-    public ShootRingAutoCmd(ShooterSubSys shooterSubSysObj, IndexerSubSys indexerSubSysObj, double tgtShooterVelRPM) {
+    public ShootBlackLineAutoCmd(ShooterSubSys shooterSubSysObj, IndexerSubSys indexerSubSysObj, double tgtShooterVelRPM) {
         this.shooterSubSysObj = shooterSubSysObj;
         this.indexerSubSysObj = indexerSubSysObj;
         this.tgtShooterVelRPM = tgtShooterVelRPM;
@@ -44,19 +45,15 @@ public class ShootRingAutoCmd extends Command {
         } else {
             indexerSubSysObj.stopIndexMotors();
         }
+
         shooterSubSysObj.runShooterHighSpeed();
+        CommandScheduler.getInstance().schedule(new AngleShooterBlackLineCmd(ShooterAnglerSubSys shooterAnglerSubSysObj));
+
         if (!isShooterPrimed && TIMER.get() >= PRIME_SHOOTER_TIME) {
             isShooterPrimed = true;
             TIMER.reset();
             TIMER.start();
         }
-        // if (Math.abs(shooterSubSysObj.getShooterVelRPM() - tgtShooterVelRPM) <= 10) {
-        //     isShooterPrimed = true;
-        //     TIMER.start();
-        // } 
-        // else {
-        //     isShooterPrimed = false;
-        // }
     }
 
     // Called once the command ends or is interrupted.
@@ -65,6 +62,7 @@ public class ShootRingAutoCmd extends Command {
         shooterSubSysObj.stopShooter();
         indexerSubSysObj.stopIndexMotors();
         TIMER.stop();
+        CommandScheduler.getInstance().schedule(new AngleShooterUpCmd(shooterAnglerSubSysObj));
     }
 
     // Returns true when the command should end.
