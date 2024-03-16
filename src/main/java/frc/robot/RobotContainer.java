@@ -51,8 +51,10 @@ import frc.robot.commands.ShootingAmp.AngleShooterAmpCmd;
 import frc.robot.commands.ShootingAmp.LowerAmpCmd;
 import frc.robot.commands.ShootingAmp.PrimeShooterAmpCmd;
 import frc.robot.commands.ShootingAmp.RaiseAmpCmd;
-import frc.robot.commands.ShootingSpeaker.AngleShooterDown;
-import frc.robot.commands.ShootingSpeaker.AngleShooterUp;
+import frc.robot.commands.ShootingAmp.AngleShooterSafeZoneCmd;
+import frc.robot.commands.ShootingSpeaker.AngleShooterBlackLineCmd;
+import frc.robot.commands.ShootingSpeaker.AngleShooterDownCmd;
+import frc.robot.commands.ShootingSpeaker.AngleShooterUpCmd;
 import frc.robot.commands.ShootingSpeaker.PrimeShooterSpeakerCmd;
 import frc.robot.commands.autons.PickUpNoteAutoCmd;
 import frc.robot.commands.autons.ShootRingAutoCmd;
@@ -157,7 +159,7 @@ public class RobotContainer {
                 new PickUpNoteAutoCmd(intakeSubSysObj, indexerSubSysObj, colorSensorObj));
         NamedCommands.registerCommand("ShootRing",
                 new ShootRingAutoCmd(shooterSubSysObj, indexerSubSysObj, Constants.AUTON_TARGET_VELOCITY));
-        NamedCommands.registerCommand("Wait", new WaitAutoCmd(8));
+        NamesCommands.registerCommand("ShootBlackLine", new ShootBlackLineAutoCmd(shooterSubSysObj, indexerSubSysObj, tgtShooterVelRPM));
 
         // Configure the AutoBuilder
         AutoBuilder.configureHolonomic(
@@ -218,6 +220,7 @@ public class RobotContainer {
         Trigger operatorYButton = operatorController.y();
         Trigger operatorDPadDown = operatorController.povDown();
         Trigger operatorDPadUp = operatorController.povUp();
+        Trigger operatorDPadRight = operatorController.povRight();
         Trigger operatorStart = operatorController.start();
         Trigger operatorBack = operatorController.back();
         Trigger operatorLeftStickTrigger = operatorController.leftStick();
@@ -225,24 +228,44 @@ public class RobotContainer {
         Trigger driverRightTrigger = driverController.rightTrigger();
         Trigger driverXButton = driverController.x();
 
-        SequentialCommandGroup intakeGroup = new SequentialCommandGroup(new ParallelCommandGroup(
-                new IntakeNoteCmd(intakeSubSysObj, colorSensorObj, driverController, operatorController),
-                new RunIndexUpCmd(indexerSubSysObj, colorSensorObj), new LightningFlash(leds, Color.kHotPink)));
-        ParallelCommandGroup outtakeGroup = new ParallelCommandGroup(new OuttakeNoteCmd(intakeSubSysObj),
-                new RunIndexDownCmd(indexerSubSysObj));
-        SequentialCommandGroup anglerGroup = new SequentialCommandGroup(new AngleShooterDown(shooterAnglerSubSysObj),
-                new AngleShooterUp(shooterAnglerSubSysObj));
+        SequentialCommandGroup intakeGroup = new SequentialCommandGroup(
+                new ParallelCommandGroup(
+                        new IntakeNoteCmd(intakeSubSysObj, colorSensorObj, driverController, operatorController),
+                        new RunIndexUpCmd(indexerSubSysObj, colorSensorObj), 
+                        new LightningFlash(leds, Color.kHotPink)
+                )
+        );
 
+        ParallelCommandGroup outtakeGroup = new ParallelCommandGroup(
+                new OuttakeNoteCmd(intakeSubSysObj),
+                new RunIndexDownCmd(indexerSubSysObj)
+        );
+                
+        SequentialCommandGroup anglerGroup = new SequentialCommandGroup(
+                new AngleShooterDownCmd(shooterAnglerSubSysObj),
+                new AngleShooterUpCmd(shooterAnglerSubSysObj)
+        );
+
+        SequentialCommandGroup blackLineShootingGroup = new SequentialCommandGroup(
+                new ParallelCommandGroup(
+                        new PrimeShooterSpeakerCmd(shooterSubSysObj),
+                        new AngleShooterBlackLineCmd(shooterAnglerSubSysObj)),
+                new AngleShooterUpCmd(shooterAnglerSubSysObj)
+        );
+
+        SequentialCommandGroup safeZoneShootingGroup = new SequentialCommandGroup(
+                new ParallelCommandGroup(
+                        new PrimeShooterSpeakerCmd(shooterSubSysObj),
+                        new AngleShooterSafeZoneCmd(shooterAnglerSubSysObj)),
+                new AngleShooterUpCmd(shooterAnglerSubSysObj)
+        );
         
-        ParallelCommandGroup primenAngleGroup = new ParallelCommandGroup(new PrimeShooterSpeakerCmd(shooterSubSysObj),
-                new AngleShooterDown(shooterAnglerSubSysObj));
-
-
-        ParallelCommandGroup primenAmpAngleGroup = new ParallelCommandGroup(new PrimeShooterAmpCmd(shooterSubSysObj),
-                new AngleShooterAmpCmd(shooterAnglerSubSysObj));
-
-        SequentialCommandGroup anglerAmpGroup = new SequentialCommandGroup(primenAmpAngleGroup,
-                new AngleShooterUp(shooterAnglerSubSysObj));
+        SequentialCommandGroup anglerAmpGroup = new SequentialCommandGroup(
+                new ParallelCommandGroup(
+                        new PrimeShooterAmpCmd(shooterSubSysObj),
+                        new AngleShooterAmpCmd(shooterAnglerSubSysObj)),
+                new AngleShooterUpCmd(shooterAnglerSubSysObj)
+        );
 
 
 
@@ -254,10 +277,11 @@ public class RobotContainer {
         operatorRightBumper.whileTrue(new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
 
         operatorAButton.whileTrue(new PrimeShooterSpeakerCmd(shooterSubSysObj));
-        operatorBButton.whileTrue(primenAngleGroup);
+        operatorBButton.whileTrue(blackLineShootingGroup);
+        operatorDPadRight.whileTrue(safeZoneShootingGroup);
         operatorYButton.whileTrue(new ReverseShooterCmd(shooterSubSysObj));
 
-        operatorXButton.whileTrue(new AngleShooterUp(shooterAnglerSubSysObj));
+        operatorXButton.whileTrue(new AngleShooterUpCmd(shooterAnglerSubSysObj));
         
         operatorDPadDown.whileTrue(new ClimbDownCmd(climberSubSysObj));
         operatorDPadUp.whileTrue(new ClimbUpCmd(climberSubSysObj));

@@ -26,6 +26,7 @@ public class ShooterAnglerSubSys extends SubsystemBase {
         // Linear Actuator Angle
         linearActuatorMotor = new CANSparkMax(Constants.LINEAR_ACTUATOR_MOTOR_CAN_ID, MotorType.kBrushed);
         linearActuatorMotor.setSmartCurrentLimit(Constants.LINEAR_ACTUATOR_MOTOR_SMART_CURRENT_LIMIT);
+        linearActuatorMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
         linearActuatorVelPct = Constants.LINEAR_ACTUATOR_MOTOR_PCT / 100.0;
         linearActuatorVelReversePct = Constants.LINEAR_ACTUATOR_MOTOR_REVERSE_PCT / 100.0;
