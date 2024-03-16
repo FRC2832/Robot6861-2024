@@ -59,17 +59,17 @@ public class DriveXbox extends Command {
 
 
         if (cont.getLeftBumper()) { // snail mode
-            SmartDashboard.putString("Drive mode:", "Snail");
+            // SmartDashboard.putString("Drive mode:", "Snail");
             newXSpeed = Constants.SNAIL_MODE * xSpeed * drive.getMaxDriverSpeed();
             newYSpeed = Constants.SNAIL_MODE * ySpeed * drive.getMaxDriverSpeed();
-            SmartDashboard.putNumber("xSpeed:", newXSpeed);
-            SmartDashboard.putNumber("ySpeed:", newYSpeed);
+            //SmartDashboard.putNumber("xSpeed:", newXSpeed);
+            //SmartDashboard.putNumber("ySpeed:", newYSpeed);
             drive.swerveDrive(
                     newXSpeed,
                     newYSpeed,
                     turn * drive.getMaxDriverOmega());
         } else if (cont.getLeftTriggerAxis() >= 0.5) { // turtle mode
-            SmartDashboard.putString("Drive mode:", "Turtle");
+            //SmartDashboard.putString("Drive mode:", "Turtle");
             newXSpeed = Constants.TURTLE_MODE * xSpeed * drive.getMaxDriverSpeed();
             newYSpeed = Constants.TURTLE_MODE * ySpeed * drive.getMaxDriverSpeed();
             drive.swerveDrive(

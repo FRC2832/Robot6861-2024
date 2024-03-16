@@ -24,20 +24,20 @@ public class IntakeSubSys extends SubsystemBase {
     // once note is fully in indexer, run intake backwards
 
     private final CANSparkMax intakeMotor;
-    private SparkPIDController intakePidController;
-    private RelativeEncoder intakeEncoder;
+    //private SparkPIDController intakePidController;
+    //private RelativeEncoder intakeEncoder;
     private double intakeVelVolts;
     private double outtakeVelVolts;
     private double intakeVelPct;
     private double outtakeVelPct;
-    private double kP;
-    private double kI;
-    private double kD;
-    private double kIz;
-    private double kFF;
-    private double kMaxOutput;
-    private double kMinOutput;
-    private double maxRPM;
+    //private double kP;
+    //private double kI;
+    //private double kD;
+   // private double kIz;
+   // private double kFF;
+   // private double kMaxOutput;
+   // private double kMinOutput;
+   // private double maxRPM;
 
     public IntakeSubSys() {
         intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR_CAN_ID, MotorType.kBrushless);
@@ -49,8 +49,8 @@ public class IntakeSubSys extends SubsystemBase {
         intakeVelVolts = intakeVelPct * 12.0;
         outtakeVelVolts = outtakeVelPct * 12.0;
 
-        intakeEncoder = intakeMotor.getEncoder();
-        intakePidController = intakeMotor.getPIDController();
+        //intakeEncoder = intakeMotor.getEncoder();
+        //intakePidController = intakeMotor.getPIDController();
     }
 
     // Runs the IntakeMotors in a positive direction(Inwards)
@@ -58,7 +58,7 @@ public class IntakeSubSys extends SubsystemBase {
        
         intakeMotor.setVoltage(intakeVelVolts); // TODO: Old code before pid
 
-
+        /* 
         kP = 0.0; // Suggested Value: 0
         kI = 0.0;
         kD = 0.0;
@@ -75,12 +75,12 @@ public class IntakeSubSys extends SubsystemBase {
         intakePidController.setFF(kFF);
         intakePidController.setOutputRange(kMinOutput, kMaxOutput);
         
-        
+        */
         // double setPoint = m_stick.getY()*maxRPM;
         //intakePidController.setReference(maxRPM, CANSparkMax.ControlType.kVelocity);
 
         // SmartDashboard.putNumber("SetPoint", setPoint);
-        SmartDashboard.putNumber("ProcessVariable", intakeEncoder.getVelocity());
+        //SmartDashboard.putNumber("ProcessVariable", intakeEncoder.getVelocity());
     }
 
     // Runs the IntakeMotors in a negative direction(Outwards)
@@ -95,6 +95,6 @@ public class IntakeSubSys extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        SmartDashboard.putNumber("Intake Motor Encoder", intakeEncoder.getVelocity());
+        //SmartDashboard.putNumber("Intake Motor Encoder", intakeEncoder.getVelocity());
     }
 }

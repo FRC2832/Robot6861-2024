@@ -27,10 +27,10 @@ public class ClimberSubSys extends SubsystemBase {
 
     private final CANSparkMax climberMotor;
     private final RelativeEncoder climberEncoder;
-    private double upClimbVelVolts;
-    private double downClimbVelVolts;
-    private double upClimbVelPct;
-    private double downClimbVelPct;
+    //private double upClimbVelVolts;
+    //private double downClimbVelVolts;
+    //private double upClimbVelPct;
+   // private double downClimbVelPct;
     // private PIDController climberPID;
     private SparkPIDController climberPIDController;
     private double kP;
@@ -50,10 +50,10 @@ public class ClimberSubSys extends SubsystemBase {
         climberMotor.setSmartCurrentLimit(Constants.CLIMBER_MOTOR_SMART_CURRENT_LIMIT);
         climberMotor.setSecondaryCurrentLimit(Constants.CLIMBER_MOTOR_SECONDARY_CURRENT_LIMIT);
 
-        upClimbVelPct = Constants.UPCLIMB_MOTOR_PCT / 100.0;
-        downClimbVelPct = Constants.DOWNCLIMB_MOTOR_PCT / 100.0;
-        upClimbVelVolts = upClimbVelPct * 12.0;
-        downClimbVelVolts = downClimbVelPct * 12.0;
+       // upClimbVelPct = Constants.UPCLIMB_MOTOR_PCT / 100.0;
+       // downClimbVelPct = Constants.DOWNCLIMB_MOTOR_PCT / 100.0;
+       // upClimbVelVolts = upClimbVelPct * 12.0;
+       // downClimbVelVolts = downClimbVelPct * 12.0;
 
         climberMotor.setIdleMode(IdleMode.kBrake); // set to coast when needing to work on climber
 

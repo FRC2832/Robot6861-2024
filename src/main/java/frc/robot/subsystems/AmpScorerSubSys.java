@@ -20,10 +20,10 @@ public class AmpScorerSubSys extends SubsystemBase {
   private final RelativeEncoder ampEncoder;
   
 
-  private double ampMotorVelPct;
-  private double ampMotorReverseVelPct;
-  private double ampMotorVolts;
-  private double ampMotorReverseVolts;
+  //private double ampMotorVelPct;
+  //private double ampMotorReverseVelPct;
+  //private double ampMotorVolts;
+  //private double ampMotorReverseVolts;
 
   private SparkPIDController ampPIDController;
   private double kP;
@@ -45,10 +45,10 @@ public class AmpScorerSubSys extends SubsystemBase {
     ampPIDController = ampMotor.getPIDController();
 
 
-    ampMotorVelPct = Constants.AMP_UP_PCT / 100.0; // TODO: Possibly switch with AMP_DOWN_PCT
-    ampMotorReverseVelPct = Constants.AMP_DOWN_PCT / 100.0;
-    ampMotorVolts = ampMotorVelPct * 12.0;
-    ampMotorReverseVolts = ampMotorReverseVelPct * 12.0;
+    //ampMotorVelPct = Constants.AMP_UP_PCT / 100.0; // TODO: Possibly switch with AMP_DOWN_PCT
+    //ampMotorReverseVelPct = Constants.AMP_DOWN_PCT / 100.0;
+    //ampMotorVolts = ampMotorVelPct * 12.0;
+    //ampMotorReverseVolts = ampMotorReverseVelPct * 12.0;
 
     ampMotor.setIdleMode(IdleMode.kCoast); // set to coast when needing to work on Amp, set to brake for comps and practice
   }

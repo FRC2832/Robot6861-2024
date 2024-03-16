@@ -117,7 +117,7 @@ public class SwerveDriveTrain extends SubsystemBase {
         /** How fast we want the driver to turn during normal operation in deg/s */
         driverMaxOmega = UtilFunctions.getSettingSub("/Swerve Drive/Max Driver Omega (dps)", 625); // 1.8 * Pi rad/sec
 
-        minSpeed = 0.1;  //units m/s
+        minSpeed = 0.2;  //units m/s
         maxSpeed = 4.8;  //units m/s
 
         swerveXSpeed = UtilFunctions.getNtPub("/Swerve Drive/X Speed (mps)", 0);

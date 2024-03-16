@@ -30,10 +30,10 @@ public class ShooterSubSys extends SubsystemBase {
     private final CANSparkMax shooterMotorFL;
     private final RelativeEncoder shooterMotorFREncoder;
     private final RelativeEncoder shooterMotorFLEncoder;
-    private double shooterVelVoltsFR;
-    private double shooterVelVoltsFL;
-    private double shooterVelPctFR;
-    private double shooterVelPctFL;
+    //private double shooterVelVoltsFR;
+    //private double shooterVelVoltsFL;
+    //private double shooterVelPctFR;
+    //private double shooterVelPctFL;
     private double shooterVelRPM;
     private SparkPIDController shooterPIDControllerFR;
     private SparkPIDController shooterPIDControllerFL;
@@ -80,10 +80,10 @@ public class ShooterSubSys extends SubsystemBase {
         shooterMotorFR.setSmartCurrentLimit(Constants.FR_SHOOTER_MOTOR_SMART_CURRENT_LIMIT);
         shooterMotorFL.setSmartCurrentLimit(Constants.FL_SHOOTER_MOTOR_SMART_CURRENT_LIMIT);
 
-        shooterVelPctFR = Constants.FR_SHOOTER_MOTOR_PCT_SPEAKER / 100.0;
-        shooterVelPctFL = Constants.FL_SHOOTER_MOTOR_PCT_SPEAKER / 100.0;
-        shooterVelVoltsFR = shooterVelPctFR * 12.0;
-        shooterVelVoltsFL = shooterVelPctFL * 12.0;
+        //shooterVelPctFR = Constants.FR_SHOOTER_MOTOR_PCT_SPEAKER / 100.0;
+        //shooterVelPctFL = Constants.FL_SHOOTER_MOTOR_PCT_SPEAKER / 100.0;
+        //shooterVelVoltsFR = shooterVelPctFR * 12.0;
+        //shooterVelVoltsFL = shooterVelPctFL * 12.0;
 
         shooterMotorFR.setIdleMode(IdleMode.kBrake); 
         shooterMotorFL.setIdleMode(IdleMode.kBrake);
@@ -248,13 +248,13 @@ public class ShooterSubSys extends SubsystemBase {
     @Override
     public void periodic() {
         // TODO: Calculate average RPM and display on SmartDashboard.
-        double flRPM = shooterMotorFLEncoder.getVelocity();
-        double frRPM = shooterMotorFREncoder.getVelocity();
-        shooterVelRPM = (flRPM + frRPM) / 2;
+        //double flRPM = shooterMotorFLEncoder.getVelocity();
+        //double frRPM = shooterMotorFREncoder.getVelocity();
+        //shooterVelRPM = (flRPM + frRPM) / 2;
         // This method will be called once per scheduler run
     }
 
-    public double getShooterVelRPM() {
-        return shooterVelRPM;
-    }
+    //public double getShooterVelRPM() {
+        //return shooterVelRPM;
+   // }
 }
