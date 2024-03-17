@@ -31,10 +31,11 @@ public class AngleShooterBlackLineCmd extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        while (TIMER.get() < timerLim) {
+        if (TIMER.get() < timerLim) {
             shooterAnglerSubSysObj.runLinearActuatorReverse(); //angle shooter down to about 47 deg.
+        } else { 
+            shooterAnglerSubSysObj.stopLinearActuator();
         }
-        shooterAnglerSubSysObj.stopLinearActuator();
     }
 
     // Called once the command ends or is interrupted.

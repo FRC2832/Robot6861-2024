@@ -121,7 +121,7 @@ public class RobotContainer {
 
         // subsystems used in all robots
         odometry = new Odometry();
-        leds = new LedSubsystem(0, 10);
+        leds = new LedSubsystem(0, 50);
         // new VisionSystem(odometry); //not making variable as we won't change this
         // subsystem
 
@@ -205,7 +205,7 @@ public class RobotContainer {
         // setup default commands that are used for driving
         swerveDrive.setDefaultCommand(new DriveXbox(swerveDrive, driverController));
         ampScorerSubSysObj.setDefaultCommand(new LowerAmpCmd(ampScorerSubSysObj));
-        leds.setDefaultCommand(new BreathLeds(leds, Color.kAqua));
+        leds.setDefaultCommand(new BreathLeds(leds, Color.kAquamarine));
         // ClimberSubSys.setDefaultCommand(new ShowClimberEncoderCmd(climberSubSysObj));
         
 
@@ -228,6 +228,8 @@ public class RobotContainer {
         Trigger driverRightTrigger = driverController.rightTrigger();
         Trigger driverXButton = driverController.x();
 
+        //TODO: check this code below.  Why sequential? can be just paralle.
+
         SequentialCommandGroup intakeGroup = new SequentialCommandGroup(
                 new ParallelCommandGroup(
                         new IntakeNoteCmd(intakeSubSysObj, colorSensorObj, driverController, operatorController),
@@ -235,16 +237,19 @@ public class RobotContainer {
                         new LightningFlash(leds, Color.kHotPink)
                 )
         );
+        intakeGroup.setName("intakeGroup");
 
         ParallelCommandGroup outtakeGroup = new ParallelCommandGroup(
                 new OuttakeNoteCmd(intakeSubSysObj),
                 new RunIndexDownCmd(indexerSubSysObj)
         );
+        outtakeGroup.setName("outtakeGroup");
                 
         SequentialCommandGroup anglerGroup = new SequentialCommandGroup(
                 new AngleShooterDownCmd(shooterAnglerSubSysObj),
                 new AngleShooterUpCmd(shooterAnglerSubSysObj)
         );
+        anglerGroup.setName("anglerGroup");
 
         SequentialCommandGroup blackLineShootingGroup = new SequentialCommandGroup(
                 new ParallelCommandGroup(
@@ -252,6 +257,7 @@ public class RobotContainer {
                         new AngleShooterBlackLineCmd(shooterAnglerSubSysObj)),
                 new AngleShooterUpCmd(shooterAnglerSubSysObj)
         );
+        blackLineShootingGroup.setName("blackLineShootingGroup");
 
         SequentialCommandGroup safeZoneShootingGroup = new SequentialCommandGroup(
                 new ParallelCommandGroup(
@@ -259,6 +265,7 @@ public class RobotContainer {
                         new AngleShooterSafeZoneCmd(shooterAnglerSubSysObj)),
                 new AngleShooterUpCmd(shooterAnglerSubSysObj)
         );
+        safeZoneShootingGroup.setName("safeZoneShootingGroup");
         
         SequentialCommandGroup anglerAmpGroup = new SequentialCommandGroup(
                 new ParallelCommandGroup(
@@ -266,6 +273,7 @@ public class RobotContainer {
                         new AngleShooterAmpCmd(shooterAnglerSubSysObj)),
                 new AngleShooterUpCmd(shooterAnglerSubSysObj)
         );
+        anglerAmpGroup.setName("anglerAmpGroup");
 
 
 

@@ -38,10 +38,12 @@ public class ShooterAnglerSubSys extends SubsystemBase {
 
     public void runLinearActuator() {
         TIMER.restart();
-        while (TIMER.get() < timerLim) {
+        if (TIMER.get() < timerLim) {
             linearActuatorMotor.setVoltage(linearActuatorVelVolts);
+        } else {
+            linearActuatorMotor.setVoltage(0.0);
         }
-        linearActuatorMotor.setVoltage(0.0);
+    
         TIMER.stop();
         TIMER.reset();
     }

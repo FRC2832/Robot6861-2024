@@ -30,10 +30,11 @@ public class LowerAmpCmd extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    while (TIMER.get() < timerLim) {
-      ampScorerSubSysObj.runAmpMotorReverse();
+    if (TIMER.get() < timerLim) {
+        ampScorerSubSysObj.runAmpMotorReverse();
+    } else {
+      ampScorerSubSysObj.stopAmpMotor();
     }
-    ampScorerSubSysObj.stopAmpMotor();
   }
 
   // Called once the command ends or is interrupted.
