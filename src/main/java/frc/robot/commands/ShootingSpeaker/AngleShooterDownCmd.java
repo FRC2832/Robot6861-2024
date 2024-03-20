@@ -12,7 +12,8 @@ import frc.robot.subsystems.ShooterAnglerSubSys;
 public class AngleShooterDownCmd extends Command {
     private final ShooterAnglerSubSys shooterAnglerSubSysObj;
     private static final Timer TIMER = new Timer();
-    private double timerLim = 0.6;   //shooter about 42 deg.
+    private double timerMotor = 0.6;   //shooter about 42 deg.
+    private double timerFinish = 4.0;
 
     /** Creates a new AngleShooterDown. */
     public AngleShooterDownCmd(ShooterAnglerSubSys shooterAnglerSubSysObj) {
@@ -31,7 +32,7 @@ public class AngleShooterDownCmd extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (TIMER.get() < timerLim) {
+        if (TIMER.get() < timerMotor) {
             shooterAnglerSubSysObj.runLinearActuatorReverse(); //angle shooter down to about 42 deg.
         } else {
             shooterAnglerSubSysObj.stopLinearActuator();
@@ -51,6 +52,6 @@ public class AngleShooterDownCmd extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        return TIMER.get() > timerFinish;
     }
 }

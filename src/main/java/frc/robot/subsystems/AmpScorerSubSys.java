@@ -60,23 +60,23 @@ public class AmpScorerSubSys extends SubsystemBase {
   public void runAmpMotor() {  //runs amp arm up
      
     // PID coefficients
-      kP = 0.6;
-      kI = 0.0;
-      kD = 0.0;
-      kIz = 0.0;
-      kFF = 0.00;
-      kMaxOutput = 0.9;
-      kMinOutput = -0.9;
+      kP = 1.4;  //was 1.0 
+      //kI = 0.0;
+      //kD = 0.0;
+     // kIz = 0.0;
+     // kFF = 0.00;
+      kMaxOutput = 0.99;
+      kMinOutput = -0.98;
 
       // set PID coefficients
       ampPIDController.setP(kP);
-      ampPIDController.setI(kI);
-      ampPIDController.setD(kD);
-      ampPIDController.setIZone(kIz);
-      ampPIDController.setFF(kFF);
+      //ampPIDController.setI(kI);
+     // ampPIDController.setD(kD);
+     // ampPIDController.setIZone(kIz);
+     // ampPIDController.setFF(kFF);
       ampPIDController.setOutputRange(kMinOutput, kMaxOutput);
 
-      double rotations = 304.0;  
+      double rotations = 287.0;   //was 288, reduced so can have some overshoot in exchange for motor getting up to speed quicker.
 
       ampPIDController.setReference(rotations, CANSparkBase.ControlType.kPosition);
         //ampMotor.setVoltage(ampMotorVolts);
@@ -90,23 +90,24 @@ public class AmpScorerSubSys extends SubsystemBase {
   public void runAmpMotorReverse() {  // runs amp arm down
     // PID coefficients
       kP = 0.3;
-      kI = 0.0;
-      kD = 0.0;
-      kIz = 0.0;
-      kFF = 0.0;
-      kMaxOutput = 0.9;
-      kMinOutput = -0.9;
+     // kI = 0.0;
+     // kD = 0.0;
+     // kIz = 0.0;
+     // kFF = 0.0;
+      kMaxOutput = 0.98;
+      kMinOutput = -0.98;
 
     // set PID coefficients
       ampPIDController.setP(kP);
-      ampPIDController.setI(kI);
-      ampPIDController.setD(kD);
-      ampPIDController.setIZone(kIz);
-      ampPIDController.setFF(kFF);
+      //ampPIDController.setI(kI);
+      //ampPIDController.setD(kD);
+     // ampPIDController.setIZone(kIz);
+     // ampPIDController.setFF(kFF);
       ampPIDController.setOutputRange(kMinOutput, kMaxOutput);
 
       double rotations = 0.0;  
 
+      //if rotations < 
       ampPIDController.setReference(rotations, CANSparkBase.ControlType.kPosition);
       //ampMotor.setVoltage(ampMotorReverseVolts);
 

@@ -4,11 +4,16 @@
 
 package frc.robot.commands.ShootingAmp;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ShooterSubSys;
 
 public class PrimeShooterAmpCmd extends Command {
     private final ShooterSubSys shooterSubSysObj;
+    private static final Timer TIMER = new Timer();
+    private double timerMotor = 0.45; 
+    private double timerFinish = 4.0;
+    
     /** Creates a new PrimeShooterAmpCmd. */
     public PrimeShooterAmpCmd(ShooterSubSys shooterSubSysObj) {
         this.shooterSubSysObj = shooterSubSysObj;

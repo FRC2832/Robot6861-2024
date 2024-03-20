@@ -24,7 +24,7 @@ public class BreathLeds extends Command {
 
     public BreathLeds(ILedSubsystem leds, Color color) {
         this.leds = leds;
-        ColorHSV hsv = ColorHSV.fromColor(color);
+        ColorHSV hsv = ColorHSV.fromRGB(26, 255, 178);  //Sonar Sea Green
         hue = (int) hsv.hue;
         sat = (int) hsv.sat;
         addRequirements(leds);

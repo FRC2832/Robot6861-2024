@@ -75,19 +75,19 @@ public class ClimberSubSys extends SubsystemBase {
 
         // PID coefficients
         kP = 0.74;
-        kI = 0.0;
-        kD = 0.0;
-        kIz = 0.0;
-        kFF = 0.0;
-        kMaxOutput = 0.9;
-        kMinOutput = -0.9;
+        //kI = 0.0;
+        //kD = 0.0;
+       // kIz = 0.0;
+       // kFF = 0.0;
+        kMaxOutput = 0.98;
+        kMinOutput = -0.98;
 
         // set PID coefficients
         climberPIDController.setP(kP);
-        climberPIDController.setI(kI);
-        climberPIDController.setD(kD);
-        climberPIDController.setIZone(kIz);
-        climberPIDController.setFF(kFF);
+        //climberPIDController.setI(kI);
+        //climberPIDController.setD(kD);
+        // climberPIDController.setIZone(kIz);
+       // climberPIDController.setFF(kFF);
         climberPIDController.setOutputRange(kMinOutput, kMaxOutput);
 
         double rotations = 50.0;  
@@ -109,19 +109,19 @@ public class ClimberSubSys extends SubsystemBase {
 
         // PID coefficients
         kP = 0.5;
-        kI = 0.0;
-        kD = 0.0;
-        kIz = 0.0;
-        kFF = 0.0;
-        kMaxOutput = 0.9;
-        kMinOutput = -0.9;
+        //kI = 0.0;
+        //kD = 0.0;
+        //kIz = 0.0;
+        //kFF = 0.0;
+        kMaxOutput = 0.98;
+        kMinOutput = -0.98;
 
         // set PID coefficients
         climberPIDController.setP(kP);
-        climberPIDController.setI(kI);
-        climberPIDController.setD(kD);
-        climberPIDController.setIZone(kIz);
-        climberPIDController.setFF(kFF);
+        //climberPIDController.setI(kI);
+        //climberPIDController.setD(kD);
+        //climberPIDController.setIZone(kIz);
+        //climberPIDController.setFF(kFF);
         climberPIDController.setOutputRange(kMinOutput, kMaxOutput);
 
         double rotations = -5.0;

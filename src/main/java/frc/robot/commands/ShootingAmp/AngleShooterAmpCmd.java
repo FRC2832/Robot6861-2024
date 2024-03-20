@@ -14,8 +14,8 @@ public class AngleShooterAmpCmd extends Command {
   private final ShooterAnglerSubSys shooterAnglerSubSysObj;
 
   private static final Timer TIMER = new Timer();
-  private double timerLim = 0.45;  //0.375 for shooter rotates about 49 deg. works well for amp.  0.45 is 47deg.
-
+  private double timerMotor = 0.45;  //0.375 for shooter rotates about 49 deg. works well for amp.  0.45 is 47deg.
+  private double timerFinish= 4.0;
 
   public AngleShooterAmpCmd(ShooterAnglerSubSys shooterAnglerSubSysObj) {
     this.shooterAnglerSubSysObj = shooterAnglerSubSysObj;
@@ -32,7 +32,7 @@ public class AngleShooterAmpCmd extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (TIMER.get() < timerLim) {
+    if (TIMER.get() < timerMotor) {
             shooterAnglerSubSysObj.runLinearActuatorReverse();
     } else { 
         shooterAnglerSubSysObj.stopLinearActuator();
@@ -50,6 +50,6 @@ public class AngleShooterAmpCmd extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return TIMER.get() > timerFinish;
   }
 }

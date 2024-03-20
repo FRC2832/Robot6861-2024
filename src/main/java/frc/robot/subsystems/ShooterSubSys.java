@@ -101,29 +101,29 @@ public class ShooterSubSys extends SubsystemBase {
 
 
          // PID FL  Motor coefficients
-         lowKpFl = 0.0256;    
-         lowKiFl = 0.0;
-         lowKdFl = 0.0; 
-         lowKizFl = 0.0; 
-         lowKffFl = 0.00016; 
+         lowKpFl = 0.00006;    //was .0256
+         //lowKiFl = 0.0;
+         //lowKdFl = 0.0; 
+         //lowKizFl = 0.0; 
+         lowKffFl = 0.00017;  //was 0.00013
          kMaxOutputFL = 0.98; 
          kMinOutputFL = -0.98;
          maxRPM = 5676.0;  // from REV data sheet
 
         // set PID coefficients FL motor
         shooterPIDControllerFL.setP(lowKpFl);
-        shooterPIDControllerFL.setP(lowKiFl);
-        shooterPIDControllerFL.setP(lowKdFl);
-        shooterPIDControllerFL.setIZone(lowKizFl);
+        //shooterPIDControllerFL.setI(lowKiFl);
+        //shooterPIDControllerFL.setD(lowKdFl);
+        //shooterPIDControllerFL.setIZone(lowKizFl);
         shooterPIDControllerFL.setFF(lowKffFl);
         shooterPIDControllerFL.setOutputRange(kMinOutputFL, kMaxOutputFL);
 
         // PID FR  Motor coefficients
-         lowKpFr = 0.0256;  
-         lowKiFr = 0.0;
-         lowKdFr = 0.0; 
-         lowKizFr = 0.0; 
-         lowKffFr = 0.00016; 
+         lowKpFr = 0.00006;  //was .0256
+         //lowKiFr = 0.0;
+         //lowKdFr = 0.0; 
+         //lowKizFr = 0.0; 
+         lowKffFr = 0.00017;  //was 0.00013
          kMaxOutputFR = 0.98; 
          kMinOutputFR = -0.98;
          maxRPM = 5676.0;  // from REV data sheet
@@ -131,16 +131,16 @@ public class ShooterSubSys extends SubsystemBase {
 
         // set PID coefficients FR motor
         shooterPIDControllerFR.setP(lowKpFr);
-        shooterPIDControllerFR.setP(lowKiFr);
-        shooterPIDControllerFR.setP(lowKdFr);
-        shooterPIDControllerFR.setIZone(lowKizFr);
+        //shooterPIDControllerFR.setI(lowKiFr);
+        //shooterPIDControllerFR.setD(lowKdFr);
+        //shooterPIDControllerFR.setIZone(lowKizFr);
         shooterPIDControllerFR.setFF(lowKffFr);
         shooterPIDControllerFR.setOutputRange(kMinOutputFR, kMaxOutputFR);
 
 
         
-        double lowFlRPM =  -3000.0;  
-        double lowFrRPM =  3000.0;  
+        double lowFlRPM =  -4250.0;    //was -3000.0
+        double lowFrRPM =  4250.0;     //was 3000.0
 
         shooterPIDControllerFL.setReference(lowFlRPM, CANSparkMax.ControlType.kVelocity);
         shooterPIDControllerFR.setReference(lowFrRPM, CANSparkMax.ControlType.kVelocity);
@@ -162,39 +162,39 @@ public class ShooterSubSys extends SubsystemBase {
         // shooterMotorFL.setVoltage(shooterVelVoltsFL);  // comment this out when running PID
 
          // PID FL  Motor coefficients
-         kPFl = 0.0016;    
-         kIFl = 0.0;
-         kDFl = 0.0; 
-         kIzFl = 0.0; 
-         kFFFl = 0.00040; 
-         kMaxOutputFL = 0.98; 
+         kPFl = 0.00024; //was 0.0016
+         //kIFl = 0.0;
+         //kDFl = 0.0; 
+         //kIzFl = 0.0; 
+         kFFFl = 0.00017;   //was 0.000179
+         kMaxOutputFL = 0.99; 
          kMinOutputFL = -0.98;
          maxRPM = 5676.0;  // from REV data sheet
 
         // set PID coefficients FL motor
         shooterPIDControllerFL.setP(kPFl);
-        shooterPIDControllerFL.setP(kIFl);
-        shooterPIDControllerFL.setP(kDFl);
-        shooterPIDControllerFL.setIZone(kIzFl);
+        //shooterPIDControllerFL.setI(kIFl);
+        //shooterPIDControllerFL.setD(kDFl);
+        //shooterPIDControllerFL.setIZone(kIzFl);
         shooterPIDControllerFL.setFF(kFFFl);
         shooterPIDControllerFL.setOutputRange(kMinOutputFL, kMaxOutputFL);
 
         // PID FR  Motor coefficients
-         kPFr = 0.0;  //6e-5;   // REV suggested value. May need to change for our motors
-         kIFr = 0.0;
-         kDFr = 0.0; 
-         kIzFr = 0.0; 
-         kFFFr = 0.000182; // REV suggested value. May need to change for our motors
-         kMaxOutputFR = 0.98; 
+         kPFr = 0.00024;  //6e-5;   // REV suggested value. May need to change for our motors
+         //kIFr = 0.0;
+        // kDFr = 0.0; 
+         //kIzFr = 0.0; 
+         kFFFr = 0.00017; // was 0.000179 REV suggested value. May need to change for our motors
+         kMaxOutputFR = 0.99; 
          kMinOutputFR = -0.98;
          maxRPM = 5676.0;  // from REV data sheet
 
 
         // set PID coefficients FR motor
         shooterPIDControllerFR.setP(kPFr);
-        shooterPIDControllerFR.setP(kIFr);
-        shooterPIDControllerFR.setP(kDFr);
-        shooterPIDControllerFR.setIZone(kIzFr);
+        //shooterPIDControllerFR.setI(kIFr);
+        //shooterPIDControllerFR.setD(kDFr);
+        //shooterPIDControllerFR.setIZone(kIzFr);
         shooterPIDControllerFR.setFF(kFFFr);
         shooterPIDControllerFR.setOutputRange(kMinOutputFR, kMaxOutputFR);
 

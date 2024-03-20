@@ -51,9 +51,9 @@ import frc.robot.commands.ShootingAmp.AngleShooterAmpCmd;
 import frc.robot.commands.ShootingAmp.LowerAmpCmd;
 import frc.robot.commands.ShootingAmp.PrimeShooterAmpCmd;
 import frc.robot.commands.ShootingAmp.RaiseAmpCmd;
-import frc.robot.commands.ShootingAmp.AngleShooterSafeZoneCmd;
 import frc.robot.commands.ShootingSpeaker.AngleShooterBlackLineCmd;
 import frc.robot.commands.ShootingSpeaker.AngleShooterDownCmd;
+import frc.robot.commands.ShootingSpeaker.AngleShooterSafeZoneCmd;
 import frc.robot.commands.ShootingSpeaker.AngleShooterUpCmd;
 import frc.robot.commands.ShootingSpeaker.PrimeShooterSpeakerCmd;
 import frc.robot.commands.autons.PickUpNoteAutoCmd;
@@ -133,7 +133,7 @@ public class RobotContainer {
         } else {
             // competition robot
             swerveDrive = new SwerveDriveTrain(new PracticeSwerveHw(), odometry);
-            odometry.setGyroHardware(new PigeonGyro(50)); // TODO: Ensure this ID is correct
+            odometry.setGyroHardware(new PigeonGyro(50)); 
 
         }
 
@@ -204,8 +204,8 @@ public class RobotContainer {
     public void configureBindings() {
         // setup default commands that are used for driving
         swerveDrive.setDefaultCommand(new DriveXbox(swerveDrive, driverController));
-        ampScorerSubSysObj.setDefaultCommand(new LowerAmpCmd(ampScorerSubSysObj));
-        leds.setDefaultCommand(new BreathLeds(leds, Color.kAquamarine));
+        //ampScorerSubSysObj.setDefaultCommand(new LowerAmpCmd(ampScorerSubSysObj));
+        leds.setDefaultCommand(new BreathLeds(leds, Color.kGreen));
         // ClimberSubSys.setDefaultCommand(new ShowClimberEncoderCmd(climberSubSysObj));
         
 

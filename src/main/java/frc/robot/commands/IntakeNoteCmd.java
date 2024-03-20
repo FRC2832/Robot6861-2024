@@ -19,7 +19,7 @@ public class IntakeNoteCmd extends Command {
     private final XboxController driverController;
     private final XboxController operatorController;
     private static final Timer TIMER = new Timer();
-    private static final double MAX_RUN_TIME = 5.0; // was 3.5 seconds
+    private static final double MAX_RUN_TIME = 7.0; // was 5.0 seconds
     private static final double PROX_THRESHOLD = 0.5;
 
     /**

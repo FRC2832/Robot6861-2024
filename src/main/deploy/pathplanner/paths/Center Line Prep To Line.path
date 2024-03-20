@@ -16,15 +16,15 @@
     },
     {
       "anchor": {
-        "x": 8.086955844581269,
+        "x": 7.9545143705672015,
         "y": 4.109679808691718
       },
       "prevControl": {
-        "x": 7.086966722569559,
+        "x": 6.954525248555492,
         "y": 4.105015491140317
       },
       "nextControl": {
-        "x": 8.782586217828914,
+        "x": 8.650144743814847,
         "y": 4.112924484946495
       },
       "isLocked": false,
@@ -41,20 +41,20 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BackThroughStage"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 1.25,
     "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 2.0,
     "rotation": 0,
     "rotateFast": false
   },
@@ -64,5 +64,5 @@
     "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

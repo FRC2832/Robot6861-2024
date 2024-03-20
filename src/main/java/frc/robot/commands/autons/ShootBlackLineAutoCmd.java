@@ -20,6 +20,7 @@ public class ShootBlackLineAutoCmd extends Command {
     private final double tgtShooterVelRPM;
     private static final double INDEXER_RUN_TIME = 1.0; // Length of time to run the indexer.
     private static final double PRIME_SHOOTER_TIME = 0.75;
+    private static final double ANGLER_SHOOTER_TIME = 0.40;
     private boolean isShooterPrimed; // When true, start the indexer.
 
     private static final Timer TIMER = new Timer();
@@ -51,7 +52,12 @@ public class ShootBlackLineAutoCmd extends Command {
         }
 
         shooterSubSysObj.runShooterHighSpeed();
-        CommandScheduler.getInstance().schedule(new AngleShooterBlackLineCmd(shooterAnglerSubSysObj));
+        if(TIMER.get() < ANGLER_SHOOTER_TIME && !isShooterPrimed) {
+            shooterAnglerSubSysObj.runLinearActuatorReverse();
+        } else {
+            shooterAnglerSubSysObj.stopLinearActuator();
+        }
+        //CommandScheduler.getInstance().schedule(new AngleShooterBlackLineCmd(shooterAnglerSubSysObj));
 
         if (!isShooterPrimed && TIMER.get() >= PRIME_SHOOTER_TIME) {
             isShooterPrimed = true;
