@@ -12,9 +12,16 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "ShootRing"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootRing"
+                }
+              }
+            ]
           }
         },
         {
@@ -81,12 +88,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "3rd Note to Black Line"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 6.0
                 }
               }
             ]

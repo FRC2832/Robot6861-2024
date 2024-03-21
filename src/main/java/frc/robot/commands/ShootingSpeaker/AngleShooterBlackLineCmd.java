@@ -13,7 +13,7 @@ public class AngleShooterBlackLineCmd extends Command {
     private final ShooterAnglerSubSys shooterAnglerSubSysObj;
     private static final Timer TIMER = new Timer();
     private double timerMotor = 0.45;   //shooter about 47 deg.
-    private double timerFinish = 4.0;
+    private double timerFinish = 7.0;
 
     /** Creates a new AngleShooterDown. */
     public AngleShooterBlackLineCmd(ShooterAnglerSubSys shooterAnglerSubSysObj) {

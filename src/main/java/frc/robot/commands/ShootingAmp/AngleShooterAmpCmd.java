@@ -15,7 +15,7 @@ public class AngleShooterAmpCmd extends Command {
 
   private static final Timer TIMER = new Timer();
   private double timerMotor = 0.45;  //0.375 for shooter rotates about 49 deg. works well for amp.  0.45 is 47deg.
-  private double timerFinish= 4.0;
+  private double timerFinish= 7.0;
 
   public AngleShooterAmpCmd(ShooterAnglerSubSys shooterAnglerSubSysObj) {
     this.shooterAnglerSubSysObj = shooterAnglerSubSysObj;

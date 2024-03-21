@@ -4,18 +4,28 @@
 
 package frc.robot.commands;
 
+import java.awt.Color;
+
+import org.livoniawarriors.ColorHSV;
 import org.livoniawarriors.REVColorSensor;
+import org.livoniawarriors.leds.ILedSubsystem;
+import org.livoniawarriors.leds.LightningFlash;
+
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.ShootingSpeaker.AngleShooterUpCmd;
 import frc.robot.subsystems.IntakeSubSys;
 
-public class IntakeNoteCmd extends Command {
+public class IntakeNoteCmd extends Command {   
     private boolean isThresholdCrossed;
     private final IntakeSubSys intakeSubSysObj;
     private final REVColorSensor colorSensorObj;
+    //private final ILedSubsystem leds;
     private final XboxController driverController;
     private final XboxController operatorController;
     private static final Timer TIMER = new Timer();
@@ -28,11 +38,12 @@ public class IntakeNoteCmd extends Command {
      * 
      * @param intakeSubSysObj The IntakeSubsystem from the where it is being called
      */
-    public IntakeNoteCmd(IntakeSubSys intakeSubSys, REVColorSensor colorSensorObj,
-            CommandXboxController driverController, CommandXboxController operatorController) {
+    public IntakeNoteCmd(IntakeSubSys intakeSubSys, REVColorSensor colorSensorObj, 
+    CommandXboxController driverController, CommandXboxController operatorController) {  //ILedSubsystem leds,
         // Use addRequirements() here to declare subsystem dependencies.
         this.intakeSubSysObj = intakeSubSys;
         this.colorSensorObj = colorSensorObj;
+        //this.leds = leds;
         this.driverController = driverController.getHID();
         this.operatorController = operatorController.getHID();
         addRequirements(intakeSubSys);
@@ -53,6 +64,8 @@ public class IntakeNoteCmd extends Command {
         if (isThresholdCrossed) {
             driverController.setRumble(RumbleType.kBothRumble, 0.8);
             operatorController.setRumble(RumbleType.kBothRumble, 0.8);
+
+           //CommandScheduler.getInstance().schedule(new LightningFlash(leds, Color.kDarkSalmon);
         }
     }
 
@@ -61,8 +74,8 @@ public class IntakeNoteCmd extends Command {
     public void end(boolean interrupted) {
         intakeSubSysObj.stopIntakeMotors();
         TIMER.stop();
-        driverController.setRumble(RumbleType.kBothRumble, 0);
-        operatorController.setRumble(RumbleType.kBothRumble, 0);
+        //driverController.setRumble(RumbleType.kBothRumble, 0);
+        //operatorController.setRumble(RumbleType.kBothRumble, 0);
     }
 
     // Returns true when the command should end.

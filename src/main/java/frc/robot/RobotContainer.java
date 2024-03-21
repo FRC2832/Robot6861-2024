@@ -6,6 +6,7 @@ package frc.robot;
 
 import org.livoniawarriors.REVColorSensor;
 import org.livoniawarriors.leds.BreathLeds;
+import org.livoniawarriors.leds.ColorWave;
 import org.livoniawarriors.leds.LedSubsystem;
 import org.livoniawarriors.leds.LightningFlash;
 import org.livoniawarriors.leds.TestLeds;
@@ -154,6 +155,7 @@ public class RobotContainer {
 
         // Register Named Commands for PathPlanner
         NamedCommands.registerCommand("flashRed", new LightningFlash(leds, Color.kFirstRed));
+        NamedCommands.registerCommand("AngleShooterUp", new AngleShooterUpCmd(shooterAnglerSubSysObj));
         NamedCommands.registerCommand("flashBlue", new LightningFlash(leds, Color.kFirstBlue));
         NamedCommands.registerCommand("PickUpNote",
                 new PickUpNoteAutoCmd(intakeSubSysObj, indexerSubSysObj, colorSensorObj));
@@ -205,7 +207,8 @@ public class RobotContainer {
         // setup default commands that are used for driving
         swerveDrive.setDefaultCommand(new DriveXbox(swerveDrive, driverController));
         //ampScorerSubSysObj.setDefaultCommand(new LowerAmpCmd(ampScorerSubSysObj));
-        leds.setDefaultCommand(new BreathLeds(leds, Color.kGreen));
+        leds.setDefaultCommand(new ColorWave(leds, Color.kDarkGoldenrod));
+        shooterAnglerSubSysObj.setDefaultCommand(new AngleShooterUpCmd(shooterAnglerSubSysObj));
         // ClimberSubSys.setDefaultCommand(new ShowClimberEncoderCmd(climberSubSysObj));
         
 
@@ -228,13 +231,13 @@ public class RobotContainer {
         Trigger driverRightTrigger = driverController.rightTrigger();
         Trigger driverXButton = driverController.x();
 
-        //TODO: check this code below.  Why sequential? can be just paralle.
+        //TODO: check this code below.  Why sequential? can be just parallel.
 
         SequentialCommandGroup intakeGroup = new SequentialCommandGroup(
                 new ParallelCommandGroup(
                         new IntakeNoteCmd(intakeSubSysObj, colorSensorObj, driverController, operatorController),
                         new RunIndexUpCmd(indexerSubSysObj, colorSensorObj), 
-                        new LightningFlash(leds, Color.kHotPink)
+                        new LightningFlash(leds, Color.kDarkSalmon)
                 )
         );
         intakeGroup.setName("intakeGroup");

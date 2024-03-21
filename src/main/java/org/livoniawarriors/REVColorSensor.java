@@ -93,7 +93,7 @@ public class REVColorSensor {
                 double endTime = Timer.getFPGATimestamp();
 
                 // report the results
-                //SmartDashboard.putString("Color Sensor Color", color.toHexString());
+                SmartDashboard.putString("Color Sensor Color", color.toHexString());
                 SmartDashboard.putNumber("Color Read TimeStamp", endTime);
                 SmartDashboard.putNumber("Color Read Time", endTime - startTime);
                 SmartDashboard.putNumber("Color Sensor Prox", proximity);
