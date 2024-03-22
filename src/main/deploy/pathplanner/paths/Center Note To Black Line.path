@@ -11,7 +11,7 @@
         "x": 2.3611731784147327,
         "y": 5.5127032474435325
       },
-      "isLocked": false,
+      "isLocked": true,
       "linkedName": "Note 2 to black line"
     },
     {
@@ -24,7 +24,7 @@
         "y": 5.528202570108845
       },
       "nextControl": null,
-      "isLocked": false,
+      "isLocked": true,
       "linkedName": null
     }
   ],

@@ -60,6 +60,7 @@ import frc.robot.commands.ShootingSpeaker.PrimeShooterSpeakerCmd;
 import frc.robot.commands.autons.PickUpNoteAutoCmd;
 import frc.robot.commands.autons.ShootBlackLineAutoCmd;
 import frc.robot.commands.autons.ShootRingAutoCmd;
+import frc.robot.commands.autons.ShootSafeZoneAutoCmd;
 import frc.robot.subsystems.AmpScorerSubSys;
 import frc.robot.subsystems.ClimberSubSys;
 import frc.robot.subsystems.IndexerSubSys;
@@ -162,6 +163,8 @@ public class RobotContainer {
         NamedCommands.registerCommand("ShootRing",
                 new ShootRingAutoCmd(shooterSubSysObj, indexerSubSysObj, Constants.AUTON_TARGET_VELOCITY));
         NamedCommands.registerCommand("ShootBlackLine", new ShootBlackLineAutoCmd(shooterSubSysObj, indexerSubSysObj, Constants.AUTON_TARGET_VELOCITY, shooterAnglerSubSysObj));
+        NamedCommands.registerCommand("ShootSafeZone", new ShootSafeZoneAutoCmd(shooterSubSysObj, indexerSubSysObj, Constants.AUTON_TARGET_VELOCITY, shooterAnglerSubSysObj));
+
 
         // Configure the AutoBuilder
         AutoBuilder.configureHolonomic(
@@ -235,6 +238,7 @@ public class RobotContainer {
 
         SequentialCommandGroup intakeGroup = new SequentialCommandGroup(
                 new ParallelCommandGroup(
+                        new AngleShooterUpCmd(shooterAnglerSubSysObj),
                         new IntakeNoteCmd(intakeSubSysObj, colorSensorObj, driverController, operatorController),
                         new RunIndexUpCmd(indexerSubSysObj, colorSensorObj), 
                         new LightningFlash(leds, Color.kDarkSalmon)

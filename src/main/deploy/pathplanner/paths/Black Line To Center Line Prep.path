@@ -11,7 +11,7 @@
         "x": 6.368364562804654,
         "y": 5.392340249238903
       },
-      "isLocked": false,
+      "isLocked": true,
       "linkedName": "BlackLineCenter"
     },
     {
@@ -20,11 +20,11 @@
         "y": 4.109679808691718
       },
       "prevControl": {
-        "x": 2.979036015381432,
-        "y": 4.122188270753766
+        "x": 2.97901469210608,
+        "y": 4.109679808691718
       },
       "nextControl": null,
-      "isLocked": false,
+      "isLocked": true,
       "linkedName": "BehindStage"
     }
   ],

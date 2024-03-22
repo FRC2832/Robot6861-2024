@@ -37,22 +37,15 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "SafeZone Note To Shoot"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": null
-                }
-              }
-            ]
+            "pathName": "SafeZone Note To Shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootBlackLine"
           }
         }
       ]

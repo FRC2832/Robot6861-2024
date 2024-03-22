@@ -124,7 +124,7 @@ public class ClimberSubSys extends SubsystemBase {
         //climberPIDController.setFF(kFF);
         climberPIDController.setOutputRange(kMinOutput, kMaxOutput);
 
-        double rotations = -5.0;
+        double rotations = -1.0;
 
         // climberMotor.setVoltage(downClimbVelVolts);
 

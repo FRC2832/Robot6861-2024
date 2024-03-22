@@ -24,7 +24,7 @@
         "y": 5.5302295882369545
       },
       "nextControl": null,
-      "isLocked": false,
+      "isLocked": true,
       "linkedName": "Note 2 to black line"
     }
   ],
