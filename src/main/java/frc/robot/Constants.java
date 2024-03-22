@@ -67,7 +67,7 @@ public final class Constants {
     public static final int TURN_MOTOR_SECONDARY_CURRENT_LIMIT = 65;
 
     // Drive mode factors
-    public static final double TURTLE_MODE = 0.4;
+    public static final double TURTLE_MODE = 0.6;
     public static final double SNAIL_MODE = 0.25;
 
     // Vision system values

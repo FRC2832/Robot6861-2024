@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 2.266900115132108,
-        "y": 5.53
+        "x": 2.9961928869726684,
+        "y": 5.5302295882369545
       },
       "prevControl": {
-        "x": 4.51643296448986,
-        "y": 5.85877137566241
+        "x": 5.0660582232845375,
+        "y": 5.495147124909636
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BlackLineCenter"
+      "linkedName": "Note 2 to black line"
     }
   ],
   "rotationTargets": [],
@@ -42,25 +42,7 @@
       }
     }
   ],
-  "eventMarkers": [
-    {
-      "name": "RunShooter",
-      "waypointRelativePos": 0.6,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "ShootBlackLine"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 29.0,
@@ -68,7 +50,7 @@
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 2.5,
     "rotation": 0,
     "rotateFast": false
   },

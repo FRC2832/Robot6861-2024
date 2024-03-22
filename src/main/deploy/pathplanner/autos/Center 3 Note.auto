@@ -44,15 +44,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Center Note To Black Line"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootBlackLine"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center Note To Black Line"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootBlackLine"
+                }
+              }
+            ]
           }
         },
         {
@@ -81,13 +88,25 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "3rd Note to Black Line"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "3rd Note to Black Line"
+                  "pathName": "Center Note To Black Line"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootBlackLine"
                 }
               }
             ]

@@ -38,7 +38,7 @@ public class IntakeNoteCmd extends Command {
      * 
      * @param intakeSubSysObj The IntakeSubsystem from the where it is being called
      */
-    public IntakeNoteCmd(IntakeSubSys intakeSubSys, REVColorSensor colorSensorObj, 
+    public IntakeNoteCmd(IntakeSubSys intakeSubSys, REVColorSensor colorSensorObj,
     CommandXboxController driverController, CommandXboxController operatorController) {  //ILedSubsystem leds,
         // Use addRequirements() here to declare subsystem dependencies.
         this.intakeSubSysObj = intakeSubSys;
@@ -85,13 +85,14 @@ public class IntakeNoteCmd extends Command {
         double prox = colorSensorObj.getProximity();
         if (!isThresholdCrossed && prox >= PROX_THRESHOLD) {
             isThresholdCrossed = true;
+            //color == Color.kOrange;
             return false;
         }
         if (isThresholdCrossed) {
             return prox < PROX_THRESHOLD || TIMER.get() >= MAX_RUN_TIME;
         }
-        return TIMER.get() >= MAX_RUN_TIME;
-        // return prox >= PROX_THRESHOLD || TIMER.get() >= MAX_RUN_TIME;
+        //return TIMER.get() >= MAX_RUN_TIME;
+        return prox >= PROX_THRESHOLD || TIMER.get() >= MAX_RUN_TIME;
         // return color == Color.kOrange || color == Color.kOrangeRed || TIMER.get() >=
         // MAX_RUN_TIME;
         // return TIMER.get() >= MAX_RUN_TIME;

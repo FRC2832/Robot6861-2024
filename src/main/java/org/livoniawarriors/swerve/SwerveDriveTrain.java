@@ -245,7 +245,7 @@ public class SwerveDriveTrain extends SubsystemBase {
         // we use a little larger optimize angle since drivers turning 90* is a pretty
         // common operation
         double optimizeAngle = UtilFunctions.getSetting(OPTIMIZE_ANGLE_KEY, 120);
-        double maxAccel = UtilFunctions.getSetting(MAX_ACCEL_KEY, 90);
+        double maxAccel = UtilFunctions.getSetting(MAX_ACCEL_KEY, 300);  
         double maxOmega = UtilFunctions.getSetting(MAX_OMEGA_KEY, 3000);
 
         // command each swerve module

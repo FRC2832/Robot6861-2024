@@ -208,7 +208,7 @@ public class RobotContainer {
         swerveDrive.setDefaultCommand(new DriveXbox(swerveDrive, driverController));
         //ampScorerSubSysObj.setDefaultCommand(new LowerAmpCmd(ampScorerSubSysObj));
         leds.setDefaultCommand(new ColorWave(leds, Color.kDarkGoldenrod));
-        shooterAnglerSubSysObj.setDefaultCommand(new AngleShooterUpCmd(shooterAnglerSubSysObj));
+        //shooterAnglerSubSysObj.setDefaultCommand(new AngleShooterUpCmd(shooterAnglerSubSysObj));
         // ClimberSubSys.setDefaultCommand(new ShowClimberEncoderCmd(climberSubSysObj));
         
 
