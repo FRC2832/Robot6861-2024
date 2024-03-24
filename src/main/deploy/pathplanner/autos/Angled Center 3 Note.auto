@@ -18,6 +18,12 @@
               {
                 "type": "named",
                 "data": {
+                  "name": "AngleShooterUp"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
                   "name": "ShootRing"
                 }
               }

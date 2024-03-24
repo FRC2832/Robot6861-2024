@@ -18,7 +18,7 @@ public class PickUpNoteAutoCmd extends Command {
     private final REVColorSensor colorSensorObj;
     private static final Timer TIMER = new Timer();
     private static final Timer BUFFER_TIMER = new Timer();
-    private static final double AUTON_MAX_RUN_TIME = 2.85; // was 6.0 note was getting stuck on top of indexer due to no prox sensro
+    private static final double AUTON_MAX_RUN_TIME = 3.00; // was 2.85 was 6.0 note was getting stuck on top of indexer due to no prox sensro
     private static final double BUFFER_TIME = 0.3;  //was 0.5
     private static final double PROX_THRESHOLD = 0.5;
 

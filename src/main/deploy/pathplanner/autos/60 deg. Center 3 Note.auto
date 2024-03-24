@@ -1,0 +1,129 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.3569647880036504,
+      "y": 5.5302295882369545
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "AngleShooterUp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootRing"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center To Note"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AngleShooterUp"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PickUpNote"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3Note Center Note To Shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AngleShooterUp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootRing"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Speaker To Center Line Prep"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center Line Prep To Line"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AngleShooterUp"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PickUpNote"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3rd Note to Speaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3Note Center Note To Shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AngleShooterUp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootRing"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

@@ -57,6 +57,7 @@ import frc.robot.commands.ShootingSpeaker.AngleShooterDownCmd;
 import frc.robot.commands.ShootingSpeaker.AngleShooterSafeZoneCmd;
 import frc.robot.commands.ShootingSpeaker.AngleShooterUpCmd;
 import frc.robot.commands.ShootingSpeaker.PrimeShooterSpeakerCmd;
+import frc.robot.commands.autons.AngleShooterUpAutoCmd;
 import frc.robot.commands.autons.PickUpNoteAutoCmd;
 import frc.robot.commands.autons.ShootBlackLineAutoCmd;
 import frc.robot.commands.autons.ShootRingAutoCmd;
@@ -164,7 +165,7 @@ public class RobotContainer {
                 new ShootRingAutoCmd(shooterSubSysObj, indexerSubSysObj, Constants.AUTON_TARGET_VELOCITY));
         NamedCommands.registerCommand("ShootBlackLine", new ShootBlackLineAutoCmd(shooterSubSysObj, indexerSubSysObj, Constants.AUTON_TARGET_VELOCITY, shooterAnglerSubSysObj));
         NamedCommands.registerCommand("ShootSafeZone", new ShootSafeZoneAutoCmd(shooterSubSysObj, indexerSubSysObj, Constants.AUTON_TARGET_VELOCITY, shooterAnglerSubSysObj));
-
+        NamedCommands.registerCommand("AngleShooterUp", new AngleShooterUpAutoCmd(shooterAnglerSubSysObj));
 
         // Configure the AutoBuilder
         AutoBuilder.configureHolonomic(
@@ -230,6 +231,7 @@ public class RobotContainer {
         Trigger operatorStart = operatorController.start();
         Trigger operatorBack = operatorController.back();
         Trigger operatorLeftStickTrigger = operatorController.leftStick();
+        Trigger operatorDPadLeft = operatorController.povLeft();
 
         Trigger driverRightTrigger = driverController.rightTrigger();
         Trigger driverXButton = driverController.x();
@@ -259,6 +261,7 @@ public class RobotContainer {
         anglerGroup.setName("anglerGroup");
 
         SequentialCommandGroup blackLineShootingGroup = new SequentialCommandGroup(
+                new AngleShooterUpAutoCmd(shooterAnglerSubSysObj),
                 new ParallelCommandGroup(
                         new PrimeShooterSpeakerCmd(shooterSubSysObj),
                         new AngleShooterBlackLineCmd(shooterAnglerSubSysObj)),
@@ -267,6 +270,7 @@ public class RobotContainer {
         blackLineShootingGroup.setName("blackLineShootingGroup");
 
         SequentialCommandGroup safeZoneShootingGroup = new SequentialCommandGroup(
+                new AngleShooterUpAutoCmd(shooterAnglerSubSysObj),
                 new ParallelCommandGroup(
                         new PrimeShooterSpeakerCmd(shooterSubSysObj),
                         new AngleShooterSafeZoneCmd(shooterAnglerSubSysObj)),
@@ -275,6 +279,7 @@ public class RobotContainer {
         safeZoneShootingGroup.setName("safeZoneShootingGroup");
         
         SequentialCommandGroup anglerAmpGroup = new SequentialCommandGroup(
+                new AngleShooterUpAutoCmd(shooterAnglerSubSysObj),
                 new ParallelCommandGroup(
                         new PrimeShooterAmpCmd(shooterSubSysObj),
                         new AngleShooterAmpCmd(shooterAnglerSubSysObj)),
@@ -284,27 +289,33 @@ public class RobotContainer {
 
 
 
+        // Operator Trigger Commands        
         // operatorRightTrigger.whileTrue(new IntakeNoteCmd(intakeSubSysObj));
         operatorLeftTrigger.whileTrue(outtakeGroup);
         operatorRightTrigger.whileTrue(intakeGroup);
 
+        // Operator Bumper Commands
         operatorLeftBumper.whileTrue(new RunIndexDownCmd(indexerSubSysObj));
         operatorRightBumper.whileTrue(new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
 
+        // Operator Button Commands
         operatorAButton.whileTrue(new PrimeShooterSpeakerCmd(shooterSubSysObj));
         operatorBButton.whileTrue(blackLineShootingGroup);
-        operatorDPadRight.whileTrue(safeZoneShootingGroup);
-        operatorYButton.whileTrue(new ReverseShooterCmd(shooterSubSysObj));
-
         operatorXButton.whileTrue(new AngleShooterUpCmd(shooterAnglerSubSysObj));
+        operatorYButton.whileTrue(new ReverseShooterCmd(shooterSubSysObj));
         
+        // Operator DPad Commands
+        operatorDPadRight.whileTrue(safeZoneShootingGroup);
         operatorDPadDown.whileTrue(new ClimbDownCmd(climberSubSysObj));
         operatorDPadUp.whileTrue(new ClimbUpCmd(climberSubSysObj));
+        operatorDPadLeft.whileTrue(new AngleShooterDownCmd(shooterAnglerSubSysObj));
 
+        // Operator Center Controller Button Commands
         operatorStart.whileTrue(anglerAmpGroup);
         operatorBack.whileTrue(new RaiseAmpCmd(ampScorerSubSysObj));
         operatorLeftStickTrigger.whileTrue(new LowerAmpCmd(ampScorerSubSysObj));
 
+        // Driver Input Commands (All of the driver input commands)
         driverRightTrigger.whileTrue(new RunIndexUpContinuousCmd(indexerSubSysObj));
         driverXButton.whileTrue(new RunIndexDownCmd(indexerSubSysObj));
 

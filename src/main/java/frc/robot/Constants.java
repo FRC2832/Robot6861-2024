@@ -22,7 +22,7 @@ public final class Constants {
     // Intake Motor Values
     public static final int INTAKE_MOTOR_SMART_CURRENT_LIMIT = 20; // NEO 550
     public static final int INTAKE_MOTOR_SECONDARY_CURRENT_LIMIT = 40; // complete
-    public static final double INTAKE_MOTOR_PCT = 45.0;      // TODO: increase these values. Maybe 70.0
+    public static final double INTAKE_MOTOR_PCT = 55.0;      // TODO: increase these values. Maybe 70.0
     public static final double OUTTAKE_MOTOR_PCT = -20.0;   // TODO: confirm these values
 
     // Indexer Motor Values

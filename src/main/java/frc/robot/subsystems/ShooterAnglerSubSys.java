@@ -16,6 +16,7 @@ public class ShooterAnglerSubSys extends SubsystemBase {
     private final CANSparkMax linearActuatorMotor;
     private static final Timer TIMER = new Timer();
     private final double timerLim;
+    private final double timerLimAuton;
     private double linearActuatorVelVolts;
     private double linearActuatorVelPct;
     private double linearActuatorVelReversePct;
@@ -34,6 +35,7 @@ public class ShooterAnglerSubSys extends SubsystemBase {
         linearActuatorVelVoltsReverse = linearActuatorVelReversePct * 12.0;
 
         timerLim = 1.75;
+        timerLimAuton = 0.4;
     }
 
     public void runLinearActuator() {
@@ -47,6 +49,14 @@ public class ShooterAnglerSubSys extends SubsystemBase {
         TIMER.stop();
         TIMER.reset();
     }
+
+
+    public void runLinearActuatorAuton() {
+        
+        linearActuatorMotor.setVoltage(linearActuatorVelVolts); 
+    
+    }
+
 
     public void runLinearActuatorReverse() {
         linearActuatorMotor.setVoltage(linearActuatorVelVoltsReverse);
