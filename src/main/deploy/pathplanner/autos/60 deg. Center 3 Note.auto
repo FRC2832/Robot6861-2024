@@ -14,12 +14,6 @@
         {
           "type": "named",
           "data": {
-            "name": "AngleShooterUp"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "ShootRing"
           }
         },
@@ -36,12 +30,6 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AngleShooterUp"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
                   "name": "PickUpNote"
                 }
               }
@@ -52,12 +40,6 @@
           "type": "path",
           "data": {
             "pathName": "3Note Center Note To Shoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AngleShooterUp"
           }
         },
         {
@@ -85,12 +67,6 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AngleShooterUp"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
                   "name": "PickUpNote"
                 }
               }
@@ -106,13 +82,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "3Note Center Note To Shoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AngleShooterUp"
+            "pathName": "3Note from centerline to shoot"
           }
         },
         {

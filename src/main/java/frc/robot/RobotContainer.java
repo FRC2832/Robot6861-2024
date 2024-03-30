@@ -260,6 +260,16 @@ public class RobotContainer {
         );
         anglerGroup.setName("anglerGroup");
 
+
+
+        SequentialCommandGroup speakershootingGroup = new SequentialCommandGroup(
+                new AngleShooterUpAutoCmd(shooterAnglerSubSysObj),
+                new PrimeShooterSpeakerCmd(shooterSubSysObj),
+                new AngleShooterUpCmd(shooterAnglerSubSysObj)
+        );
+
+        speakershootingGroup.setName("speakershootingGroup");
+
         SequentialCommandGroup blackLineShootingGroup = new SequentialCommandGroup(
                 new AngleShooterUpAutoCmd(shooterAnglerSubSysObj),
                 new ParallelCommandGroup(
@@ -270,7 +280,7 @@ public class RobotContainer {
         blackLineShootingGroup.setName("blackLineShootingGroup");
 
         SequentialCommandGroup safeZoneShootingGroup = new SequentialCommandGroup(
-                new AngleShooterUpAutoCmd(shooterAnglerSubSysObj),
+                new AngleShooterUpAutoCmd(shooterAnglerSubSysObj),  //using Auto cmd becuase it is faster
                 new ParallelCommandGroup(
                         new PrimeShooterSpeakerCmd(shooterSubSysObj),
                         new AngleShooterSafeZoneCmd(shooterAnglerSubSysObj)),
@@ -299,7 +309,7 @@ public class RobotContainer {
         operatorRightBumper.whileTrue(new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
 
         // Operator Button Commands
-        operatorAButton.whileTrue(new PrimeShooterSpeakerCmd(shooterSubSysObj));
+        operatorAButton.whileTrue(speakershootingGroup);
         operatorBButton.whileTrue(blackLineShootingGroup);
         operatorXButton.whileTrue(new AngleShooterUpCmd(shooterAnglerSubSysObj));
         operatorYButton.whileTrue(new ReverseShooterCmd(shooterSubSysObj));

@@ -73,6 +73,8 @@ public class IntakeNoteCmd extends Command {
     @Override
     public void end(boolean interrupted) {
         intakeSubSysObj.stopIntakeMotors();
+        driverController.setRumble(RumbleType.kBothRumble, 0.0);
+        operatorController.setRumble(RumbleType.kBothRumble, 0.0);
         TIMER.stop();
         //driverController.setRumble(RumbleType.kBothRumble, 0);
         //operatorController.setRumble(RumbleType.kBothRumble, 0);
