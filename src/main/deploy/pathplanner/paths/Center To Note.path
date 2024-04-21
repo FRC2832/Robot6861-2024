@@ -16,23 +16,23 @@
     },
     {
       "anchor": {
-        "x": 3.04,
+        "x": 2.9961928869726684,
         "y": 5.5302295882369545
       },
       "prevControl": {
-        "x": 2.04,
+        "x": 1.9961928869726684,
         "y": 5.5302295882369545
       },
       "nextControl": null,
-      "isLocked": false,
-      "linkedName": null
+      "isLocked": true,
+      "linkedName": "Note 2 to black line"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 2.0,
     "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
@@ -48,5 +48,5 @@
     "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

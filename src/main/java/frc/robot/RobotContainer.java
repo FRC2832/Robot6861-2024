@@ -5,9 +5,10 @@
 package frc.robot;
 
 import org.livoniawarriors.REVColorSensor;
+import org.livoniawarriors.leds.BreathLeds;
+import org.livoniawarriors.leds.ColorWave;
 import org.livoniawarriors.leds.LedSubsystem;
 import org.livoniawarriors.leds.LightningFlash;
-import org.livoniawarriors.leds.RainbowLeds;
 import org.livoniawarriors.leds.TestLeds;
 import org.livoniawarriors.odometry.Odometry;
 import org.livoniawarriors.odometry.PigeonGyro;
@@ -19,7 +20,6 @@ import org.livoniawarriors.swerve.SwerveDriveTrain;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
@@ -28,34 +28,46 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.ClimbDownCmd;
-import frc.robot.commands.ClimbUpCmd;
-import frc.robot.commands.ShowClimberEncoderCmd;
-import frc.robot.commands.autons.PickUpNoteAutoCmd;
-import frc.robot.commands.autons.ShootRingAutoCmd;
-import frc.robot.commands.autons.WaitAutoCmd;
 import frc.robot.commands.IntakeNoteCmd;
 import frc.robot.commands.OuttakeNoteCmd;
-import frc.robot.commands.PrimeShooterCmd;
 import frc.robot.commands.ReverseShooterCmd;
-import frc.robot.commands.RunIndexDownCmd;
-import frc.robot.commands.RunIndexUpCmd;
-import frc.robot.commands.RunIndexUpContinuousCmd;
+import frc.robot.commands.Climbing.ClimbDownCmd;
+import frc.robot.commands.Climbing.ClimbUpCmd;
+import frc.robot.commands.Indexing.RunIndexDownCmd;
+import frc.robot.commands.Indexing.RunIndexUpCmd;
+import frc.robot.commands.Indexing.RunIndexUpContinuousCmd;
+import frc.robot.commands.ShootingAmp.AngleShooterAmpCmd;
+import frc.robot.commands.ShootingAmp.LowerAmpCmd;
+import frc.robot.commands.ShootingAmp.PrimeShooterAmpCmd;
+import frc.robot.commands.ShootingAmp.RaiseAmpCmd;
+import frc.robot.commands.ShootingSpeaker.AngleShooterBlackLineCmd;
+import frc.robot.commands.ShootingSpeaker.AngleShooterDownCmd;
+import frc.robot.commands.ShootingSpeaker.AngleShooterSafeZoneCmd;
+import frc.robot.commands.ShootingSpeaker.AngleShooterUpCmd;
+import frc.robot.commands.ShootingSpeaker.PrimeShooterSpeakerCmd;
+import frc.robot.commands.autons.AngleShooterUpAutoCmd;
+import frc.robot.commands.autons.PickUpNoteAutoCmd;
+import frc.robot.commands.autons.ShootBlackLineAutoCmd;
+import frc.robot.commands.autons.ShootRingAutoCmd;
+import frc.robot.commands.autons.ShootSafeZoneAutoCmd;
+import frc.robot.subsystems.AmpScorerSubSys;
 import frc.robot.subsystems.ClimberSubSys;
 import frc.robot.subsystems.IndexerSubSys;
 import frc.robot.subsystems.IntakeSubSys;
 import frc.robot.subsystems.PracticeSwerveHw;
+import frc.robot.subsystems.ShooterAnglerSubSys;
 import frc.robot.subsystems.ShooterSubSys;
 
 /**
@@ -77,8 +89,10 @@ public class RobotContainer {
     private ShooterSubSys shooterSubSysObj;
     private REVColorSensor colorSensorObj;
     private ClimberSubSys climberSubSysObj;
+    private ShooterAnglerSubSys shooterAnglerSubSysObj;
+    private AmpScorerSubSys ampScorerSubSysObj;
     // private VisionSystem visionSystemObj;
-    private UsbCamera camera;
+    private UsbCamera camera;  
     // TODO: Make a JoystickSubSystem
     private CommandXboxController driverController;
     private CommandXboxController operatorController;
@@ -92,6 +106,8 @@ public class RobotContainer {
         indexerSubSysObj = new IndexerSubSys();
         shooterSubSysObj = new ShooterSubSys();
         climberSubSysObj = new ClimberSubSys();
+        shooterAnglerSubSysObj = new ShooterAnglerSubSys();
+        ampScorerSubSysObj = new AmpScorerSubSys();
         colorSensorObj = new REVColorSensor(Port.kMXP); // TODO: Verify this port.
         String serNum = RobotController.getSerialNumber();
         SmartDashboard.putString("Serial Number", serNum);
@@ -108,7 +124,7 @@ public class RobotContainer {
 
         // subsystems used in all robots
         odometry = new Odometry();
-        leds = new LedSubsystem(0, 10);
+        leds = new LedSubsystem(0, 50);
         // new VisionSystem(odometry); //not making variable as we won't change this
         // subsystem
 
@@ -120,7 +136,7 @@ public class RobotContainer {
         } else {
             // competition robot
             swerveDrive = new SwerveDriveTrain(new PracticeSwerveHw(), odometry);
-            odometry.setGyroHardware(new PigeonGyro(50)); // TODO: Ensure this ID is correct
+            odometry.setGyroHardware(new PigeonGyro(50)); 
 
         }
 
@@ -138,14 +154,18 @@ public class RobotContainer {
         SmartDashboard.putData("Drive Wheels Diamond", new MoveWheels(swerveDrive, MoveWheels.driveWheelsDiamond()));
         SmartDashboard.putData("Test Leds", new TestLeds(leds));
         SmartDashboard.putNumber("Climb motor encoder", climberSubSysObj.showEncoders());
-        
 
         // Register Named Commands for PathPlanner
         NamedCommands.registerCommand("flashRed", new LightningFlash(leds, Color.kFirstRed));
+        NamedCommands.registerCommand("AngleShooterUp", new AngleShooterUpCmd(shooterAnglerSubSysObj));
         NamedCommands.registerCommand("flashBlue", new LightningFlash(leds, Color.kFirstBlue));
-        NamedCommands.registerCommand("PickUpNote", new PickUpNoteAutoCmd(intakeSubSysObj, indexerSubSysObj, colorSensorObj));
-        NamedCommands.registerCommand("ShootRing", new ShootRingAutoCmd(shooterSubSysObj, indexerSubSysObj, Constants.AUTON_TARGET_VELOCITY));
-        NamedCommands.registerCommand("Wait", new WaitAutoCmd(8));
+        NamedCommands.registerCommand("PickUpNote",
+                new PickUpNoteAutoCmd(intakeSubSysObj, indexerSubSysObj, colorSensorObj));
+        NamedCommands.registerCommand("ShootRing",
+                new ShootRingAutoCmd(shooterSubSysObj, indexerSubSysObj, Constants.AUTON_TARGET_VELOCITY));
+        NamedCommands.registerCommand("ShootBlackLine", new ShootBlackLineAutoCmd(shooterSubSysObj, indexerSubSysObj, Constants.AUTON_TARGET_VELOCITY, shooterAnglerSubSysObj));
+        NamedCommands.registerCommand("ShootSafeZone", new ShootSafeZoneAutoCmd(shooterSubSysObj, indexerSubSysObj, Constants.AUTON_TARGET_VELOCITY, shooterAnglerSubSysObj));
+        NamedCommands.registerCommand("AngleShooterUp", new AngleShooterUpAutoCmd(shooterAnglerSubSysObj));
 
         // Configure the AutoBuilder
         AutoBuilder.configureHolonomic(
@@ -172,7 +192,7 @@ public class RobotContainer {
         autoChooser = AutoBuilder.buildAutoChooser();
         autoChooser.addOption("Do Nothing", Commands.none());
         SmartDashboard.putData("Auto Chooser", autoChooser);
-        
+
     }
 
     /**
@@ -190,8 +210,10 @@ public class RobotContainer {
     public void configureBindings() {
         // setup default commands that are used for driving
         swerveDrive.setDefaultCommand(new DriveXbox(swerveDrive, driverController));
-        leds.setDefaultCommand(new RainbowLeds(leds));
-        //ClimberSubSys.setDefaultCommand(new ShowClimberEncoderCmd(climberSubSysObj));
+        //ampScorerSubSysObj.setDefaultCommand(new LowerAmpCmd(ampScorerSubSysObj));
+        leds.setDefaultCommand(new ColorWave(leds, Color.kDarkGoldenrod));
+        //shooterAnglerSubSysObj.setDefaultCommand(new AngleShooterUpCmd(shooterAnglerSubSysObj));
+        // ClimberSubSys.setDefaultCommand(new ShowClimberEncoderCmd(climberSubSysObj));
         
 
         // setup button bindings
@@ -200,30 +222,110 @@ public class RobotContainer {
         Trigger operatorLeftBumper = operatorController.leftBumper();
         Trigger operatorRightBumper = operatorController.rightBumper();
         Trigger operatorAButton = operatorController.a();
+        Trigger operatorBButton = operatorController.b();
+        Trigger operatorXButton = operatorController.x();
         Trigger operatorYButton = operatorController.y();
         Trigger operatorDPadDown = operatorController.povDown();
         Trigger operatorDPadUp = operatorController.povUp();
+        Trigger operatorDPadRight = operatorController.povRight();
+        Trigger operatorStart = operatorController.start();
+        Trigger operatorBack = operatorController.back();
+        Trigger operatorLeftStickTrigger = operatorController.leftStick();
+        Trigger operatorDPadLeft = operatorController.povLeft();
 
         Trigger driverRightTrigger = driverController.rightTrigger();
         Trigger driverXButton = driverController.x();
 
+        //TODO: check this code below.  Why sequential? can be just parallel.
 
-        ParallelCommandGroup intakeGroup = new ParallelCommandGroup(
-                new IntakeNoteCmd(intakeSubSysObj, colorSensorObj, driverController, operatorController),
-                new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
-        ParallelCommandGroup outtakeGroup = new ParallelCommandGroup(new OuttakeNoteCmd(intakeSubSysObj),
-                new RunIndexDownCmd(indexerSubSysObj));
+        SequentialCommandGroup intakeGroup = new SequentialCommandGroup(
+                new ParallelCommandGroup(
+                        new AngleShooterUpCmd(shooterAnglerSubSysObj),
+                        new IntakeNoteCmd(intakeSubSysObj, colorSensorObj, driverController, operatorController),
+                        new RunIndexUpCmd(indexerSubSysObj, colorSensorObj), 
+                        new LightningFlash(leds, Color.kDarkSalmon)
+                )
+        );
+        intakeGroup.setName("intakeGroup");
 
+        ParallelCommandGroup outtakeGroup = new ParallelCommandGroup(
+                new OuttakeNoteCmd(intakeSubSysObj),
+                new RunIndexDownCmd(indexerSubSysObj)
+        );
+        outtakeGroup.setName("outtakeGroup");
+                
+        SequentialCommandGroup anglerGroup = new SequentialCommandGroup(
+                new AngleShooterDownCmd(shooterAnglerSubSysObj),
+                new AngleShooterUpCmd(shooterAnglerSubSysObj)
+        );
+        anglerGroup.setName("anglerGroup");
+
+
+
+        SequentialCommandGroup speakershootingGroup = new SequentialCommandGroup(
+                new AngleShooterUpAutoCmd(shooterAnglerSubSysObj),
+                new PrimeShooterSpeakerCmd(shooterSubSysObj),
+                new AngleShooterUpCmd(shooterAnglerSubSysObj)
+        );
+
+        speakershootingGroup.setName("speakershootingGroup");
+
+        SequentialCommandGroup blackLineShootingGroup = new SequentialCommandGroup(
+                new AngleShooterUpAutoCmd(shooterAnglerSubSysObj),
+                new ParallelCommandGroup(
+                        new PrimeShooterSpeakerCmd(shooterSubSysObj),
+                        new AngleShooterBlackLineCmd(shooterAnglerSubSysObj)),
+                new AngleShooterUpCmd(shooterAnglerSubSysObj)
+        );
+        blackLineShootingGroup.setName("blackLineShootingGroup");
+
+        SequentialCommandGroup safeZoneShootingGroup = new SequentialCommandGroup(
+                new AngleShooterUpAutoCmd(shooterAnglerSubSysObj),  //using Auto cmd becuase it is faster
+                new ParallelCommandGroup(
+                        new PrimeShooterSpeakerCmd(shooterSubSysObj),
+                        new AngleShooterSafeZoneCmd(shooterAnglerSubSysObj)),
+                new AngleShooterUpCmd(shooterAnglerSubSysObj)
+        );
+        safeZoneShootingGroup.setName("safeZoneShootingGroup");
+        
+        SequentialCommandGroup anglerAmpGroup = new SequentialCommandGroup(
+                new AngleShooterUpAutoCmd(shooterAnglerSubSysObj),
+                new ParallelCommandGroup(
+                        new PrimeShooterAmpCmd(shooterSubSysObj),
+                        new AngleShooterAmpCmd(shooterAnglerSubSysObj)),
+                new AngleShooterUpCmd(shooterAnglerSubSysObj)
+        );
+        anglerAmpGroup.setName("anglerAmpGroup");
+
+
+
+        // Operator Trigger Commands        
         // operatorRightTrigger.whileTrue(new IntakeNoteCmd(intakeSubSysObj));
         operatorLeftTrigger.whileTrue(outtakeGroup);
         operatorRightTrigger.whileTrue(intakeGroup);
+
+        // Operator Bumper Commands
         operatorLeftBumper.whileTrue(new RunIndexDownCmd(indexerSubSysObj));
         operatorRightBumper.whileTrue(new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
-        operatorAButton.whileTrue(new PrimeShooterCmd(shooterSubSysObj));
+
+        // Operator Button Commands
+        operatorAButton.whileTrue(speakershootingGroup);
+        operatorBButton.whileTrue(blackLineShootingGroup);
+        operatorXButton.whileTrue(new AngleShooterUpCmd(shooterAnglerSubSysObj));
         operatorYButton.whileTrue(new ReverseShooterCmd(shooterSubSysObj));
+        
+        // Operator DPad Commands
+        operatorDPadRight.whileTrue(safeZoneShootingGroup);
         operatorDPadDown.whileTrue(new ClimbDownCmd(climberSubSysObj));
         operatorDPadUp.whileTrue(new ClimbUpCmd(climberSubSysObj));
+        operatorDPadLeft.whileTrue(new AngleShooterDownCmd(shooterAnglerSubSysObj));
 
+        // Operator Center Controller Button Commands
+        operatorStart.whileTrue(anglerAmpGroup);
+        operatorBack.whileTrue(new RaiseAmpCmd(ampScorerSubSysObj));
+        operatorLeftStickTrigger.whileTrue(new LowerAmpCmd(ampScorerSubSysObj));
+
+        // Driver Input Commands (All of the driver input commands)
         driverRightTrigger.whileTrue(new RunIndexUpContinuousCmd(indexerSubSysObj));
         driverXButton.whileTrue(new RunIndexDownCmd(indexerSubSysObj));
 

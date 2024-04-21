@@ -39,6 +39,11 @@ public class Pigeon2Gyro implements IGyroHardware {
     }
 
     @Override
+    public double zeroGyroAngle() {  // same as getGYroANgle for now.  WE don't use pigeon2
+        return yprDeg[0];
+    }
+
+    @Override
     public double getPitchAngle() {
         return yprDeg[1];
     }

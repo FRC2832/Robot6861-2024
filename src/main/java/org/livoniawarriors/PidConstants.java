@@ -189,7 +189,7 @@ public class PidConstants {
      * 
      * @param motor Motor to configure
      */
-    public void configureMotor(TalonFX motor) {
+    /*public void configureMotor(TalonFX motor) {
         // TODO Implement conversion from CTRE unit to sane units... Should be 1023/12 /
         // scaleFactor
         loadFromNT();
@@ -209,14 +209,14 @@ public class PidConstants {
         allConfigs.motionAcceleration = kAccelMax;
 
         motor.configAllSettings(allConfigs);
-    }
+    }*/
 
     /**
      * Configure a TalonSRX speed controller with this PID constants
      * 
      * @param motor Motor to configure
      */
-    public void configureMotor(TalonSRX motor) {
+    /*public void configureMotor(TalonSRX motor) {
         // TODO Implement conversion from CTRE unit to sane units... Should be 1023/12 /
         // scaleFactor
         loadFromNT();
@@ -236,7 +236,7 @@ public class PidConstants {
         allConfigs.motionAcceleration = kAccelMax;
 
         motor.configAllSettings(allConfigs);
-    }
+    }*/
 
     /**
      * Configure a CanSparkMax speed controller with this PID constants

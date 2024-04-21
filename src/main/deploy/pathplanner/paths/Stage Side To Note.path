@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.5682544050273295,
-        "y": 4.089030117875049
+        "x": 1.568241471956302,
+        "y": 4.0890036116395025
       },
       "isLocked": false,
       "linkedName": null
@@ -32,16 +32,16 @@
     },
     {
       "anchor": {
-        "x": 2.6807613430041677,
-        "y": 4.092711949312788
+        "x": 2.797392261451189,
+        "y": 4.128036518181299
       },
       "prevControl": {
-        "x": 2.825124765990273,
-        "y": 4.0827353738040815
+        "x": 2.9417556844372945,
+        "y": 4.118059942672592
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "StageNote"
     }
   ],
   "rotationTargets": [
@@ -55,7 +55,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 1.0,
-    "maxAcceleration": 2.0,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -70,5 +70,5 @@
     "rotation": -53.41515363173978,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

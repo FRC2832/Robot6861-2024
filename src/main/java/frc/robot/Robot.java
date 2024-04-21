@@ -6,6 +6,7 @@ package frc.robot;
 
 import org.livoniawarriors.GitVersion;
 import org.livoniawarriors.Logger;
+import org.livoniawarriors.odometry.PigeonGyro;
 
 import com.pathplanner.lib.util.PPLibTelemetry;
 
@@ -36,6 +37,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         // display the Git info for the build in the network tables
         GitVersion.loadVersion().printVersions();
+        //PigeonGyro.zeroGyroAngle();
 
         // internal logger class
         logger = new Logger();
@@ -93,6 +95,7 @@ public class Robot extends TimedRobot {
     /** This function is called once each time the robot enters Disabled mode. */
     @Override
     public void disabledInit() {
+        //System.out.println("           DISABLED INIT IS RUNNING    $$$$$$$$$$$$$$$$$$$$$$");
         // No op
     }
 

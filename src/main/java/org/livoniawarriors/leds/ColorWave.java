@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class ColorWave extends Command {
-    ILedSubsystem leds;
-    AddressableLEDBuffer ledBuffer;
-    UpdateValues hueCalc;
-    UpdateValues valueCalc;
-    int sat;
+    private ILedSubsystem leds;
+    private AddressableLEDBuffer ledBuffer;
+    private UpdateValues hueCalc;
+    private UpdateValues valueCalc;
+    private int sat;
 
     public ColorWave(ILedSubsystem leds, Color color) {
         this.leds = leds;

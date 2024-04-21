@@ -168,6 +168,7 @@ public class Odometry extends SubsystemBase {
 
     public void resetHeading() {
         // reset the robot back to it's spot, just facing forward now
+        hardware.zeroGyroAngle();
         Pose2d pose = new Pose2d(robotPose.getTranslation(), Rotation2d.fromDegrees(0));
         odometry.resetPosition(getGyroRotation(), drive.getSwervePositions(), pose);
     }
@@ -186,6 +187,10 @@ public class Odometry extends SubsystemBase {
 
     public double getGyroAngle() {
         return hardware.getGyroAngle();
+    }
+
+    public double zeroGyroAngle() {
+        return hardware.zeroGyroAngle();
     }
 
     public double getGyroPitch() {

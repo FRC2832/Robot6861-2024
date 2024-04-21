@@ -6,16 +6,16 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class TargetLeds extends Command {
     // cals to edit
-    static final double MAX_BRIGHT = 60.0;
-    static final int NUM_DIM_PIXELS = 4;
-    static final int LOOP_DELAY = 4; // how many loops before we change (1 loop = 20ms)
+    private static final double MAX_BRIGHT = 60.0;
+    private static final int NUM_DIM_PIXELS = 4;
+    private static final int LOOP_DELAY = 4; // how many loops before we change (1 loop = 20ms)
 
-    ILedSubsystem leds;
-    AddressableLEDBuffer ledBuffer;
-    int center;
-    boolean forward;
-    int loopCount;
-    int hue;
+    private ILedSubsystem leds;
+    private AddressableLEDBuffer ledBuffer;
+    private int center;
+    private boolean forward;
+    private int loopCount;
+    private int hue;
 
     public TargetLeds(ILedSubsystem leds, int hue) {
         this.leds = leds;

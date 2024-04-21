@@ -2,14 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Indexing;
 
 import org.livoniawarriors.REVColorSensor;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubSys;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RunIndexUpCmd extends Command {
     /** Creates a new RunIndexUp. */
@@ -20,7 +19,7 @@ public class RunIndexUpCmd extends Command {
     private static final Timer TIMER = new Timer();
     private static final double MAX_RUN_TIME = 3.5; // TODO: confirm this time
     private static final double BUFFER_TIME = 1.0;
-    private static final double PROX_THRESHOLD = 0.5;
+    private static final double PROX_THRESHOLD = 0.6;
 
     /**
      * Creates a new RunIndexUpCmd.

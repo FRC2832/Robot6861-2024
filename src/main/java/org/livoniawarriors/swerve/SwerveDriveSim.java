@@ -26,7 +26,7 @@ public class SwerveDriveSim implements ISwerveDriveIo {
     private PIDController[] turningPIDController;
 
     private static final double V_TURN = 0.006531;
-    private static final double MAX_SPEED = 5.0;     //5m/s ~= 15ft/s
+    private static final double MAX_SPEED = 4.8;     //5m/s ~= 15ft/s
     private static final double NOM_BAT_VOLT = 12.5;
 
     private Translation2d[] swervePositions = {

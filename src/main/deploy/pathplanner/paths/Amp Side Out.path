@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 5.408048288318799,
-        "y": 7.369601313276701
+        "x": 6.65,
+        "y": 7.437482225391801
       },
       "prevControl": {
-        "x": 4.42287972895034,
-        "y": 7.390705607622041
+        "x": 6.65,
+        "y": 7.4608705342766815
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "AmpPreptoCenter"
     }
   ],
   "rotationTargets": [
@@ -38,14 +38,14 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 2.5,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 0,
+    "velocity": 0.0,
+    "rotation": 0.0,
     "rotateFast": false
   },
   "reversed": false,
@@ -54,5 +54,5 @@
     "rotation": 53.4006825363178,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

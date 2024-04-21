@@ -2,12 +2,14 @@ package frc.robot.subsystems;
 
 import org.livoniawarriors.Logger;
 import org.livoniawarriors.swerve.ISwerveDriveIo;
+
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderStatusFrame;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -117,9 +119,9 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
 
             // initialize hardware
             turnEncoder[wheel] = turnMotors[wheel].getEncoder();
-            driveMotors[wheel].getEncoder().setPositionConversionFactor(1/21.92);
-            driveMotors[wheel].getEncoder().setVelocityConversionFactor(1/(21.92 * 60));
-            turnPid[wheel] = new PIDController(0.5 / Math.PI, 0.2, 0.0); // TODO: modify turnPID values
+            driveMotors[wheel].getEncoder().setPositionConversionFactor(1/21.92);  
+            driveMotors[wheel].getEncoder().setVelocityConversionFactor(1/(21.92 * 60));    
+            turnPid[wheel] = new PIDController(0.5 / Math.PI, .2, 0.0); // TODO: modify turnPID values, ki was 0.2
 
             // driveEncoder[wheel] = driveMotors[wheel].getEncoder();
             
@@ -165,13 +167,13 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
     @Override
     public void setCornerState(int wheel, SwerveModuleState swerveModuleState) {
         // set the drive command
-        double velPct = swerveModuleState.speedMetersPerSecond / 5; // TODO set equal to max module speed
+        double velPct = swerveModuleState.speedMetersPerSecond / 4.8; 
         SmartDashboard.putNumber("Wheel Velocity ", velPct);
-        double velVolts = velPct * 12.0; 
+        //double velVolts = velPct * 12.0; 
 
-        // driveMotors[wheel].set(velPct);
+        driveMotors[wheel].set(velPct);
         // CANSparkBase.ControlType.kDutyCycle ^
-        driveMotors[wheel].setVoltage(velVolts);
+        //driveMotors[wheel].setVoltage(velVolts);
     
 
         // set the turn command

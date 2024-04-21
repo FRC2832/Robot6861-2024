@@ -13,7 +13,8 @@ public class ShootRingAutoCmd extends Command {
     private final ShooterSubSys shooterSubSysObj;
     private final IndexerSubSys indexerSubSysObj;
     private final double tgtShooterVelRPM;
-    private static final double INDEXER_RUN_TIME = 2.5; // Length of time to run the indexer.
+    private static final double INDEXER_RUN_TIME = 1.0; // Length of time to run the indexer.
+    private static final double PRIME_SHOOTER_TIME = 0.75;
     private boolean isShooterPrimed; // When true, start the indexer.
 
     private static final Timer TIMER = new Timer();
@@ -43,8 +44,8 @@ public class ShootRingAutoCmd extends Command {
         } else {
             indexerSubSysObj.stopIndexMotors();
         }
-        shooterSubSysObj.runShooter();
-        if (!isShooterPrimed && TIMER.get() >= 1) {
+        shooterSubSysObj.runShooterHighSpeedAuton();
+        if (!isShooterPrimed && TIMER.get() >= PRIME_SHOOTER_TIME) {
             isShooterPrimed = true;
             TIMER.reset();
             TIMER.start();

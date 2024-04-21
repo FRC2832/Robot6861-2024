@@ -12,6 +12,12 @@ public class BlankGyro implements IGyroHardware {
     }
 
     @Override
+    public double zeroGyroAngle() {
+        return 0.0;
+    }
+
+
+    @Override
     public double getPitchAngle() {
         return 0.0;
     }

@@ -6,12 +6,12 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class FillLeds extends Command {
-    static final double STEP_TIME = 0.04; // increment every 40ms
-    ILedSubsystem leds;
-    AddressableLEDBuffer ledBuffer;
-    double startTime;
-    int currentLight;
-    Color color;
+    private static final double STEP_TIME = 0.04; // increment every 40ms
+    private ILedSubsystem leds;
+    private AddressableLEDBuffer ledBuffer;
+    private double startTime;
+    private int currentLight;
+    private Color color;
 
     public FillLeds(ILedSubsystem leds, Color color) {
         this.leds = leds;

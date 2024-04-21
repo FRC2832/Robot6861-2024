@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class TestLeds extends Command {
-    ILedSubsystem leds;
-    AddressableLEDBuffer ledBuffer;
+    private ILedSubsystem leds;
+    private AddressableLEDBuffer ledBuffer;
 
-    IntegerSubscriber subIndex;
-    IntegerSubscriber subHue;
-    IntegerSubscriber subSat;
-    IntegerSubscriber subValue;
+    private IntegerSubscriber subIndex;
+    private IntegerSubscriber subHue;
+    private IntegerSubscriber subSat;
+    private IntegerSubscriber subValue;
 
     public TestLeds(ILedSubsystem leds) {
         this.leds = leds;

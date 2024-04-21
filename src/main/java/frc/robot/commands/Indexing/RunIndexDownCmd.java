@@ -2,37 +2,37 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Indexing;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ClimberSubSys;
+import frc.robot.subsystems.IndexerSubSys;
 
-public class ShowClimberEncoderCmd extends Command {
-    /** Creates a new ShowClimberEnvoder. */
-    private ClimberSubSys climberSubSysObj;
+public class RunIndexDownCmd extends Command {
+    private final IndexerSubSys indexerSubSysObj;
 
-    public ShowClimberEncoderCmd(ClimberSubSys climberSubSysObj) {
+    /** Creates a new RunIndexDown. */
+    public RunIndexDownCmd(IndexerSubSys indexerSubSys) {
+        this.indexerSubSysObj = indexerSubSys;
+        addRequirements(indexerSubSys);
         // Use addRequirements() here to declare subsystem dependencies.
-        this.climberSubSysObj = climberSubSysObj;
-        addRequirements(climberSubSysObj);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        climberSubSysObj.resetEncoders();
-
+        // No op
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        climberSubSysObj.showEncoders();
+        indexerSubSysObj.runIndexerDown();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        indexerSubSysObj.stopIndexMotors();
     }
 
     // Returns true when the command should end.

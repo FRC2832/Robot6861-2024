@@ -1,6 +1,7 @@
 package org.livoniawarriors.lightdriveleds;
 
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.util.Color;
 
 public final class LightDrivePWM {
@@ -19,7 +20,7 @@ public final class LightDrivePWM {
     }
 
     public void update() {
-        double newduty = 0.0;
+        double newduty;
         int channels = ((this.matrix[0] > 127) ? 16 : 0) | ((this.matrix[1] > 127) ? 32 : 0)
                 | ((this.matrix[2] > 127) ? 64 : 0) | ((this.matrix[3] > 127) ? 128 : 0)
                 | ((this.matrix[4] > 127) ? 256 : 0) | ((this.matrix[5] > 127) ? 512 : 0);

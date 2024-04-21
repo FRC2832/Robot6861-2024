@@ -1,12 +1,15 @@
 package org.livoniawarriors.lightdriveleds;
 
-import java.nio.*;
-import edu.wpi.first.wpilibj.util.*;
-import edu.wpi.first.hal.can.*;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
+import edu.wpi.first.hal.can.CANJNI;
+import edu.wpi.first.hal.can.CANMessageNotFoundException;
 import edu.wpi.first.hal.util.UncleanStatusException;
+import edu.wpi.first.wpilibj.util.Color;
 
 public final class LightDriveCAN {
-    private static int LD_ADDR;
+    private static int ldAddr;
     private ByteBuffer matrix;
     private RxPacket rx;
     // private boolean m_init;
@@ -15,7 +18,7 @@ public final class LightDriveCAN {
     private static ByteBuffer rxid;
 
     static {
-        LightDriveCAN.LD_ADDR = 33882112;
+        LightDriveCAN.ldAddr = 33882112;
     }
 
     public LightDriveCAN() {
@@ -32,13 +35,13 @@ public final class LightDriveCAN {
 
     public void update() {
         final byte[] txdata = new byte[8];
-        LightDriveCAN.rxid.putInt(LightDriveCAN.LD_ADDR + 4);
+        LightDriveCAN.rxid.putInt(LightDriveCAN.ldAddr + 4);
         LightDriveCAN.rxid.rewind();
         try {
             this.matrix.get(txdata, 0, 8);
-            CANJNI.FRCNetCommCANSessionMuxSendMessage(LightDriveCAN.LD_ADDR, txdata, 100);
+            CANJNI.FRCNetCommCANSessionMuxSendMessage(LightDriveCAN.ldAddr, txdata, 100);
             this.matrix.get(txdata, 0, 8);
-            CANJNI.FRCNetCommCANSessionMuxSendMessage(LightDriveCAN.LD_ADDR + 1, txdata, 100);
+            CANJNI.FRCNetCommCANSessionMuxSendMessage(LightDriveCAN.ldAddr + 1, txdata, 100);
         } catch (UncleanStatusException ex) {
         }
         this.matrix.rewind();
@@ -54,7 +57,7 @@ public final class LightDriveCAN {
     }
 
     public float getCurrent(final int ch) {
-        float current = 0.0f;
+        float current;
         switch (ch) {
             case 1: {
                 current = this.rx.i1;
@@ -121,9 +124,9 @@ public final class LightDriveCAN {
         byte green = (byte) (color.green * brightness);
         byte blue = (byte) (color.blue * brightness);
         ch = --ch * 3;
-        this.matrix.array()[ch] = (byte) green;
-        this.matrix.array()[ch + 1] = (byte) red;
-        this.matrix.array()[ch + 2] = (byte) blue;
+        this.matrix.array()[ch] = green;
+        this.matrix.array()[ch + 1] = red;
+        this.matrix.array()[ch + 2] = blue;
     }
 
     public void setLevel(final int ch, final byte level) {

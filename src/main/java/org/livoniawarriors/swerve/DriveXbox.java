@@ -26,7 +26,7 @@ public class DriveXbox extends Command {
     public DriveXbox(SwerveDriveTrain drive, CommandXboxController cont) {
         this.drive = drive;
         this.cont = cont.getHID();
-        deadband = UtilFunctions.getSettingSub("DriveXbox/Deadband", 0.13);
+        deadband = UtilFunctions.getSettingSub("DriveXbox/Deadband", 0.16);
         addRequirements(drive);
     }
 
@@ -47,20 +47,29 @@ public class DriveXbox extends Command {
         double ySpeed = UtilFunctions.deadband(-cont.getLeftX(), dead);
         double turn = UtilFunctions.deadband(-cont.getRightX(), dead);
 
-        double newXSpeed = 0.0;
-        double newYSpeed = 0.0;
+        // Alex didn't like the sharp exponential rise when commanding full speed
+        //cube joystick inputs:
+        // double xSpeedCubed = Math.pow(xSpeed, 3);
+        // double ySpeedCubed = Math.pow(ySpeed, 3);
+        //double turnCubed = Math.pow(turn, 3);
+
+        double newXSpeed;
+        double newYSpeed;
+        double newTurn;
+
+
         if (cont.getLeftBumper()) { // snail mode
-            SmartDashboard.putString("Drive mode:", "Snail");
+            // SmartDashboard.putString("Drive mode:", "Snail");
             newXSpeed = Constants.SNAIL_MODE * xSpeed * drive.getMaxDriverSpeed();
             newYSpeed = Constants.SNAIL_MODE * ySpeed * drive.getMaxDriverSpeed();
-            SmartDashboard.putNumber("xSpeed:", newXSpeed);
-            SmartDashboard.putNumber("ySpeed:", newYSpeed);
+            //SmartDashboard.putNumber("xSpeed:", newXSpeed);
+            //SmartDashboard.putNumber("ySpeed:", newYSpeed);
             drive.swerveDrive(
                     newXSpeed,
                     newYSpeed,
                     turn * drive.getMaxDriverOmega());
         } else if (cont.getLeftTriggerAxis() >= 0.5) { // turtle mode
-            SmartDashboard.putString("Drive mode:", "Turtle");
+            //SmartDashboard.putString("Drive mode:", "Turtle");
             newXSpeed = Constants.TURTLE_MODE * xSpeed * drive.getMaxDriverSpeed();
             newYSpeed = Constants.TURTLE_MODE * ySpeed * drive.getMaxDriverSpeed();
             drive.swerveDrive(
@@ -69,12 +78,13 @@ public class DriveXbox extends Command {
                     turn * drive.getMaxDriverOmega());
         } else {
             SmartDashboard.putString("Drive mode:", "Normal");
-            newXSpeed = xSpeed * drive.getMaxDriverSpeed();
+            newXSpeed = xSpeed * drive.getMaxDriverSpeed();  // removed cubed to see if that's causing unintended autonomous
             newYSpeed = ySpeed * drive.getMaxDriverSpeed();
+            newTurn = turn * drive.getMaxDriverOmega();
             drive.swerveDrive(
                     newXSpeed,
                     newYSpeed,
-                    turn * drive.getMaxDriverOmega());
+                    newTurn);
         }
         SmartDashboard.putNumber("xSpeed:", newXSpeed);
         SmartDashboard.putNumber("ySpeed:", newYSpeed);

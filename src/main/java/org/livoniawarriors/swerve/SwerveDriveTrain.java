@@ -113,12 +113,12 @@ public class SwerveDriveTrain extends SubsystemBase {
         }
 
         /** How fast we want the driver to go during normal operation in m/s */
-        driverMaxSpeed = UtilFunctions.getSettingSub("/Swerve Drive/Max Driver Speed (mps)", 4.5);
+        driverMaxSpeed = UtilFunctions.getSettingSub("/Swerve Drive/Max Driver Speed (mps)", 4.3);
         /** How fast we want the driver to turn during normal operation in deg/s */
         driverMaxOmega = UtilFunctions.getSettingSub("/Swerve Drive/Max Driver Omega (dps)", 625); // 1.8 * Pi rad/sec
 
-        minSpeed = 0.1;  //units m/s
-        maxSpeed = 5.0;  //units m/s
+        minSpeed = 0.5;  //units m/s
+        maxSpeed = 4.8;  //units m/s
 
         swerveXSpeed = UtilFunctions.getNtPub("/Swerve Drive/X Speed (mps)", 0);
         swerveYSpeed = UtilFunctions.getNtPub("/Swerve Drive/Y Speed (mps)", 0);
@@ -160,9 +160,11 @@ public class SwerveDriveTrain extends SubsystemBase {
         resetZeroPid = false;
 
         pushSwerveStates(swerveStates, swerveTargets);
-        minSpeed = UtilFunctions.getSetting(MIN_SPEED_KEY, 0.1); // TODO: may need to increase to 0.5 once max speed
+
+        
+        minSpeed = UtilFunctions.getSetting(MIN_SPEED_KEY, 0.15); // TODO: may need to increase to 0.5 once max speed
                                                                  // increases
-        maxSpeed = UtilFunctions.getSetting(MAX_SPEED_KEY, 5);
+        maxSpeed = UtilFunctions.getSetting(MAX_SPEED_KEY, 4.8);
     }
 
     /**
@@ -206,8 +208,9 @@ public class SwerveDriveTrain extends SubsystemBase {
         // log the request
         swerveXSpeed.set(xSpeed);
         swerveYSpeed.set(ySpeed);
-        
         swerveOmega.set(Math.toDegrees(turn));
+
+
         for (int i = 0; i < requestStates.length; i++) {
             wheelRequestAngle[i].set(requestStates[i].angle.getDegrees());
             wheelRequestSpeed[i].set(requestStates[i].speedMetersPerSecond);
@@ -242,7 +245,7 @@ public class SwerveDriveTrain extends SubsystemBase {
         // we use a little larger optimize angle since drivers turning 90* is a pretty
         // common operation
         double optimizeAngle = UtilFunctions.getSetting(OPTIMIZE_ANGLE_KEY, 120);
-        double maxAccel = UtilFunctions.getSetting(MAX_ACCEL_KEY, 42);
+        double maxAccel = UtilFunctions.getSetting(MAX_ACCEL_KEY, 450);  
         double maxOmega = UtilFunctions.getSetting(MAX_OMEGA_KEY, 3000);
 
         // command each swerve module
@@ -270,6 +273,11 @@ public class SwerveDriveTrain extends SubsystemBase {
                     speedReq, // current request
                     Math.min(value1, value2), // last request minimum
                     Math.max(value1, value2)); // last request maximum
+
+
+
+
+
 
             // smooth out turn command
             double maxAngleDelta = maxOmega * TimedRobot.kDefaultPeriod; // acceleration * loop time
@@ -315,6 +323,7 @@ public class SwerveDriveTrain extends SubsystemBase {
     }
 
     public void resetFieldOriented() {
+        odometry.zeroGyroAngle();
         fieldOffset = odometry.getPose().getRotation().minus(odometry.getGyroRotation());
     }
 

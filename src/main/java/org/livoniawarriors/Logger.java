@@ -78,7 +78,7 @@ public class Logger implements Runnable {
         canStatusTable = NetworkTableInstance.getDefault().getTable("CAN Status");
         currentTable = NetworkTableInstance.getDefault().getTable("Motor Currents");
         tempTable = NetworkTableInstance.getDefault().getTable("Motor Temps");
-        commandTable = NetworkTableInstance.getDefault().getTable("Device Commands");
+        commandTable = NetworkTableInstance.getDefault().getTable("Device Volts Commands");
         faultTable = NetworkTableInstance.getDefault().getTable("Device Faults");
         stickyTable = NetworkTableInstance.getDefault().getTable("Device Sticky Faults");
         sensorTable = NetworkTableInstance.getDefault().getTable("Sensors");

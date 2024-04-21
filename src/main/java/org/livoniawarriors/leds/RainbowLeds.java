@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class RainbowLeds extends Command {
-    ILedSubsystem leds;
-    int rumbleCounts;
-    int rainbowFirstPixelHue;
-    AddressableLEDBuffer ledBuffer;
+    private ILedSubsystem leds;
+    private int rumbleCounts;
+    private int rainbowFirstPixelHue;
+    private AddressableLEDBuffer ledBuffer;
 
     public RainbowLeds(ILedSubsystem leds) {
         this.leds = leds;
