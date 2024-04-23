@@ -28,6 +28,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
@@ -88,6 +89,7 @@ public class RobotContainer {
     private IndexerSubSys indexerSubSysObj;
     private ShooterSubSys shooterSubSysObj;
     private REVColorSensor colorSensorObj;
+    private DigitalInput intakeSensor;
     private ClimberSubSys climberSubSysObj;
     private ShooterAnglerSubSys shooterAnglerSubSysObj;
     private AmpScorerSubSys ampScorerSubSysObj;
@@ -109,6 +111,9 @@ public class RobotContainer {
         shooterAnglerSubSysObj = new ShooterAnglerSubSys();
         ampScorerSubSysObj = new AmpScorerSubSys();
         colorSensorObj = new REVColorSensor(Port.kMXP); // TODO: Verify this port.
+        intakeSensor = new DigitalInput(0);
+        String beamBreak = intakeSensor.get() ? "is Broken" : "is not Broken";
+        SmartDashboard.putString("Beam Break", beamBreak);
         String serNum = RobotController.getSerialNumber();
         SmartDashboard.putString("Serial Number", serNum);
         // known Rio serial numbers:
@@ -241,7 +246,7 @@ public class RobotContainer {
         SequentialCommandGroup intakeGroup = new SequentialCommandGroup(
                 new ParallelCommandGroup(
                         new AngleShooterUpCmd(shooterAnglerSubSysObj),
-                        new IntakeNoteCmd(intakeSubSysObj, colorSensorObj, driverController, operatorController),
+                        new IntakeNoteCmd(intakeSubSysObj, intakeSensor, colorSensorObj, driverController, operatorController),
                         new RunIndexUpCmd(indexerSubSysObj, colorSensorObj), 
                         new LightningFlash(leds, Color.kDarkSalmon)
                 )
