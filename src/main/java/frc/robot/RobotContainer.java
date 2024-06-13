@@ -26,8 +26,11 @@ import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.hal.AnalogJNI;
+import edu.wpi.first.hal.DIOJNI;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -93,6 +96,7 @@ public class RobotContainer {
     private ClimberSubSys climberSubSysObj;
     private ShooterAnglerSubSys shooterAnglerSubSysObj;
     private AmpScorerSubSys ampScorerSubSysObj;
+    private AnalogInput test1;
     // private VisionSystem visionSystemObj;
     private UsbCamera camera;  
     // TODO: Make a JoystickSubSystem
@@ -112,8 +116,10 @@ public class RobotContainer {
         ampScorerSubSysObj = new AmpScorerSubSys();
         colorSensorObj = new REVColorSensor(Port.kMXP); // TODO: Verify this port.
         intakeSensor = new DigitalInput(0);
-        String beamBreak = intakeSensor.get() ? "is Broken" : "is not Broken";
-        SmartDashboard.putString("Beam Break", beamBreak);
+        // test1 = new AnalogInput(0);
+        // //String beamBreak = intakeSensor.get() ? "is not Broken" : "is Broken"; //true means beam break not broken, so sees 4.5 V
+        // double beamBreak = test1.getVoltage();  //true is 4.5V and beam not broken.
+        // SmartDashboard.putNumber("Beam Break", beamBreak);
         String serNum = RobotController.getSerialNumber();
         SmartDashboard.putString("Serial Number", serNum);
         // known Rio serial numbers:

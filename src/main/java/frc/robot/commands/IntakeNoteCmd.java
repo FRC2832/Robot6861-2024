@@ -67,6 +67,18 @@ public class IntakeNoteCmd extends Command {
     public void execute() {
         intakeSubSysObj.runIntake();
         System.out.println("intake running ***************************");
+
+        String beamBreak = !intakeSensor.get() ? "is Broken" : "is not Broken";
+        System.out.println("Intake Beam Break Sensor " + beamBreak);
+
+        if (!isNoteIn && !intakeSensor.get()) {
+            isNoteIn = true;
+        } else if (intakeSensor.get()) {
+            isNoteIn = false;
+        }
+
+        System.out.println("isNoteIn: " + isNoteIn);
+
         if (isNoteIn) {
             driverController.setRumble(RumbleType.kBothRumble, 0.8);
             operatorController.setRumble(RumbleType.kBothRumble, 0.8);
@@ -97,10 +109,6 @@ public class IntakeNoteCmd extends Command {
     @Override
     public boolean isFinished() {
         // Color color = colorSensorObj.getColor();
-
-        if(!isNoteIn && intakeSensor.get()) {
-            isNoteIn = true;
-        }
 
         double prox = colorSensorObj.getProximity();
         if (!isThresholdCrossed && prox >= PROX_THRESHOLD) {   // need this to know when to stop intake and indexer motors
