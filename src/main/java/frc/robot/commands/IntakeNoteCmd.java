@@ -66,10 +66,10 @@ public class IntakeNoteCmd extends Command {
     @Override
     public void execute() {
         intakeSubSysObj.runIntake();
-        System.out.println("intake running ***************************");
+        //System.out.println("intake running ***************************");
 
         String beamBreak = !intakeSensor.get() ? "is Broken" : "is not Broken";
-        System.out.println("Intake Beam Break Sensor " + beamBreak);
+        //System.out.println("Intake Beam Break Sensor " + beamBreak);
 
         if (!isNoteIn && !intakeSensor.get()) {
             isNoteIn = true;

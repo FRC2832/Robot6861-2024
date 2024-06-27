@@ -114,12 +114,9 @@ public class RobotContainer {
         climberSubSysObj = new ClimberSubSys();
         shooterAnglerSubSysObj = new ShooterAnglerSubSys();
         ampScorerSubSysObj = new AmpScorerSubSys();
-        colorSensorObj = new REVColorSensor(Port.kMXP); // TODO: Verify this port.
-        intakeSensor = new DigitalInput(0);
-        // test1 = new AnalogInput(0);
-        // //String beamBreak = intakeSensor.get() ? "is not Broken" : "is Broken"; //true means beam break not broken, so sees 4.5 V
-        // double beamBreak = test1.getVoltage();  //true is 4.5V and beam not broken.
-        // SmartDashboard.putNumber("Beam Break", beamBreak);
+        colorSensorObj = new REVColorSensor(Port.kMXP); 
+        intakeSensor = new DigitalInput(Constants.INTAKE_SENSOR_DIO_PORT);
+        
         String serNum = RobotController.getSerialNumber();
         SmartDashboard.putString("Serial Number", serNum);
         // known Rio serial numbers:

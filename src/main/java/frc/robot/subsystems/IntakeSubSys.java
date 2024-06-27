@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 public class IntakeSubSys extends SubsystemBase {
     /** Creates a new Intake. */
@@ -31,6 +32,8 @@ public class IntakeSubSys extends SubsystemBase {
     private double outtakeVelVolts;
     private double intakeVelPct;
     private double outtakeVelPct;
+    //private DigitalInput intakeSensor;
+
     //private double kP;
     //private double kI;
     //private double kD;
@@ -49,6 +52,8 @@ public class IntakeSubSys extends SubsystemBase {
         outtakeVelPct = Constants.OUTTAKE_MOTOR_PCT / 100.0;
         intakeVelVolts = intakeVelPct * 12.0;
         outtakeVelVolts = outtakeVelPct * 12.0;
+    
+        //intakeSensor = new DigitalInput(Constants.INTAKE_SENSOR_DIO_PORT);
 
         //intakeEncoder = intakeMotor.getEncoder();
         //intakePidController = intakeMotor.getPIDController();
@@ -94,9 +99,14 @@ public class IntakeSubSys extends SubsystemBase {
         intakeMotor.setVoltage(0.0);
     }
 
+    /*public boolean getIntakeSensor() {
+        return !intakeSensor.get();
+    }*/
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
         //SmartDashboard.putNumber("Intake Motor Encoder", intakeEncoder.getVelocity());
+        //SmartDashboard.putBoolean("Intake Sensor", !intakeSensor.get());
     }
 }

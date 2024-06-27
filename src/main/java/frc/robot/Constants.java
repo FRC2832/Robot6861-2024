@@ -81,6 +81,7 @@ public final class Constants {
     public static final int LINEAR_ACTUATOR_MOTOR_SMART_CURRENT_LIMIT = 3;
     public static final double LINEAR_ACTUATOR_MOTOR_PCT = 99.0;
     public static final double LINEAR_ACTUATOR_MOTOR_REVERSE_PCT = -99.0;
+    public static final int INTAKE_SENSOR_DIO_PORT = 0;
 
    
     
