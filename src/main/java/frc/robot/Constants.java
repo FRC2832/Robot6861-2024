@@ -29,7 +29,7 @@ public final class Constants {
     public static final int INDEX_MOTOR_SMART_CURRENT_LIMIT = 20; // NEO 550 
     public static final int INDEX_MOTOR_SECONDARY_CURRENT_LIMIT = 40; // complete
     public static final double UPINDEX_MOTOR_PCT = 95.0; // TODO: confirm these values
-    public static final double DOWNINDEX_MOTOR_PCT = -30.0; 
+    public static final double DOWNINDEX_MOTOR_PCT = -45.0; 
 
     // Shooter Motor Values NEO
     public static final int FR_SHOOTER_MOTOR_CAN_ID = 4;
