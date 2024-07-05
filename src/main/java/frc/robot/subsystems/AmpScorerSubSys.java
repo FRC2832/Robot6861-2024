@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkBase.IdleMode;
 
@@ -39,6 +40,11 @@ public class AmpScorerSubSys extends SubsystemBase {
     ampMotor = new CANSparkMax(Constants.AMP_MOTOR_CAN_ID, MotorType.kBrushless);
     ampMotor.setSmartCurrentLimit(Constants.AMP_MOTOR_SMART_CURRENT_LIMIT);
     ampMotor.setSecondaryCurrentLimit(Constants.AMP_MOTOR_SECONDARY_CURRENT_LIMIT);
+
+    //from https://www.revrobotics.com/development-spark-max-users-manual/#section-3-3-2-1
+    ampMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 100);  //to help reduce CANbus high utilization
+    ampMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 110);  // TODO: might be able to go higher than 100....
+    ampMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 30);  
 
     ampEncoder = ampMotor.getEncoder();
     ampEncoder.setPosition(0.0);

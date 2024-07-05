@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
@@ -71,6 +72,14 @@ public class ShooterSubSys extends SubsystemBase {
         // Main Shooter Module
         shooterMotorFR = new CANSparkMax(Constants.FR_SHOOTER_MOTOR_CAN_ID, MotorType.kBrushless);
         shooterMotorFL = new CANSparkMax(Constants.FL_SHOOTER_MOTOR_CAN_ID, MotorType.kBrushless);
+
+        //from https://www.revrobotics.com/development-spark-max-users-manual/#section-3-3-2-1
+        shooterMotorFL.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 100);  //to help reduce CANbus high utilization
+        shooterMotorFL.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 100);  // TODO: might be able to go higher than 100....
+
+        shooterMotorFR.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 100);  //to help reduce CANbus high utilization
+        shooterMotorFR.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 100);  // TODO: might be able to go higher than 100....
+
         shooterMotorFREncoder = shooterMotorFR.getEncoder();
         shooterMotorFLEncoder = shooterMotorFL.getEncoder();
         shooterMotorFREncoder.setPosition(0.0);

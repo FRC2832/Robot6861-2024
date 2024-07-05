@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 import com.revrobotics.CANSparkMax;
 
 import frc.robot.Constants;
@@ -27,6 +28,12 @@ public class ShooterAnglerSubSys extends SubsystemBase {
         // Linear Actuator Angle
         linearActuatorMotor = new CANSparkMax(Constants.LINEAR_ACTUATOR_MOTOR_CAN_ID, MotorType.kBrushed);
         linearActuatorMotor.setSmartCurrentLimit(Constants.LINEAR_ACTUATOR_MOTOR_SMART_CURRENT_LIMIT);
+        
+        //from https://www.revrobotics.com/development-spark-max-users-manual/#section-3-3-2-1
+        linearActuatorMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 500);  //to help reduce CANbus high utilization
+        linearActuatorMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 500);  // TODO: might be able to go higher than 100....
+        linearActuatorMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);  
+
         linearActuatorMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
         linearActuatorVelPct = Constants.LINEAR_ACTUATOR_MOTOR_PCT / 100.0;

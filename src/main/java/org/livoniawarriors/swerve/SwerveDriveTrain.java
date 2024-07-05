@@ -113,9 +113,9 @@ public class SwerveDriveTrain extends SubsystemBase {
         }
 
         /** How fast we want the driver to go during normal operation in m/s */
-        driverMaxSpeed = UtilFunctions.getSettingSub("/Swerve Drive/Max Driver Speed (mps)", 3.5);  //TODO: was 4.3 end of Livonia comp.  turned down for new driver practice
+        driverMaxSpeed = UtilFunctions.getSettingSub("/Swerve Drive/Max Driver Speed (mps)", 4.6);  //TODO: was 4.3 end of Livonia comp.  turned down for new driver practice
         /** How fast we want the driver to turn during normal operation in deg/s */
-        driverMaxOmega = UtilFunctions.getSettingSub("/Swerve Drive/Max Driver Omega (dps)", 300); // TODO: was 625 end of livonia comp. turned down for new driver practice  1.8 * Pi rad/sec
+        driverMaxOmega = UtilFunctions.getSettingSub("/Swerve Drive/Max Driver Omega (dps)", 625); // TODO: was 625 end of livonia comp. turned down for new driver practice  1.8 * Pi rad/sec
 
         minSpeed = 0.5;  //units m/s
         maxSpeed = 4.8;  //units m/s
@@ -245,7 +245,7 @@ public class SwerveDriveTrain extends SubsystemBase {
         // we use a little larger optimize angle since drivers turning 90* is a pretty
         // common operation
         double optimizeAngle = UtilFunctions.getSetting(OPTIMIZE_ANGLE_KEY, 120);
-        double maxAccel = UtilFunctions.getSetting(MAX_ACCEL_KEY, 450);  
+        double maxAccel = UtilFunctions.getSetting(MAX_ACCEL_KEY, 625);  
         double maxOmega = UtilFunctions.getSetting(MAX_OMEGA_KEY, 3000);
 
         // command each swerve module

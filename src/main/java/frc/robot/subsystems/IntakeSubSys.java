@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 import com.revrobotics.CANSparkMax;
 //import com.revrobotics.RelativeEncoder;
 //import com.revrobotics.SparkPIDController;
@@ -47,6 +48,12 @@ public class IntakeSubSys extends SubsystemBase {
         intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR_CAN_ID, MotorType.kBrushless);
         intakeMotor.setSmartCurrentLimit(Constants.INTAKE_MOTOR_SMART_CURRENT_LIMIT);
         intakeMotor.setSecondaryCurrentLimit(Constants.INTAKE_MOTOR_SECONDARY_CURRENT_LIMIT);
+        
+        //from https://www.revrobotics.com/development-spark-max-users-manual/#section-3-3-2-1
+        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 100);  //to help reduce CANbus high utilization
+        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 100);  // TODO: might be able to go higher than 100....
+
+
         intakeMotor.setIdleMode(IdleMode.kBrake);
         intakeVelPct = Constants.INTAKE_MOTOR_PCT / 100.0;
         outtakeVelPct = Constants.OUTTAKE_MOTOR_PCT / 100.0;

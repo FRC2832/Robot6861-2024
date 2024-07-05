@@ -61,13 +61,13 @@ public final class Constants {
     public static final double DOWNCLIMB_MOTOR_PCT = -70.0; 
 
     // Swerve current limits
-    public static final int DRIVE_MOTOR_PRIMARY_CURRENT_LIMIT = 45;
-    public static final int DRIVE_MOTOR_SECONDARY_CURRENT_LIMIT = 65;
-    public static final int TURN_MOTOR_PRIMARY_CURRENT_LIMIT = 45;
-    public static final int TURN_MOTOR_SECONDARY_CURRENT_LIMIT = 65;
+    public static final int DRIVE_MOTOR_PRIMARY_CURRENT_LIMIT = 52;
+    public static final int DRIVE_MOTOR_SECONDARY_CURRENT_LIMIT = 70;
+    public static final int TURN_MOTOR_PRIMARY_CURRENT_LIMIT = 52;
+    public static final int TURN_MOTOR_SECONDARY_CURRENT_LIMIT = 70;
 
     // Drive mode factors
-    public static final double TURTLE_MODE = 0.55;
+    public static final double TURTLE_MODE = 0.45;
     public static final double SNAIL_MODE = 0.25;
 
     // Vision system values

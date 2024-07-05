@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -33,6 +34,11 @@ public class IndexerSubSys extends SubsystemBase {
         indexMotor = new CANSparkMax(Constants.INDEX_MOTOR_CAN_ID, MotorType.kBrushless);
         indexMotor.setSmartCurrentLimit(Constants.INDEX_MOTOR_SMART_CURRENT_LIMIT);
         indexMotor.setSecondaryCurrentLimit(Constants.INDEX_MOTOR_SECONDARY_CURRENT_LIMIT);
+        
+        //from https://www.revrobotics.com/development-spark-max-users-manual/#section-3-3-2-1
+        indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 100);  //to help reduce CANbus high utilization
+        indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 100);  // TODO: might be able to go higher than 100....
+
         indexMotor.setIdleMode(IdleMode.kBrake);
 
         upIndexVelPct = Constants.UPINDEX_MOTOR_PCT / 100.0;

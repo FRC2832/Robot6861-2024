@@ -7,6 +7,7 @@ import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderStatusFrame;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 
@@ -26,6 +27,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
     // 100ms)
     private static final double COUNTS_PER_METER = 4331.1 / 0.94362; // velocity units
     private static final double VELO_PER_METER = COUNTS_PER_METER * 10; // distance units
+   
 
     // Swerve corner locations for kinematics
     // trackwidth = 25" /2 = 12.5" converts to 0.3175 meters
@@ -96,6 +98,8 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
         for (CANSparkMax drive : driveMotors) {
             drive.setSmartCurrentLimit(Constants.DRIVE_MOTOR_PRIMARY_CURRENT_LIMIT);
             drive.setSecondaryCurrentLimit(Constants.DRIVE_MOTOR_SECONDARY_CURRENT_LIMIT);
+            //drive.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 100);
+            
         }
         for (CANSparkMax turn : turnMotors) {
             turn.setSmartCurrentLimit(Constants.TURN_MOTOR_PRIMARY_CURRENT_LIMIT);
@@ -124,6 +128,12 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
             turnPid[wheel] = new PIDController(0.5 / Math.PI, .2, 0.0); // TODO: modify turnPID values, ki was 0.2
 
             // driveEncoder[wheel] = driveMotors[wheel].getEncoder();
+
+            //from https://www.revrobotics.com/development-spark-max-users-manual/#section-3-3-2-1
+            turnMotors[wheel].setPeriodicFramePeriod(PeriodicFrame.kStatus0, 100);  //to help reduce CANbus high utilization
+            turnMotors[wheel].setPeriodicFramePeriod(PeriodicFrame.kStatus1, 100);
+            driveMotors[wheel].setPeriodicFramePeriod(PeriodicFrame.kStatus0, 20);
+            driveMotors[wheel].setPeriodicFramePeriod(PeriodicFrame.kStatus1, 100);
             
         }
         setDriveMotorBrakeMode(true);
