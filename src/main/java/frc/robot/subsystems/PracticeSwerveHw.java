@@ -61,7 +61,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
         // allocate our hardware
         int numMotors = swervePositions.length;
         driveMotors = new CANSparkMax[numMotors];
-       driveEncoder = new RelativeEncoder[numMotors];
+        driveEncoder = new RelativeEncoder[numMotors];
        // driveEncoderVelocity = new RelativeEncoder[numMotors];
         turnMotors = new CANSparkMax[numMotors];
         turnSensors = new CANCoder[numMotors];
@@ -92,7 +92,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
         driveMotors[3] = new CANSparkMax(41, MotorType.kBrushless);
         turnMotors[3] = new CANSparkMax(42, MotorType.kBrushless);
         turnSensors[3] = new CANCoder(43);
-        // driveMotors[3].setInverted(true);
+        driveMotors[3].setInverted(false);
 
         // Current Limit for Drive and Turn (20 and 40)
         for (CANSparkMax drive : driveMotors) {

@@ -77,7 +77,7 @@ public class IntakeNoteCmd extends Command {
             isNoteIn = false;
         }
 
-        System.out.println("isNoteIn: " + isNoteIn);
+        //System.out.println("isNoteIn: " + isNoteIn);
 
         if (isNoteIn) {
             driverController.setRumble(RumbleType.kBothRumble, 0.8);

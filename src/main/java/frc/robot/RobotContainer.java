@@ -161,7 +161,7 @@ public class RobotContainer {
         SmartDashboard.putData("Drive Wheels Straight", new MoveWheels(swerveDrive, MoveWheels.driveWheelsStraight()));
         SmartDashboard.putData("Drive Wheels Diamond", new MoveWheels(swerveDrive, MoveWheels.driveWheelsDiamond()));
         SmartDashboard.putData("Test Leds", new TestLeds(leds));
-        SmartDashboard.putNumber("Climb motor encoder", climberSubSysObj.showEncoders());
+        //SmartDashboard.putNumber("Climb motor encoder", climberSubSysObj.showEncoders());
 
         // Register Named Commands for PathPlanner
         NamedCommands.registerCommand("flashRed", new LightningFlash(leds, Color.kFirstRed));

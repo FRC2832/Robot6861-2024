@@ -39,7 +39,7 @@ public class SwerveDriveTrain extends SubsystemBase {
     private SwerveModulePosition[] swervePositions;
     private SwerveModuleState[] swerveTargets;
     private double gyroOffset = 0.0;
-    private PIDController pidZero = new PIDController(0.000, 0.0000, 0); // confirm these values.
+    private PIDController pidZero = new PIDController(0.001, 0.0000, 0); // confirm these values.
     private SwerveModuleState[] swerveStates;
     private boolean optimize;
     private boolean resetZeroPid;
@@ -115,7 +115,7 @@ public class SwerveDriveTrain extends SubsystemBase {
         /** How fast we want the driver to go during normal operation in m/s */
         driverMaxSpeed = UtilFunctions.getSettingSub("/Swerve Drive/Max Driver Speed (mps)", 4.6);  //TODO: was 4.3 end of Livonia comp.  turned down for new driver practice
         /** How fast we want the driver to turn during normal operation in deg/s */
-        driverMaxOmega = UtilFunctions.getSettingSub("/Swerve Drive/Max Driver Omega (dps)", 625); // TODO: was 625 end of livonia comp. turned down for new driver practice  1.8 * Pi rad/sec
+        driverMaxOmega = UtilFunctions.getSettingSub("/Swerve Drive/Max Driver Omega (dps)", 525); // TODO: was 625 end of livonia comp. turned down for new driver practice  1.8 * Pi rad/sec
 
         minSpeed = 0.5;  //units m/s
         maxSpeed = 4.8;  //units m/s
@@ -164,7 +164,7 @@ public class SwerveDriveTrain extends SubsystemBase {
         
         minSpeed = UtilFunctions.getSetting(MIN_SPEED_KEY, 0.5); 
                                                                  
-        maxSpeed = UtilFunctions.getSetting(MAX_SPEED_KEY, 3.7);  //increase to 4.8 when experienced drivers are driving
+        maxSpeed = UtilFunctions.getSetting(MAX_SPEED_KEY, 4.6);  //increase to 4.8 when experienced drivers are driving
     }
 
     /**
@@ -191,6 +191,7 @@ public class SwerveDriveTrain extends SubsystemBase {
         } else {
             // straighten the robot
             turn = pidZero.calculate(currentHeading.getDegrees(), gyroOffset);
+            SmartDashboard.putNumber("gyro Offset ", gyroOffset);
             SmartDashboard.putNumber("turn ", turn);
         }
 
