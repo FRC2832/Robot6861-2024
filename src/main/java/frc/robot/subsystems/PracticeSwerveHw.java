@@ -99,7 +99,8 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
             drive.setSmartCurrentLimit(Constants.DRIVE_MOTOR_PRIMARY_CURRENT_LIMIT);
             drive.setSecondaryCurrentLimit(Constants.DRIVE_MOTOR_SECONDARY_CURRENT_LIMIT);
             //drive.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 100);
-            
+            drive.enableVoltageCompensation(11);
+            drive.setOpenLoopRampRate(0.025);
         }
         for (CANSparkMax turn : turnMotors) {
             turn.setSmartCurrentLimit(Constants.TURN_MOTOR_PRIMARY_CURRENT_LIMIT);
@@ -125,7 +126,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
             turnEncoder[wheel] = turnMotors[wheel].getEncoder();
             driveMotors[wheel].getEncoder().setPositionConversionFactor(1/21.92);  
             driveMotors[wheel].getEncoder().setVelocityConversionFactor(1/(21.92 * 60));    
-            turnPid[wheel] = new PIDController(0.5 / Math.PI, .2, 0.0); // TODO: modify turnPID values, ki was 0.2
+            turnPid[wheel] = new PIDController(0.5 / Math.PI, 0 , 0.0); // TODO: modify turnPID values, ki was 0.2
 
             // driveEncoder[wheel] = driveMotors[wheel].getEncoder();
 

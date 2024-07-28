@@ -39,7 +39,7 @@ public class SwerveDriveTrain extends SubsystemBase {
     private SwerveModulePosition[] swervePositions;
     private SwerveModuleState[] swerveTargets;
     private double gyroOffset = 0.0;
-    private PIDController pidZero = new PIDController(0.001, 0.0000, 0); // confirm these values.
+    private PIDController pidZero = new PIDController(.0001, 0.0000, 0); // confirm these values.
     private SwerveModuleState[] swerveStates;
     private boolean optimize;
     private boolean resetZeroPid;
@@ -113,7 +113,7 @@ public class SwerveDriveTrain extends SubsystemBase {
         }
 
         /** How fast we want the driver to go during normal operation in m/s */
-        driverMaxSpeed = UtilFunctions.getSettingSub("/Swerve Drive/Max Driver Speed (mps)", 4.6);  //TODO: was 4.3 end of Livonia comp.  turned down for new driver practice
+        driverMaxSpeed = UtilFunctions.getSettingSub("/Swerve Drive/Max Driver Speed (mps)", 4.9);  //TODO: was 4.3 end of Livonia comp.  turned down for new driver practice
         /** How fast we want the driver to turn during normal operation in deg/s */
         driverMaxOmega = UtilFunctions.getSettingSub("/Swerve Drive/Max Driver Omega (dps)", 525); // TODO: was 625 end of livonia comp. turned down for new driver practice  1.8 * Pi rad/sec
 
