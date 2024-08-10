@@ -11,9 +11,9 @@ import frc.robot.subsystems.ShooterAnglerSubSys;
 
 public class AngleShooterDownCmd extends Command {
     private final ShooterAnglerSubSys shooterAnglerSubSysObj;
-    private static final Timer TIMER = new Timer();
-    private double timerMotor = 0.6;   //shooter about 42 deg.
-    private double timerFinish = 7.0;
+    //private static final Timer TIMER = new Timer();
+    //private double timerMotor = 0.6;   //shooter about 42 deg.
+    //private double timerFinish = 7.0;
 
     /** Creates a new AngleShooterDown. */
     public AngleShooterDownCmd(ShooterAnglerSubSys shooterAnglerSubSysObj) {
@@ -25,33 +25,36 @@ public class AngleShooterDownCmd extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        TIMER.restart();
+        //TIMER.restart();
     
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (TIMER.get() < timerMotor) {
+        System.out.println("running shooter angle");
+        shooterAnglerSubSysObj.angleShooterDown();
+        /*if (TIMER.get() < timerMotor) {
             shooterAnglerSubSysObj.runLinearActuatorReverse(); //angle shooter down to about 42 deg.
         } else {
             shooterAnglerSubSysObj.stopLinearActuator();
-        }
+        }*/
         
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        // shooterAnglerSubSysObj.stopLinearActuator();   
-        shooterAnglerSubSysObj.runLinearActuator();  // angle shooter back to 60 deg.
-        TIMER.stop();
-        TIMER.reset();
+        shooterAnglerSubSysObj.stopAngledShooterMotor();   
+       // shooterAnglerSubSysObj.runLinearActuator();  // angle shooter back to 60 deg.
+        //TIMER.stop();
+        //TIMER.reset();
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return TIMER.get() > timerFinish;
+        return false;
+        //return TIMER.get() > timerFinish;
     }
 }

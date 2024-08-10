@@ -38,6 +38,11 @@ public class IndexerSubSys extends SubsystemBase {
         //from https://www.revrobotics.com/development-spark-max-users-manual/#section-3-3-2-1
         indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 100);  //to help reduce CANbus high utilization
         indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 100);  // TODO: might be able to go higher than 100....
+        indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 100);
+        indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 50);
+        indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 100);
+        indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus5, 300);
+        indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus6, 300);
 
         indexMotor.setIdleMode(IdleMode.kBrake);
 

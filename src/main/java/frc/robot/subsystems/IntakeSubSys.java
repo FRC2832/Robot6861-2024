@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import edu.wpi.first.wpilibj.DigitalInput;
+//import edu.wpi.first.wpilibj.DigitalInput;
 
 public class IntakeSubSys extends SubsystemBase {
     /** Creates a new Intake. */
@@ -50,9 +50,13 @@ public class IntakeSubSys extends SubsystemBase {
         intakeMotor.setSecondaryCurrentLimit(Constants.INTAKE_MOTOR_SECONDARY_CURRENT_LIMIT);
         
         //from https://www.revrobotics.com/development-spark-max-users-manual/#section-3-3-2-1
-        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 100);  //to help reduce CANbus high utilization
-        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 100);  // TODO: might be able to go higher than 100....
-
+        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 10);  //to help reduce CANbus high utilization
+        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 20);  // TODO: might be able to go higher than 100....
+        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 100);
+        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 50);
+        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 200);
+        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus5, 500);
+        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus6, 500);
 
         intakeMotor.setIdleMode(IdleMode.kBrake);
         intakeVelPct = Constants.INTAKE_MOTOR_PCT / 100.0;

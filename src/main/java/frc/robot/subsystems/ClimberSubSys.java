@@ -77,7 +77,8 @@ public class ClimberSubSys extends SubsystemBase {
 
 
     public void runClimberUp() {
-        SmartDashboard.putNumber("Climb motor encoder - up", climberEncoder.getPosition());
+        // Uncomment this for development, testing or debugging work:
+        //SmartDashboard.putNumber("Climb motor encoder - up", climberEncoder.getPosition());
 
         // PID coefficients
         kP = 0.74;
@@ -101,17 +102,19 @@ public class ClimberSubSys extends SubsystemBase {
         climberPIDController.setReference(rotations, CANSparkBase.ControlType.kPosition);
          // climberMotor.setVoltage(upClimbVelVolts);
 
-        SmartDashboard.putNumber("SetPoint", rotations);
-        SmartDashboard.putNumber("ProcessVariable", climberEncoder.getPosition());
-        SmartDashboard.putNumber("CLimber Motor Speed", climberEncoder.getVelocity());
+         // Uncomment these for development, testing or debugging work:
+        //SmartDashboard.putNumber("SetPoint", rotations);
+        //SmartDashboard.putNumber("ProcessVariable", climberEncoder.getPosition());
+        //SmartDashboard.putNumber("CLimber Motor Speed", climberEncoder.getVelocity());
 
 
        
     }
 
-    // Runs the Climber eMotor in a negative direction
+    // Runs the Climber Motor in a negative direction
     public void runClimberDown() {
-        SmartDashboard.putNumber("Climb motor encoder - down", climberEncoder.getPosition());
+        // Uncomment this for development, testing or debugging work:
+        // SmartDashboard.putNumber("Climb motor encoder - down", climberEncoder.getPosition());
 
         // PID coefficients
         kP = 0.5;
@@ -136,8 +139,9 @@ public class ClimberSubSys extends SubsystemBase {
 
         climberPIDController.setReference(rotations, CANSparkBase.ControlType.kPosition);
 
-        SmartDashboard.putNumber("SetPoint", rotations);
-        SmartDashboard.putNumber("ProcessVariable", climberEncoder.getPosition());
+        // Uncomment these for development, testing or debugging work:
+        //SmartDashboard.putNumber("SetPoint", rotations);
+        //SmartDashboard.putNumber("ProcessVariable", climberEncoder.getPosition());
 
     }
 
@@ -148,6 +152,7 @@ public class ClimberSubSys extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        SmartDashboard.putNumber("Climb motor encoder", climberEncoder.getPosition());
+        // Uncomment this for development, testing or debugging work:
+        // SmartDashboard.putNumber("Climb motor encoder", climberEncoder.getPosition());
     }
 }

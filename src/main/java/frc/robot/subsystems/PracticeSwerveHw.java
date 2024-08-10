@@ -126,12 +126,12 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
             turnEncoder[wheel] = turnMotors[wheel].getEncoder();
             driveMotors[wheel].getEncoder().setPositionConversionFactor(1/21.92);  
             driveMotors[wheel].getEncoder().setVelocityConversionFactor(1/(21.92 * 60));    
-            turnPid[wheel] = new PIDController(0.5 / Math.PI, 0 , 0.0); // TODO: modify turnPID values, ki was 0.2
+            turnPid[wheel] = new PIDController(1.5/ Math.PI, 0.0 , 0.0); // TODO: modify turnPID values, kp was 0.5/math.pi, ki was 0.2
 
             // driveEncoder[wheel] = driveMotors[wheel].getEncoder();
 
             //from https://www.revrobotics.com/development-spark-max-users-manual/#section-3-3-2-1
-            turnMotors[wheel].setPeriodicFramePeriod(PeriodicFrame.kStatus0, 100);  //to help reduce CANbus high utilization
+            turnMotors[wheel].setPeriodicFramePeriod(PeriodicFrame.kStatus0, 20);  //to help reduce CANbus high utilization
             turnMotors[wheel].setPeriodicFramePeriod(PeriodicFrame.kStatus1, 100);
             driveMotors[wheel].setPeriodicFramePeriod(PeriodicFrame.kStatus0, 20);
             driveMotors[wheel].setPeriodicFramePeriod(PeriodicFrame.kStatus1, 100);
@@ -167,7 +167,14 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
 
     @Override
     public double getCornerSpeed(int wheel) { 
-        return driveMotors[wheel].getEncoder().getVelocity();
+        double encoderSpeed = driveMotors[wheel].getEncoder().getVelocity();
+
+        if (encoderSpeed < 0.006) {
+            encoderSpeed = 0.00;
+            //System.out.println("                debugging: had to set cornerSpeed to 0");
+        }
+
+        return encoderSpeed;
     }
 
     @Override

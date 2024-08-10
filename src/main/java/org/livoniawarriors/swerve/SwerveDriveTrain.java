@@ -39,7 +39,8 @@ public class SwerveDriveTrain extends SubsystemBase {
     private SwerveModulePosition[] swervePositions;
     private SwerveModuleState[] swerveTargets;
     private double gyroOffset = 0.0;
-    private PIDController pidZero = new PIDController(.0001, 0.0000, 0); // confirm these values.
+    private PIDController pidZero = new PIDController(.0000, 0.0000, 0); 
+                   // pidZero is not working as expected. Keep all gains = 0 as of 8/9/24. Code below needs rewrite.
     private SwerveModuleState[] swerveStates;
     private boolean optimize;
     private boolean resetZeroPid;
@@ -92,7 +93,7 @@ public class SwerveDriveTrain extends SubsystemBase {
         wheelRequestAngle = new DoublePublisher[numWheels];
         wheelCommandSpeed = new DoublePublisher[numWheels];
         wheelRequestSpeed = new DoublePublisher[numWheels];
-        double[] wheelOffsetSettingBackups = { 18.19, 289.16, 345.23, 14.326 };
+        double[] wheelOffsetSettingBackups = { 18.19, 287.60, 343.35, 14.326 };
         for (int wheel = 0; wheel < numWheels; wheel++) {
             swervePositions[wheel] = new SwerveModulePosition();
             swerveTargets[wheel] = new SwerveModuleState();
@@ -140,6 +141,7 @@ public class SwerveDriveTrain extends SubsystemBase {
             swervePositions[wheel].distanceMeters = hardware.getCornerDistance(wheel);
 
             swerveStates[wheel].angle = swervePositions[wheel].angle;
+            //if hardware.getCornerSpeed(wheel) < 
             swerveStates[wheel].speedMetersPerSecond = hardware.getCornerSpeed(wheel);
 
             wheelCalcAngle[wheel].set(angle);
@@ -192,8 +194,17 @@ public class SwerveDriveTrain extends SubsystemBase {
             // straighten the robot
             turn = pidZero.calculate(currentHeading.getDegrees(), gyroOffset);
             SmartDashboard.putNumber("gyro Offset ", gyroOffset);
-            SmartDashboard.putNumber("turn ", turn);
+            //SmartDashboard.putNumber("turn ", turn);
         }
+
+        // try this? to fix odd flipping in requested angle/speed that seems to be connected to tiny turn value flipping +/-
+        if (Math.abs(turn) < 0.006) { 
+            turn = 0.00; 
+            //System.out.println("debugging: had to set turn to 0");
+        } 
+        SmartDashboard.putNumber("turn ", turn); 
+
+
 
         if (fieldOriented) {
             speeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turn, currentHeading.minus(fieldOffset));

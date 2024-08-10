@@ -263,8 +263,8 @@ public class RobotContainer {
         outtakeGroup.setName("outtakeGroup");
                 
         SequentialCommandGroup anglerGroup = new SequentialCommandGroup(
-                new AngleShooterDownCmd(shooterAnglerSubSysObj),
-                new AngleShooterUpCmd(shooterAnglerSubSysObj)
+                new AngleShooterDownCmd(shooterAnglerSubSysObj) //remember the comma!  if decide to add in the up command!
+                //new AngleShooterUpCmd(shooterAnglerSubSysObj)
         );
         anglerGroup.setName("anglerGroup");
 

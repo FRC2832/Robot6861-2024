@@ -76,11 +76,14 @@ public final class Constants {
     public static final int IMAGE_HEIGHT = 480;
     public static final int FRAMERATE = 20;
 
-    // Linear Actuator Values
-    public static final int LINEAR_ACTUATOR_MOTOR_CAN_ID = 7;
-    public static final int LINEAR_ACTUATOR_MOTOR_SMART_CURRENT_LIMIT = 3;
-    public static final double LINEAR_ACTUATOR_MOTOR_PCT = 99.0;
-    public static final double LINEAR_ACTUATOR_MOTOR_REVERSE_PCT = -99.0;
+    // Angled Shooter Values
+    public static final int ANGLED_SHOOTER_MOTOR_CAN_ID = 7;
+    public static final int ANGLED_SHOOTER_MOTOR_SMART_CURRENT_LIMIT = 3;
+    public static final int ANGLED_SHOOTER_MOTOR_SECONDARY_CURRENT_LIMIT = 10;
+    public static final double ANGLED_SHOOTER_MOTOR_PCT = 99.0;
+    public static final double ANGLED_SHOOTER_MOTOR_REVERSE_PCT = -99.0;
+
+    //Intake Sensor
     public static final int INTAKE_SENSOR_DIO_PORT = 0;
 
    

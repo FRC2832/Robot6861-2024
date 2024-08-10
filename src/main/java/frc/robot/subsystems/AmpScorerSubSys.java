@@ -44,7 +44,12 @@ public class AmpScorerSubSys extends SubsystemBase {
     //from https://www.revrobotics.com/development-spark-max-users-manual/#section-3-3-2-1
     ampMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 100);  //to help reduce CANbus high utilization
     ampMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 110);  // TODO: might be able to go higher than 100....
-    ampMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 30);  
+    ampMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 100);
+    ampMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 150);  
+    ampMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 500);
+    ampMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus5, 500);
+    ampMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus6, 500);
+
 
     ampEncoder = ampMotor.getEncoder();
     ampEncoder.setPosition(0.0);
@@ -117,9 +122,10 @@ public class AmpScorerSubSys extends SubsystemBase {
       ampPIDController.setReference(rotations, CANSparkBase.ControlType.kPosition);
       //ampMotor.setVoltage(ampMotorReverseVolts);
 
-      SmartDashboard.putNumber("SetPoint Amo", rotations);
-      SmartDashboard.putNumber("ProcessVariable Amp", ampEncoder.getPosition());
-      SmartDashboard.putNumber("Motor Speed Amp", ampEncoder.getVelocity());
+      // Uncomment these for development, testing or debugging work:
+      //SmartDashboard.putNumber("SetPoint Amp", rotations);
+      //SmartDashboard.putNumber("ProcessVariable Amp", ampEncoder.getPosition());
+      //SmartDashboard.putNumber("Motor Speed Amp", ampEncoder.getVelocity());
 
       //if (ampEncoder.getVelocity() < 10.0 );
           //stopAmpMotor();
@@ -134,6 +140,7 @@ public class AmpScorerSubSys extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Amp Encoder Position", ampEncoder.getPosition());
+    // Uncomment this for development, testing or debugging work:
+    // SmartDashboard.putNumber("Amp Encoder Position", ampEncoder.getPosition());
   }
 }
