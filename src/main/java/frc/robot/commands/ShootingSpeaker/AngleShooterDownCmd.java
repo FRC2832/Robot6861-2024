@@ -45,7 +45,11 @@ public class AngleShooterDownCmd extends Command {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        shooterAnglerSubSysObj.stopAngledShooterMotor();   
+        shooterAnglerSubSysObj.angleShooterUp();
+        //shooterAnglerSubSysObj.stopAngledShooterMotor();   
+
+
+        
        // shooterAnglerSubSysObj.runLinearActuator();  // angle shooter back to 60 deg.
         //TIMER.stop();
         //TIMER.reset();

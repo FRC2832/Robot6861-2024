@@ -78,10 +78,10 @@ public final class Constants {
 
     // Angled Shooter Values
     public static final int ANGLED_SHOOTER_MOTOR_CAN_ID = 7;
-    public static final int ANGLED_SHOOTER_MOTOR_SMART_CURRENT_LIMIT = 3;
-    public static final int ANGLED_SHOOTER_MOTOR_SECONDARY_CURRENT_LIMIT = 10;
-    public static final double ANGLED_SHOOTER_MOTOR_PCT = 99.0;
-    public static final double ANGLED_SHOOTER_MOTOR_REVERSE_PCT = -99.0;
+    public static final int ANGLED_SHOOTER_MOTOR_SMART_CURRENT_LIMIT = 20;
+    public static final int ANGLED_SHOOTER_MOTOR_SECONDARY_CURRENT_LIMIT = 40;
+    public static final double ANGLED_SHOOTER_MOTOR_PCT = 20.0;  //positive volts brings shooter down
+    public static final double ANGLED_SHOOTER_MOTOR_REVERSE_PCT = -20.0; //currently not using this at all
 
     //Intake Sensor
     public static final int INTAKE_SENSOR_DIO_PORT = 0;

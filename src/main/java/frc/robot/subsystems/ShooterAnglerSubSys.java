@@ -31,10 +31,10 @@ public class ShooterAnglerSubSys extends SubsystemBase {
     //private static final Timer TIMER = new Timer();
     //private final double timerLim;
     //private final double timerLimAuton;
-    //private double linearActuatorVelVolts;
-    //private double linearActuatorVelPct;
-    //private double linearActuatorVelReversePct;
-    //private double linearActuatorVelVoltsReverse;
+    private double angledShooterVelVolts;
+    private double angledShooterVelPct;
+    private double angledShooterVelReversePct;
+    private double angledShooterVelReverseVolts;
 
     /** Creates a new ShooterAnglerSubsys. */
     public ShooterAnglerSubSys() {
@@ -46,6 +46,7 @@ public class ShooterAnglerSubSys extends SubsystemBase {
 
         
         //from https://www.revrobotics.com/development-spark-max-users-manual/#section-3-3-2-1
+        // found better info on https://docs.revrobotics.com/brushless/spark-max/control-interfaces 
         angledShooterMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 10);  //to help reduce CANbus high utilization
         angledShooterMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 20);  // TODO: might be able to go higher than 100....
         angledShooterMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 20); 
@@ -61,10 +62,11 @@ public class ShooterAnglerSubSys extends SubsystemBase {
         angledShooterMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
 
-        //linearActuatorVelPct = Constants.LINEAR_ACTUATOR_MOTOR_PCT / 100.0;
-        //linearActuatorVelReversePct = Constants.LINEAR_ACTUATOR_MOTOR_REVERSE_PCT / 100.0;
-        //linearActuatorVelVolts = linearActuatorVelPct * 12.0;
-        //linearActuatorVelVoltsReverse = linearActuatorVelReversePct * 12.0;
+        angledShooterVelPct = Constants.ANGLED_SHOOTER_MOTOR_PCT / 100.0;
+        angledShooterVelReversePct = Constants.ANGLED_SHOOTER_MOTOR_REVERSE_PCT / 100.0;
+        angledShooterVelVolts = angledShooterVelPct * 12.0;
+        angledShooterVelReverseVolts = angledShooterVelReversePct * 12.0;
+        System.out.println("angled shooter volts commanded = " + angledShooterVelVolts);
 
 
         //timerLim = 1.75;
@@ -81,37 +83,73 @@ public class ShooterAnglerSubSys extends SubsystemBase {
     }
 
      public void angleShooterDown() {
-        // Uncomment this for development, testing or debugging work:
+          // Uncomment this for development, testing or debugging work:
         SmartDashboard.putNumber("Angled Shooter encoder - down", angledShooterEncoder.getPosition());
 
-        // PID coefficients
-        kP = 0.001;  //TODO: was 0.5 for climber
+          // PID coefficients
+        kP = 0.5;  //TODO: was 0.5 for climber, up to 1.6 for shooter.
           //kI = 0.0;
           //kD = 0.0;
           //kIz = 0.0;
-          //kFF = 0.0;
-        kMaxOutput = 0.20;  //was .98 for climber
-        kMinOutput = -0.10; //was -.98 for climber
+          //kFF = 0.08;
+        kMaxOutput = 0.5;  //was .98 for climber
+        kMinOutput = -0.5; //was -.98 for climber
 
-        // set PID coefficients
+          // set PID coefficients
         angledShooterPIDController.setP(kP);
            //climberPIDController.setI(kI);
            //climberPIDController.setD(kD);
            //climberPIDController.setIZone(kIz);
-        //climberPIDController.setFF(kFF);
+           //climberPIDController.setFF(kFF);
         angledShooterPIDController.setOutputRange(kMinOutput, kMaxOutput);
 
-        double rotations = 6.0;  //TODO: determine this value.  50 or -50?
+        double rotations = 187.0;  
 
-            // climberMotor.setVoltage(downClimbVelVolts);
+        //angledShooterMotor.setVoltage(angledShooterVelVolts);
 
         angledShooterPIDController.setReference(rotations, CANSparkBase.ControlType.kPosition);
 
-        // Uncomment these for development, testing or debugging work:
-        SmartDashboard.putNumber("SetPoint", rotations);
-        SmartDashboard.putNumber("ProcessVariable", angledShooterEncoder.getPosition());
+          // Uncomment these for development, testing or debugging work:
+        SmartDashboard.putNumber("Angled Shooter SetPoint", rotations);
+        SmartDashboard.putNumber("Angled Shooter Proces sVariable", angledShooterEncoder.getPosition());
+        SmartDashboard.putNumber("Angled Shooter Motor RPM", angledShooterEncoder.getVelocity());
 
     }
+
+
+    public void angleShooterUp() {
+        // Uncomment this for development, testing or debugging work:
+      SmartDashboard.putNumber("Angled Shooter encoder - up", angledShooterEncoder.getPosition());
+
+        // PID coefficients
+      kP = 0.5;  //TODO: was 0.5 for climber, up to 1.6 for shooter.
+        //kI = 0.0;
+        //kD = 0.0;
+        //kIz = 0.0;
+        //kFF = 0.08;
+      kMaxOutput = 0.50;  //was .98 for climber
+      kMinOutput = -0.50; //was -.98 for climber
+
+        // set PID coefficients
+      angledShooterPIDController.setP(kP);
+         //climberPIDController.setI(kI);
+         //climberPIDController.setD(kD);
+         //climberPIDController.setIZone(kIz);
+         //climberPIDController.setFF(kFF);
+      angledShooterPIDController.setOutputRange(kMinOutput, kMaxOutput);
+
+      double rotations = 0.0;  
+
+      //angledShooterMotor.setVoltage(angledShooterVelVolts);
+
+      angledShooterPIDController.setReference(rotations, CANSparkBase.ControlType.kPosition);
+
+        // Uncomment these for development, testing or debugging work:
+      SmartDashboard.putNumber("Angled Shooter SetPoint", rotations);
+      SmartDashboard.putNumber("Angled Shooter Proces sVariable", angledShooterEncoder.getPosition());
+      SmartDashboard.putNumber("Angled Shooter Motor RPM", angledShooterEncoder.getVelocity());
+
+  }
 
     public void stopAngledShooterMotor() {
         angledShooterMotor.setVoltage(0.0);

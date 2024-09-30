@@ -317,7 +317,7 @@ public class RobotContainer {
         operatorRightBumper.whileTrue(new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
 
         // Operator Button Commands
-        operatorAButton.whileTrue(speakershootingGroup);
+        operatorAButton.whileTrue(new PrimeShooterSpeakerCmd(shooterSubSysObj));  // speakershootingGroup 
         operatorBButton.whileTrue(blackLineShootingGroup);
         operatorXButton.whileTrue(new AngleShooterUpCmd(shooterAnglerSubSysObj));
         operatorYButton.whileTrue(new ReverseShooterCmd(shooterSubSysObj));

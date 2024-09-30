@@ -18,6 +18,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
+
 @SuppressWarnings("removal")
 public class PracticeSwerveHw implements ISwerveDriveIo {
 
@@ -72,6 +73,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
         // FL
         driveMotors[0] = new CANSparkMax(11, MotorType.kBrushless);
         turnMotors[0] = new CANSparkMax(12, MotorType.kBrushless);
+
         turnSensors[0] = new CANCoder(13);
         driveMotors[0].setInverted(true);
 
