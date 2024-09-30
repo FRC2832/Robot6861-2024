@@ -56,6 +56,7 @@ public class ShooterAnglerSubSys extends SubsystemBase {
 
         angledShooterEncoder = angledShooterMotor.getEncoder(); 
         angledShooterEncoder.setPosition(0.0);
+        angledShooterPIDController = angledShooterMotor.getPIDController();
 
         angledShooterMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
