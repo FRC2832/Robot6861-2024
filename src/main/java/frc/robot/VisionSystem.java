@@ -44,8 +44,8 @@ public class VisionSystem extends SubsystemBase {
     // (Fake values. Experiment and determine estimation noise on an actual robot.)
     public static final Matrix<N3, N1> SINGLE_TAG_STD_DEVIATIONS = VecBuilder.fill(4.0, 4.0, 8.0);
     public static final Matrix<N3, N1> MULTI_TAG_STD_DEVIATIONS = VecBuilder.fill(0.5, 0.5, 1.0);
-    public static final double MAX_VISION_DISTANCE = 4.0;
-
+    public static final double MAX_VISION_DISTANCE = 4.0; #TODO: identify the units
+ 
     public VisionSystem(Odometry odometry) {
         super();
         this.odometry = odometry;
