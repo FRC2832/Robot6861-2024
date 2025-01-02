@@ -4,26 +4,29 @@
 
 package frc.robot.commands;
 
-import java.awt.Color;
+//import java.awt.Color;
 
-import org.livoniawarriors.ColorHSV;
+//import org.livoniawarriors.ColorHSV;
+//import org.livoniawarriors.leds.ILedSubsystem;
+//import org.livoniawarriors.leds.LightningFlash;
 import org.livoniawarriors.REVColorSensor;
-import org.livoniawarriors.leds.ILedSubsystem;
-import org.livoniawarriors.leds.LightningFlash;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.commands.ShootingSpeaker.AngleShooterUpCmd;
+//import edu.wpi.first.wpilibj2.command.CommandScheduler;
+//import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+//import frc.robot.commands.ShootingSpeaker.AngleShooterUpCmd;
 import frc.robot.subsystems.IntakeSubSys;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class IntakeNoteCmd extends Command {   
     private boolean isThresholdCrossed;
+    private boolean isNoteIn;
     private final IntakeSubSys intakeSubSysObj;
+    private final DigitalInput intakeSensor;
     private final REVColorSensor colorSensorObj;
     //private final ILedSubsystem leds;
     private final XboxController driverController;
@@ -38,10 +41,11 @@ public class IntakeNoteCmd extends Command {
      * 
      * @param intakeSubSysObj The IntakeSubsystem from the where it is being called
      */
-    public IntakeNoteCmd(IntakeSubSys intakeSubSys, REVColorSensor colorSensorObj,
-    CommandXboxController driverController, CommandXboxController operatorController) {  //ILedSubsystem leds,
+    public IntakeNoteCmd(IntakeSubSys intakeSubSys, DigitalInput intakeSensor, REVColorSensor colorSensorObj,
+    CommandXboxController driverController, CommandXboxController operatorController) {  //  ILedSubsystem leds,
         // Use addRequirements() here to declare subsystem dependencies.
         this.intakeSubSysObj = intakeSubSys;
+        this.intakeSensor = intakeSensor;
         this.colorSensorObj = colorSensorObj;
         //this.leds = leds;
         this.driverController = driverController.getHID();
@@ -54,6 +58,7 @@ public class IntakeNoteCmd extends Command {
     public void initialize() {
         TIMER.reset();
         TIMER.start();
+        isNoteIn = false;
         isThresholdCrossed = false;
     }
 
@@ -61,7 +66,27 @@ public class IntakeNoteCmd extends Command {
     @Override
     public void execute() {
         intakeSubSysObj.runIntake();
-        if (isThresholdCrossed) {
+        //System.out.println("intake running ***************************");
+
+        String beamBreak = !intakeSensor.get() ? "is Broken" : "is not Broken";
+        //System.out.println("Intake Beam Break Sensor " + beamBreak);
+
+        if (!isNoteIn && !intakeSensor.get()) {
+            isNoteIn = true;
+        } else if (intakeSensor.get()) {
+            isNoteIn = false;
+        }
+
+        //System.out.println("isNoteIn: " + isNoteIn);
+
+        if (isNoteIn) {
+            driverController.setRumble(RumbleType.kBothRumble, 0.8);
+            operatorController.setRumble(RumbleType.kBothRumble, 0.8);
+
+           //CommandScheduler.getInstance().schedule(new LightningFlash(leds, Color.kDarkSalmon);
+        }
+
+        if (isThresholdCrossed) { //may not need this part...
             driverController.setRumble(RumbleType.kBothRumble, 0.8);
             operatorController.setRumble(RumbleType.kBothRumble, 0.8);
 
@@ -84,20 +109,29 @@ public class IntakeNoteCmd extends Command {
     @Override
     public boolean isFinished() {
         // Color color = colorSensorObj.getColor();
+
         double prox = colorSensorObj.getProximity();
-        if (!isThresholdCrossed && prox >= PROX_THRESHOLD) {
+        if (!isThresholdCrossed && prox >= PROX_THRESHOLD) {   // need this to know when to stop intake and indexer motors
             isThresholdCrossed = true;
             //color == Color.kOrange;
             return false;
         }
+
         if (isThresholdCrossed) {
-            return prox < PROX_THRESHOLD || TIMER.get() >= MAX_RUN_TIME;
+           return prox < PROX_THRESHOLD || TIMER.get() >= MAX_RUN_TIME;
+
         }
+        
+        
         //return TIMER.get() >= MAX_RUN_TIME;
-        return prox >= PROX_THRESHOLD || TIMER.get() >= MAX_RUN_TIME;
+
+        return prox >= PROX_THRESHOLD || TIMER.get() >= MAX_RUN_TIME;    
+        
         // return color == Color.kOrange || color == Color.kOrangeRed || TIMER.get() >=
         // MAX_RUN_TIME;
         // return TIMER.get() >= MAX_RUN_TIME;
         // REV color sensor
+
     }
+    
 }

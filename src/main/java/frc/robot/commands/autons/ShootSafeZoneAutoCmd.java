@@ -55,11 +55,11 @@ public class ShootSafeZoneAutoCmd extends Command {
 
     shooterSubSysObj.runShooterHighSpeed();
 
-      if(TIMER.get() < ANGLER_SHOOTER_TIME && !isShooterPrimed) {
+      /*if(TIMER.get() < ANGLER_SHOOTER_TIME && !isShooterPrimed) {
           shooterAnglerSubSysObj.runLinearActuatorReverse();
       } else {
           shooterAnglerSubSysObj.stopLinearActuator();
-      }
+      }*/
   
 
       if (!isShooterPrimed && TIMER.get() >= PRIME_SHOOTER_TIME) {

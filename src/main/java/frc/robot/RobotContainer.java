@@ -26,8 +26,12 @@ import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.hal.AnalogJNI;
+import edu.wpi.first.hal.DIOJNI;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
@@ -88,9 +92,11 @@ public class RobotContainer {
     private IndexerSubSys indexerSubSysObj;
     private ShooterSubSys shooterSubSysObj;
     private REVColorSensor colorSensorObj;
+    private DigitalInput intakeSensor;
     private ClimberSubSys climberSubSysObj;
     private ShooterAnglerSubSys shooterAnglerSubSysObj;
     private AmpScorerSubSys ampScorerSubSysObj;
+    private AnalogInput test1;
     // private VisionSystem visionSystemObj;
     private UsbCamera camera;  
     // TODO: Make a JoystickSubSystem
@@ -108,7 +114,9 @@ public class RobotContainer {
         climberSubSysObj = new ClimberSubSys();
         shooterAnglerSubSysObj = new ShooterAnglerSubSys();
         ampScorerSubSysObj = new AmpScorerSubSys();
-        colorSensorObj = new REVColorSensor(Port.kMXP); // TODO: Verify this port.
+        colorSensorObj = new REVColorSensor(Port.kMXP); 
+        intakeSensor = new DigitalInput(Constants.INTAKE_SENSOR_DIO_PORT);
+        
         String serNum = RobotController.getSerialNumber();
         SmartDashboard.putString("Serial Number", serNum);
         // known Rio serial numbers:
@@ -153,7 +161,7 @@ public class RobotContainer {
         SmartDashboard.putData("Drive Wheels Straight", new MoveWheels(swerveDrive, MoveWheels.driveWheelsStraight()));
         SmartDashboard.putData("Drive Wheels Diamond", new MoveWheels(swerveDrive, MoveWheels.driveWheelsDiamond()));
         SmartDashboard.putData("Test Leds", new TestLeds(leds));
-        SmartDashboard.putNumber("Climb motor encoder", climberSubSysObj.showEncoders());
+        //SmartDashboard.putNumber("Climb motor encoder", climberSubSysObj.showEncoders());
 
         // Register Named Commands for PathPlanner
         NamedCommands.registerCommand("flashRed", new LightningFlash(leds, Color.kFirstRed));
@@ -241,7 +249,7 @@ public class RobotContainer {
         SequentialCommandGroup intakeGroup = new SequentialCommandGroup(
                 new ParallelCommandGroup(
                         new AngleShooterUpCmd(shooterAnglerSubSysObj),
-                        new IntakeNoteCmd(intakeSubSysObj, colorSensorObj, driverController, operatorController),
+                        new IntakeNoteCmd(intakeSubSysObj, intakeSensor, colorSensorObj, driverController, operatorController),
                         new RunIndexUpCmd(indexerSubSysObj, colorSensorObj), 
                         new LightningFlash(leds, Color.kDarkSalmon)
                 )
@@ -255,8 +263,8 @@ public class RobotContainer {
         outtakeGroup.setName("outtakeGroup");
                 
         SequentialCommandGroup anglerGroup = new SequentialCommandGroup(
-                new AngleShooterDownCmd(shooterAnglerSubSysObj),
-                new AngleShooterUpCmd(shooterAnglerSubSysObj)
+                new AngleShooterDownCmd(shooterAnglerSubSysObj) //remember the comma!  if decide to add in the up command!
+                //new AngleShooterUpCmd(shooterAnglerSubSysObj)
         );
         anglerGroup.setName("anglerGroup");
 
@@ -309,7 +317,7 @@ public class RobotContainer {
         operatorRightBumper.whileTrue(new RunIndexUpCmd(indexerSubSysObj, colorSensorObj));
 
         // Operator Button Commands
-        operatorAButton.whileTrue(speakershootingGroup);
+        operatorAButton.whileTrue(new PrimeShooterSpeakerCmd(shooterSubSysObj));  // speakershootingGroup 
         operatorBButton.whileTrue(blackLineShootingGroup);
         operatorXButton.whileTrue(new AngleShooterUpCmd(shooterAnglerSubSysObj));
         operatorYButton.whileTrue(new ReverseShooterCmd(shooterSubSysObj));

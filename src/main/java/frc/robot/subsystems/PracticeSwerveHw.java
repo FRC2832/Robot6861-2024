@@ -7,6 +7,7 @@ import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderStatusFrame;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 
@@ -17,6 +18,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
+
 @SuppressWarnings("removal")
 public class PracticeSwerveHw implements ISwerveDriveIo {
 
@@ -26,6 +28,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
     // 100ms)
     private static final double COUNTS_PER_METER = 4331.1 / 0.94362; // velocity units
     private static final double VELO_PER_METER = COUNTS_PER_METER * 10; // distance units
+   
 
     // Swerve corner locations for kinematics
     // trackwidth = 25" /2 = 12.5" converts to 0.3175 meters
@@ -59,7 +62,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
         // allocate our hardware
         int numMotors = swervePositions.length;
         driveMotors = new CANSparkMax[numMotors];
-       driveEncoder = new RelativeEncoder[numMotors];
+        driveEncoder = new RelativeEncoder[numMotors];
        // driveEncoderVelocity = new RelativeEncoder[numMotors];
         turnMotors = new CANSparkMax[numMotors];
         turnSensors = new CANCoder[numMotors];
@@ -70,6 +73,7 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
         // FL
         driveMotors[0] = new CANSparkMax(11, MotorType.kBrushless);
         turnMotors[0] = new CANSparkMax(12, MotorType.kBrushless);
+
         turnSensors[0] = new CANCoder(13);
         driveMotors[0].setInverted(true);
 
@@ -90,12 +94,15 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
         driveMotors[3] = new CANSparkMax(41, MotorType.kBrushless);
         turnMotors[3] = new CANSparkMax(42, MotorType.kBrushless);
         turnSensors[3] = new CANCoder(43);
-        // driveMotors[3].setInverted(true);
+        driveMotors[3].setInverted(false);
 
         // Current Limit for Drive and Turn (20 and 40)
         for (CANSparkMax drive : driveMotors) {
             drive.setSmartCurrentLimit(Constants.DRIVE_MOTOR_PRIMARY_CURRENT_LIMIT);
             drive.setSecondaryCurrentLimit(Constants.DRIVE_MOTOR_SECONDARY_CURRENT_LIMIT);
+            //drive.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 100);
+            drive.enableVoltageCompensation(11);
+            drive.setOpenLoopRampRate(0.025);
         }
         for (CANSparkMax turn : turnMotors) {
             turn.setSmartCurrentLimit(Constants.TURN_MOTOR_PRIMARY_CURRENT_LIMIT);
@@ -121,9 +128,15 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
             turnEncoder[wheel] = turnMotors[wheel].getEncoder();
             driveMotors[wheel].getEncoder().setPositionConversionFactor(1/21.92);  
             driveMotors[wheel].getEncoder().setVelocityConversionFactor(1/(21.92 * 60));    
-            turnPid[wheel] = new PIDController(0.5 / Math.PI, .2, 0.0); // TODO: modify turnPID values, ki was 0.2
+            turnPid[wheel] = new PIDController(1.5/ Math.PI, 0.0 , 0.0); // TODO: modify turnPID values, kp was 0.5/math.pi, ki was 0.2
 
             // driveEncoder[wheel] = driveMotors[wheel].getEncoder();
+
+            //from https://www.revrobotics.com/development-spark-max-users-manual/#section-3-3-2-1
+            turnMotors[wheel].setPeriodicFramePeriod(PeriodicFrame.kStatus0, 20);  //to help reduce CANbus high utilization
+            turnMotors[wheel].setPeriodicFramePeriod(PeriodicFrame.kStatus1, 100);
+            driveMotors[wheel].setPeriodicFramePeriod(PeriodicFrame.kStatus0, 20);
+            driveMotors[wheel].setPeriodicFramePeriod(PeriodicFrame.kStatus1, 100);
             
         }
         setDriveMotorBrakeMode(true);
@@ -156,7 +169,14 @@ public class PracticeSwerveHw implements ISwerveDriveIo {
 
     @Override
     public double getCornerSpeed(int wheel) { 
-        return driveMotors[wheel].getEncoder().getVelocity();
+        double encoderSpeed = driveMotors[wheel].getEncoder().getVelocity();
+
+        if (encoderSpeed < 0.006) {
+            encoderSpeed = 0.00;
+            //System.out.println("                debugging: had to set cornerSpeed to 0");
+        }
+
+        return encoderSpeed;
     }
 
     @Override

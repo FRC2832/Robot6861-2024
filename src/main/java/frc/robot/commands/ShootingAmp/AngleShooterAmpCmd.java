@@ -32,17 +32,17 @@ public class AngleShooterAmpCmd extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (TIMER.get() < timerMotor) {
+    /*if (TIMER.get() < timerMotor) {
             shooterAnglerSubSysObj.runLinearActuatorReverse();
     } else { 
         shooterAnglerSubSysObj.stopLinearActuator();
-      }
+      }*/
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooterAnglerSubSysObj.runLinearActuator();
+    //shooterAnglerSubSysObj.runLinearActuator();
     TIMER.stop();
     TIMER.reset();
   }

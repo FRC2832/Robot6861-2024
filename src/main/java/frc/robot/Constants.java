@@ -29,7 +29,7 @@ public final class Constants {
     public static final int INDEX_MOTOR_SMART_CURRENT_LIMIT = 20; // NEO 550 
     public static final int INDEX_MOTOR_SECONDARY_CURRENT_LIMIT = 40; // complete
     public static final double UPINDEX_MOTOR_PCT = 95.0; // TODO: confirm these values
-    public static final double DOWNINDEX_MOTOR_PCT = -30.0; 
+    public static final double DOWNINDEX_MOTOR_PCT = -45.0; 
 
     // Shooter Motor Values NEO
     public static final int FR_SHOOTER_MOTOR_CAN_ID = 4;
@@ -61,13 +61,13 @@ public final class Constants {
     public static final double DOWNCLIMB_MOTOR_PCT = -70.0; 
 
     // Swerve current limits
-    public static final int DRIVE_MOTOR_PRIMARY_CURRENT_LIMIT = 45;
-    public static final int DRIVE_MOTOR_SECONDARY_CURRENT_LIMIT = 65;
-    public static final int TURN_MOTOR_PRIMARY_CURRENT_LIMIT = 45;
-    public static final int TURN_MOTOR_SECONDARY_CURRENT_LIMIT = 65;
+    public static final int DRIVE_MOTOR_PRIMARY_CURRENT_LIMIT = 52;
+    public static final int DRIVE_MOTOR_SECONDARY_CURRENT_LIMIT = 70;
+    public static final int TURN_MOTOR_PRIMARY_CURRENT_LIMIT = 52;
+    public static final int TURN_MOTOR_SECONDARY_CURRENT_LIMIT = 70;
 
     // Drive mode factors
-    public static final double TURTLE_MODE = 0.55;
+    public static final double TURTLE_MODE = 0.45;
     public static final double SNAIL_MODE = 0.25;
 
     // Vision system values
@@ -76,11 +76,15 @@ public final class Constants {
     public static final int IMAGE_HEIGHT = 480;
     public static final int FRAMERATE = 20;
 
-    // Linear Actuator Values
-    public static final int LINEAR_ACTUATOR_MOTOR_CAN_ID = 7;
-    public static final int LINEAR_ACTUATOR_MOTOR_SMART_CURRENT_LIMIT = 3;
-    public static final double LINEAR_ACTUATOR_MOTOR_PCT = 99.0;
-    public static final double LINEAR_ACTUATOR_MOTOR_REVERSE_PCT = -99.0;
+    // Angled Shooter Values
+    public static final int ANGLED_SHOOTER_MOTOR_CAN_ID = 7;
+    public static final int ANGLED_SHOOTER_MOTOR_SMART_CURRENT_LIMIT = 20;
+    public static final int ANGLED_SHOOTER_MOTOR_SECONDARY_CURRENT_LIMIT = 40;
+    public static final double ANGLED_SHOOTER_MOTOR_PCT = 20.0;  //positive volts brings shooter down
+    public static final double ANGLED_SHOOTER_MOTOR_REVERSE_PCT = -20.0; //currently not using this at all
+
+    //Intake Sensor
+    public static final int INTAKE_SENSOR_DIO_PORT = 0;
 
    
     

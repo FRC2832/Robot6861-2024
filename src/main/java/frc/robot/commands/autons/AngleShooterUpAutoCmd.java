@@ -31,13 +31,13 @@ public class AngleShooterUpAutoCmd extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        shooterAnglerSubSysObj.runLinearActuatorAuton();
+        //shooterAnglerSubSysObj.runLinearActuatorAuton();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        shooterAnglerSubSysObj.stopLinearActuator();
+        //shooterAnglerSubSysObj.stopLinearActuator();
         TIMER.stop();
         TIMER.reset();
     }

@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
@@ -43,6 +44,11 @@ public class ClimberSubSys extends SubsystemBase {
 
     public ClimberSubSys() {
         climberMotor = new CANSparkMax(Constants.CLIMBER_MOTOR_CAN_ID, MotorType.kBrushless);
+      
+        //from https://www.revrobotics.com/development-spark-max-users-manual/#section-3-3-2-1
+        climberMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 100);  //to help reduce CANbus high utilization
+        climberMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 100);  // TODO: might be able to go higher than 100....
+
         climberEncoder = climberMotor.getEncoder(); 
         climberEncoder.setPosition(0.0);
         climberPIDController = climberMotor.getPIDController();
@@ -71,7 +77,8 @@ public class ClimberSubSys extends SubsystemBase {
 
 
     public void runClimberUp() {
-        SmartDashboard.putNumber("Climb motor encoder - up", climberEncoder.getPosition());
+        // Uncomment this for development, testing or debugging work:
+        //SmartDashboard.putNumber("Climb motor encoder - up", climberEncoder.getPosition());
 
         // PID coefficients
         kP = 0.74;
@@ -95,17 +102,19 @@ public class ClimberSubSys extends SubsystemBase {
         climberPIDController.setReference(rotations, CANSparkBase.ControlType.kPosition);
          // climberMotor.setVoltage(upClimbVelVolts);
 
-        SmartDashboard.putNumber("SetPoint", rotations);
-        SmartDashboard.putNumber("ProcessVariable", climberEncoder.getPosition());
-        SmartDashboard.putNumber("CLimber Motor Speed", climberEncoder.getVelocity());
+         // Uncomment these for development, testing or debugging work:
+        //SmartDashboard.putNumber("SetPoint", rotations);
+        //SmartDashboard.putNumber("ProcessVariable", climberEncoder.getPosition());
+        //SmartDashboard.putNumber("CLimber Motor Speed", climberEncoder.getVelocity());
 
 
        
     }
 
-    // Runs the Climber eMotor in a negative direction
+    // Runs the Climber Motor in a negative direction
     public void runClimberDown() {
-        SmartDashboard.putNumber("Climb motor encoder - down", climberEncoder.getPosition());
+        // Uncomment this for development, testing or debugging work:
+        // SmartDashboard.putNumber("Climb motor encoder - down", climberEncoder.getPosition());
 
         // PID coefficients
         kP = 0.5;
@@ -130,8 +139,9 @@ public class ClimberSubSys extends SubsystemBase {
 
         climberPIDController.setReference(rotations, CANSparkBase.ControlType.kPosition);
 
-        SmartDashboard.putNumber("SetPoint", rotations);
-        SmartDashboard.putNumber("ProcessVariable", climberEncoder.getPosition());
+        // Uncomment these for development, testing or debugging work:
+        //SmartDashboard.putNumber("SetPoint", rotations);
+        //SmartDashboard.putNumber("ProcessVariable", climberEncoder.getPosition());
 
     }
 
@@ -142,6 +152,7 @@ public class ClimberSubSys extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        SmartDashboard.putNumber("Climb motor encoder", climberEncoder.getPosition());
+        // Uncomment this for development, testing or debugging work:
+        // SmartDashboard.putNumber("Climb motor encoder", climberEncoder.getPosition());
     }
 }

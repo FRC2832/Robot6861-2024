@@ -6,13 +6,16 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkPIDController;
+//import com.revrobotics.RelativeEncoder;
+//import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+//import edu.wpi.first.wpilibj.DigitalInput;
 
 public class IntakeSubSys extends SubsystemBase {
     /** Creates a new Intake. */
@@ -30,6 +33,8 @@ public class IntakeSubSys extends SubsystemBase {
     private double outtakeVelVolts;
     private double intakeVelPct;
     private double outtakeVelPct;
+    //private DigitalInput intakeSensor;
+
     //private double kP;
     //private double kI;
     //private double kD;
@@ -43,11 +48,23 @@ public class IntakeSubSys extends SubsystemBase {
         intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR_CAN_ID, MotorType.kBrushless);
         intakeMotor.setSmartCurrentLimit(Constants.INTAKE_MOTOR_SMART_CURRENT_LIMIT);
         intakeMotor.setSecondaryCurrentLimit(Constants.INTAKE_MOTOR_SECONDARY_CURRENT_LIMIT);
+        
+        //from https://www.revrobotics.com/development-spark-max-users-manual/#section-3-3-2-1
+        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 10);  //to help reduce CANbus high utilization
+        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 20);  // TODO: might be able to go higher than 100....
+        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 100);
+        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 50);
+        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 200);
+        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus5, 500);
+        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus6, 500);
+
         intakeMotor.setIdleMode(IdleMode.kBrake);
         intakeVelPct = Constants.INTAKE_MOTOR_PCT / 100.0;
         outtakeVelPct = Constants.OUTTAKE_MOTOR_PCT / 100.0;
         intakeVelVolts = intakeVelPct * 12.0;
         outtakeVelVolts = outtakeVelPct * 12.0;
+    
+        //intakeSensor = new DigitalInput(Constants.INTAKE_SENSOR_DIO_PORT);
 
         //intakeEncoder = intakeMotor.getEncoder();
         //intakePidController = intakeMotor.getPIDController();
@@ -56,7 +73,8 @@ public class IntakeSubSys extends SubsystemBase {
     // Runs the IntakeMotors in a positive direction(Inwards)
     public void runIntake() {
        
-        intakeMotor.setVoltage(intakeVelVolts); // TODO: Old code before pid
+        intakeMotor.setVoltage(intakeVelVolts);
+        SmartDashboard.putNumber("Intake Volts", intakeVelVolts);
 
         /* 
         kP = 0.0; // Suggested Value: 0
@@ -92,9 +110,14 @@ public class IntakeSubSys extends SubsystemBase {
         intakeMotor.setVoltage(0.0);
     }
 
+    /*public boolean getIntakeSensor() {
+        return !intakeSensor.get();
+    }*/
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
         //SmartDashboard.putNumber("Intake Motor Encoder", intakeEncoder.getVelocity());
+        //SmartDashboard.putBoolean("Intake Sensor", !intakeSensor.get());
     }
 }

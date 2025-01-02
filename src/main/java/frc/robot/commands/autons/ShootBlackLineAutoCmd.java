@@ -52,11 +52,11 @@ public class ShootBlackLineAutoCmd extends Command {
         }
 
         shooterSubSysObj.runShooterHighSpeed();
-        if(TIMER.get() < ANGLER_SHOOTER_TIME && !isShooterPrimed) {
+        /*if(TIMER.get() < ANGLER_SHOOTER_TIME && !isShooterPrimed) {
             shooterAnglerSubSysObj.runLinearActuatorReverse();
         } else {
             shooterAnglerSubSysObj.stopLinearActuator();
-        }
+        }*/
         //CommandScheduler.getInstance().schedule(new AngleShooterBlackLineCmd(shooterAnglerSubSysObj));
 
         if (!isShooterPrimed && TIMER.get() >= PRIME_SHOOTER_TIME) {
